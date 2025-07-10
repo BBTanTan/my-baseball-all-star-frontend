@@ -41,7 +41,7 @@ const FriendBattleHost = ({ onBack }) => {
 
   if (step === 'setup') {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-sky-300 to-sky-200 relative overflow-hidden">
+      <div className="min-h-screen relative overflow-hidden">
         {/* ...중략... */}
       </div>
     );
@@ -61,7 +61,7 @@ const FriendBattleHost = ({ onBack }) => {
 
   if (step === 'password-setup') {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-sky-300 to-sky-200 relative overflow-hidden">
+      <div className="min-h-screen relative overflow-hidden">
         {/* ...중략... */}
       </div>
     );
@@ -69,7 +69,7 @@ const FriendBattleHost = ({ onBack }) => {
 
   if (step === 'link-sharing') {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-sky-300 to-sky-200 relative overflow-hidden flex items-center justify-center p-4">
+      <div className="min-h-screen relative overflow-hidden flex items-center justify-center p-4">
         {/* ...중략... */}
       </div>
     );

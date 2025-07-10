@@ -35,7 +35,7 @@ const BattleScreen = ({ team1Name, team2Name, onResult }) => {
 
   return (
     <div className="min-h-screen flex items-center justify-center">
-      <Card className="bg-white/95 backdrop-blur-sm p-8 w-full max-w-md text-center">
+      <Card className="backdrop-blur-sm p-8 w-full max-w-md text-center">
         <CardContent className="space-y-6">
           <h1 className="text-3xl font-bold text-gray-800">Epic Battle!</h1>
           <div className="space-y-4">
@@ -44,9 +44,9 @@ const BattleScreen = ({ team1Name, team2Name, onResult }) => {
               <span className="text-2xl">⚔️</span>
               <span className="text-red-600">{team2Name}</span>
             </div>
-            <div className="w-full bg-gray-200 rounded-full h-4 overflow-hidden">
+            <div className="w-full rounded-full h-4 overflow-hidden">
               <div 
-                className="h-full bg-gradient-to-r from-blue-500 to-green-500 transition-all duration-100 ease-out"
+                className="h-full transition-all duration-100 ease-out"
                 style={{ width: `${progress}%` }}
               />
             </div>

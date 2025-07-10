@@ -99,7 +99,38 @@ All colors MUST be HSL.
     @apply border-border;
   }
 
-  body {
-    @apply bg-background text-foreground;
+  body, #root, #app {
+    min-height: 100vh;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    font-family: 'Pretendard', 'Noto Sans KR', Arial, sans-serif;
+    background-image: url('/main_back_ground.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+  
+  /* 특정 폰트 적용 예시 */
+  .font-title {
+    font-family: 'Bagel Fat One', Arial, sans-serif;
+  }
+  .font-body {
+    font-family: 'Nanum Pen Script', cursive;
+  }
+  .font-english {
+    font-family: 'Roboto', Arial, sans-serif;
+  }
+  
+  @font-face {
+    font-family: 'yg-jalnan';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.2/JalnanOTF00.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  .font-jalnan {
+    font-family: 'yg-jalnan', sans-serif;
   }
 }

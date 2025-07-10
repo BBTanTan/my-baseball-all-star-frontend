@@ -97,22 +97,21 @@ const TeamSelectionScreen = ({
     { pos: 'CL', x: 65, y: 80, label: 'CP' }
   ];
   return (
-    <div className="min-h-screen bg-gradient-to-b from-sky-300 to-sky-200 relative overflow-hidden">
-      {/* Clouds */}
-      <div className="absolute top-8 left-8 w-24 h-16 bg-white rounded-full opacity-90"></div>
-      <div className="absolute top-12 right-16 w-20 h-12 bg-white rounded-full opacity-80"></div>
-      <div className="absolute bottom-32 right-8 w-28 h-18 bg-white rounded-full opacity-85"></div>
+    <div className="min-h-screen relative overflow-hidden">
+      <div className="absolute top-8 left-8 w-24 h-16 rounded-full opacity-90"></div>
+      <div className="absolute top-12 right-16 w-20 h-12 rounded-full opacity-80"></div>
+      <div className="absolute bottom-32 right-8 w-28 h-18 rounded-full opacity-85"></div>
       <div className="flex flex-col items-center p-2 space-y-4 w-full max-w-md mx-auto">
         {/* Title */}
-        <div className="bg-gray-700 text-white px-6 py-3 rounded-full mt-4">
+        <div className="text-white px-6 py-3 rounded-full mt-4">
           <h2 className="text-lg font-bold">{teamName} 선수선택</h2>
         </div>
         {/* Baseball Field */}
         <div className="relative w-72 h-56 mx-auto">
           {/* Outfield (brown area) */}
-          <div className="absolute bottom-0 w-full h-40 bg-orange-400 rounded-t-full"></div>
+          <div className="absolute bottom-0 w-full h-40 rounded-t-full"></div>
           {/* Infield (green area) */}
-          <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-56 h-28 bg-green-500 rounded-t-full">
+          <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-56 h-28 rounded-t-full">
             {/* Diamond outline */}
             <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 w-20 h-20 border-4 border-yellow-400 rotate-45"></div>
           </div>
@@ -131,10 +130,10 @@ const TeamSelectionScreen = ({
               >
                 <div className={`w-10 h-10 rounded-full border-2 flex items-center justify-center text-xs font-bold ${
                   player 
-                    ? 'bg-blue-500 border-blue-600 text-white p-1' 
-                    : isSelected 
-                      ? 'bg-yellow-300 border-yellow-500 text-yellow-800' 
-                      : 'bg-white border-gray-400 text-gray-600'
+                    ? 'border-blue-600 text-white p-1' 
+                    : isSelected
+                    ? 'border-yellow-500 text-yellow-800' 
+                    : 'border-gray-400 text-gray-600'
                 }`}>
                   {player ? (
                     <div className="w-8 h-8 rounded-full overflow-hidden">
@@ -168,15 +167,15 @@ const TeamSelectionScreen = ({
                     key={`${player.name}-${player.team}-${index}`} 
                     className={`cursor-pointer transition-all hover:shadow-lg rounded-2xl ${
                       isCurrentlySelected 
-                        ? 'ring-2 ring-blue-500 bg-blue-100' 
+                        ? 'ring-2 ring-blue-500' 
                         : isAlreadySelected
-                          ? 'bg-gray-200 opacity-60'
-                          : 'bg-white hover:bg-gray-50'
+                          ? 'opacity-60'
+                          : 'hover:bg-gray-50'
                     }`} 
                     onClick={() => !isAlreadySelected && selectPlayer(player)}
                   >
                     <CardContent className="p-3 flex items-center space-x-3">
-                      <div className="w-12 h-12 rounded-full bg-gray-300 overflow-hidden flex-shrink-0">
+                      <div className="w-12 h-12 rounded-full overflow-hidden flex-shrink-0">
                         <img 
                           src="https://images.unsplash.com/photo-1582562124811-c09040d0a901?w=150&h=150&fit=crop&crop=face" 
                           alt={player.name} 
@@ -206,9 +205,9 @@ const TeamSelectionScreen = ({
                 const player = selectedPlayers[pos];
                 if (!player) return null;
                 return (
-                  <Card key={pos} className="bg-blue-100 rounded-2xl">
+                  <Card key={pos} className="rounded-2xl">
                     <CardContent className="p-3 flex items-center space-x-3">
-                      <div className="w-12 h-12 rounded-full bg-gray-300 overflow-hidden flex-shrink-0">
+                      <div className="w-12 h-12 rounded-full overflow-hidden flex-shrink-0">
                         <img 
                           src="https://images.unsplash.com/photo-1582562124811-c09040d0a901?w=150&h=150&fit=crop&crop=face" 
                           alt={player.name} 
