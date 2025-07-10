@@ -31,8 +31,8 @@ const Index = () => {
       <img 
         src="/logo.png" 
         alt="Logo" 
-        className="w-70 h-auto mb-6 sm:w-40 md:w-48 lg:w-56 xl:w-64"
-        style={{ maxWidth: '80vw' }}
+        className="mb-6 sm:w-40 md:w-48 lg:w-56 xl:w-64"
+        style={{ width: '280px', maxWidth: '80vw', height: 'auto' }}
       />
       <div className="flex flex-col space-y-4 w-full max-w-xs">
         <Button className="font-bold py-4 rounded-full text-lg text-white bg-green-600 hover:bg-green-700" onClick={() => setGameMode('solo')}>
