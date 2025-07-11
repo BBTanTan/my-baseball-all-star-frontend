@@ -7,24 +7,33 @@ const ResultScreen = ({ team1Name, team2Name, team1Score, team2Score, onPlayAgai
   const winner = finalTeam1Score > finalTeam2Score ? team1Name : team2Name;
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-sky-300 to-sky-200 relative overflow-hidden">
-      {/* Clouds */}
-      <div className="absolute top-8 left-8 w-32 h-20 bg-white rounded-full opacity-90"></div>
-      <div className="absolute top-12 right-16 w-24 h-16 bg-white rounded-full opacity-80"></div>
-      <div className="absolute bottom-32 right-8 w-36 h-22 bg-white rounded-full opacity-85"></div>
-      
-      <div className="flex flex-col items-center justify-center min-h-screen p-4 space-y-8">
-        {/* Title */}
-        <div className="bg-white rounded-3xl px-8 py-6 shadow-lg">
-          <h1 className="text-2xl font-bold text-gray-800 text-center">
-            MY BASEBALL<br />
-            ALL⭐STAR
-          </h1>
-        </div>
-
+    <div className="min-h-screen w-full relative overflow-hidden">
+      {/* Fullscreen background image */}
+      <div
+        style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: "100vw",
+          height: "100vh",
+          zIndex: 0,
+          backgroundImage: "url('/landing.png')",
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "center",
+          backgroundSize: "cover",
+          backgroundColor: "transparent"
+        }}
+      />
+      <div className="flex flex-col items-center pt-2 pb-0 px-2 space-y-2" style={{ position: "relative", zIndex: 1 }}>
+        {/* Logo 이미지 */}
+        <img
+          src="element/logo.png"
+          alt="Logo"
+          className="w-56 h-56 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-96 lg:h-96 object-contain"
+        />
         {/* Result Board */}
         <div className="bg-black text-white p-6 rounded-3xl border-4 border-gray-300 w-full max-w-md">
-          <div className="text-center space-y-4">
+          <div className="text-center space-y-4 font-dunggeunmo">
             <div className="text-red-400 text-lg font-bold">
               경기가 종료되었습니다
             </div>
@@ -49,38 +58,23 @@ const ResultScreen = ({ team1Name, team2Name, team1Score, team2Score, onPlayAgai
         </div>
 
         {/* Action Buttons */}
-        <div className="flex space-x-4">
-          <Button
-            onClick={onPlayAgain}
-            className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold px-8 py-4 rounded-full"
-          >
-            공유하기
-          </Button>
-          
-          <Button
-            onClick={onHome}
-            className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold px-8 py-4 rounded-full"
-          >
-            또 경기하기
-          </Button>
+        <div className="w-full max-w-md mx-auto">
+          <div className="flex space-x-4 w-full">
+            <Button
+              onClick={onPlayAgain}
+              className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold px-8 py-4 rounded-full w-1/2"
+            >
+              공유하기
+            </Button>
+            <Button
+              onClick={onHome}
+              className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold px-8 py-4 rounded-full w-1/2"
+            >
+              또 경기하기
+            </Button>
+          </div>
         </div>
 
-        {/* Baseball Field */}
-        <div className="relative w-80 h-40">
-          {/* Outfield */}
-          <div className="absolute bottom-0 w-full h-32 bg-orange-400 rounded-t-full"></div>
-          {/* Infield */}
-          <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-64 h-24 bg-green-500 rounded-t-full">
-            {/* Diamond */}
-            <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 w-16 h-16 bg-yellow-500 rotate-45"></div>
-          </div>
-          
-          {/* Baseball and Glove decorations */}
-          <div className="absolute -bottom-6 -left-8 w-16 h-16 bg-white rounded-full border-4 border-red-500"></div>
-          <div className="absolute -bottom-6 -right-8 w-16 h-16 bg-orange-600 rounded-full relative">
-            <div className="absolute inset-2 border-2 border-orange-800 rounded-full"></div>
-          </div>
-        </div>
       </div>
     </div>
   );

@@ -36,19 +36,30 @@ const GameLoadingScreen = ({ team1Name, team2Name, onComplete }) => {
   }, [onComplete, team1InningScores, team2InningScores]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-sky-300 to-sky-200 relative overflow-hidden">
-      {/* Clouds */}
-      <div className="absolute top-8 left-8 w-32 h-20 bg-white rounded-full opacity-90"></div>
-      <div className="absolute top-12 right-16 w-24 h-16 bg-white rounded-full opacity-80"></div>
-      <div className="absolute bottom-32 right-8 w-36 h-22 bg-white rounded-full opacity-85"></div>
-      <div className="flex flex-col items-center justify-center min-h-screen p-4 space-y-8">
-        {/* Title */}
-        <div className="bg-white rounded-3xl px-8 py-6 shadow-lg">
-          <h1 className="text-2xl font-bold text-gray-800 text-center">
-            MY BASEBALL<br />
-            ALL⭐STAR
-          </h1>
-        </div>
+    <div className="min-h-screen w-full relative overflow-hidden">
+      {/* Fullscreen background image */}
+      <div
+        style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: "100vw",
+          height: "100vh",
+          zIndex: 0,
+          backgroundImage: "url('/landing.png')",
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "center",
+          backgroundSize: "cover",
+          backgroundColor: "transparent"
+        }}
+      />
+      <div className="flex flex-col items-center pt-2 pb-0 px-2 space-y-2" style={{ position: "relative", zIndex: 1 }}>
+        {/* Logo 이미지 */}
+        <img
+          src="element/logo.png"
+          alt="Logo"
+          className="w-56 h-56 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-96 lg:h-96 object-contain mb-2"
+        />
         {/* Game Status Board */}
         <div className="bg-black text-white p-6 rounded-3xl border-4 border-gray-300 w-full max-w-md">
           <div className="text-center space-y-4">
@@ -60,7 +71,7 @@ const GameLoadingScreen = ({ team1Name, team2Name, onComplete }) => {
               홈런을 날리는 중
             </div>
             {/* Innings Display */}
-            <div className="grid grid-cols-12 gap-1 text-xs">
+            <div className="grid grid-cols-12 gap-1 text-lg font-dunggeunmo">
               {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((inning) => (
                 <div key={inning} className="text-center">
                   <div className={`mb-1 ${inning <= currentInning ? 'text-white' : 'text-gray-600'}`}>
@@ -70,11 +81,11 @@ const GameLoadingScreen = ({ team1Name, team2Name, onComplete }) => {
               ))}
             </div>
             {/* Team Scores by Inning */}
-            <div className="space-y-2">
-              <div className="grid grid-cols-12 gap-1 text-xs">
+            <div className="space-y-2 font-dunggeunmo">
+              <div className="grid grid-cols-12 gap-1 text-lg">
                 {team1InningScores.map((score, index) => (
                   <div key={index} className="text-center">
-                    <span className={`text-yellow-400 ${index < currentInning ? 'font-bold' : 'text-gray-600'}`}>
+                    <span className={`text-yellow-400 ${index < currentInning ? 'font-normal' : 'text-gray-600'}`}>
                       {index < currentInning ? score : ''}
                     </span>
                   </div>
@@ -84,11 +95,11 @@ const GameLoadingScreen = ({ team1Name, team2Name, onComplete }) => {
                 {team1Name}
               </div>
             </div>
-            <div className="space-y-2">
-              <div className="grid grid-cols-12 gap-1 text-xs">
+            <div className="space-y-2 font-dunggeunmo">
+              <div className="grid grid-cols-12 gap-1 text-lg">
                 {team2InningScores.map((score, index) => (
                   <div key={index} className="text-center">
-                    <span className={`text-yellow-400 ${index < currentInning ? 'font-bold' : 'text-gray-600'}`}>
+                    <span className={`text-yellow-400 ${index < currentInning ? 'font-normal' : 'text-gray-600'}`}>
                       {index < currentInning ? score : ''}
                     </span>
                   </div>
@@ -98,23 +109,6 @@ const GameLoadingScreen = ({ team1Name, team2Name, onComplete }) => {
                 {team2Name}
               </div>
             </div>
-          </div>
-        </div>
-        {/* Baseball Field */}
-        <div className="relative w-80 h-40">
-          {/* Outfield */}
-          <div className="absolute bottom-0 w-full h-32 bg-orange-400 rounded-t-full"></div>
-          {/* Infield */}
-          <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-64 h-24 bg-green-500 rounded-t-full">
-            {/* Diamond */}
-            <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 w-16 h-16 bg-yellow-500 rotate-45"></div>
-          </div>
-          {/* Baseball */}
-          <div className="absolute top-4 left-1/2 transform -translate-x-1/2 w-6 h-6 bg-white rounded-full animate-bounce"></div>
-          {/* Baseball and Glove decorations */}
-          <div className="absolute -bottom-6 -left-8 w-16 h-16 bg-white rounded-full border-4 border-red-500"></div>
-          <div className="absolute -bottom-6 -right-8 w-16 h-16 bg-orange-600 rounded-full relative">
-            <div className="absolute inset-2 border-2 border-orange-800 rounded-full"></div>
           </div>
         </div>
       </div>

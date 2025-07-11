@@ -6,6 +6,7 @@ import TeamCompletionScreen from "@/components/TeamCompletionScreen";
 import GameLoadingScreen from "@/components/GameLoadingScreen";
 import ResultScreen from "@/components/ResultScreen";
 import FriendBattleHost from "@/components/FriendBattleHost";
+import FriendTeamSetupScreen from "@/components/FriendTeamSetupScreen";
 import FriendBattleJoin from "@/components/FriendBattleJoin";
 import SoloBattleScreen from "@/components/SoloBattleScreen";
 import Landing from "./Landing";
@@ -14,6 +15,7 @@ const Index = () => {
   const [showLanding, setShowLanding] = useState(true);
   const [gameMode, setGameMode] = useState('home');
   const [battleParams, setBattleParams] = useState(null);
+  const [friendTeam, setFriendTeam] = useState(null);
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -94,7 +96,12 @@ const Index = () => {
 
   if (gameMode === 'home') return <HomeScreen />;
   if (gameMode === 'solo') return <SoloBattleScreen onBack={() => setGameMode('home')} />;
-  if (gameMode === 'friend-host') return <FriendBattleHost onBack={() => setGameMode('home')} />;
+  if (gameMode === 'friend-host') {
+    if (!friendTeam) {
+      return <FriendTeamSetupScreen onComplete={setFriendTeam} onBack={() => setGameMode('home')} />;
+    }
+    return <FriendBattleHost onBack={() => setGameMode('home')} myTeam={friendTeam} />;
+  }
   if (gameMode === 'friend-join' && battleParams) {
     return (
       <FriendBattleJoin 
