@@ -27,23 +27,63 @@ const Index = () => {
   }, []);
 
   const HomeScreen = () => (
-    <div className="min-h-screen flex flex-col items-center justify-center">
-      <img 
-        src="/logo.png" 
-        alt="Logo" 
-        className="mb-6 sm:w-40 md:w-48 lg:w-56 xl:w-64"
-        style={{ width: '280px', maxWidth: '80vw', height: 'auto' }}
+    <div className="min-h-screen w-full flex flex-col items-center justify-center relative overflow-hidden">
+      {/* 전체 배경 이미지는 landing.png 하나로 */}
+      <img
+        src="/landing.png"
+        alt="Home Background"
+        className="w-full h-full object-cover absolute inset-0 z-0"
+        style={{ minHeight: '100vh', minWidth: '100vw' }}
       />
-      <div className="flex flex-col space-y-4 w-full max-w-xs">
-        <Button className="font-bold py-4 rounded-full text-lg text-white bg-green-600 hover:bg-green-700" onClick={() => setGameMode('solo')}>
+      <div className="z-10 flex flex-col items-center justify-start gap-1" style={{ position: 'absolute', top: '2vh', left: '50%', transform: 'translateX(-50%)' }}>
+        <img
+          src="/element/logo.png"
+          alt="Logo"
+          className="mb-2"
+          style={{ width: '55vw', maxWidth: '75vw', height: 'auto' }}
+        />
+        <img
+          src="/element/baseball-cap.png"
+          alt="Baseball Cap"
+          className="mb-8"
+          style={{ width: '140px', maxWidth: '40vw', height: 'auto' }}
+        />
+        <button
+          onClick={() => setGameMode('solo')}
+          className="font-jalnan mb-6"
+          style={{
+            padding: '0.5rem 1rem',
+            fontSize: '1.5rem',
+            borderRadius: '2rem',
+            background: '#FFFFFF',
+            color: '#535353',
+            fontWeight: 'normal',
+            boxShadow: '0 4px 24px rgba(0,0,0,0.2)',
+            border: 'none',
+            cursor: 'pointer',
+            width: 'min(320px, 80vw)'
+          }}
+        >
           혼자 경기
-        </Button>
-        <Button className="font-bold py-4 rounded-full text-lg text-white bg-blue-600 hover:bg-blue-700" onClick={() => setGameMode('friend-host')}>
-          친구와 대결 (방 만들기)
-        </Button>
-        <Button className="font-bold py-4 rounded-full text-lg text-white bg-yellow-500 hover:bg-yellow-600" onClick={() => setGameMode('friend-join')}>
-          친구방 참가
-        </Button>
+        </button>
+        <button
+          onClick={() => setGameMode('friend-host')}
+          className="font-jalnan"
+          style={{
+            padding: '0.5rem 1rem',
+            fontSize: '1.5rem',
+            borderRadius: '2rem',
+            background: '#FFFFFF',
+            color: '#535353',
+            fontWeight: 'normal',
+            boxShadow: '0 4px 24px rgba(0,0,0,0.2)',
+            border: 'none',
+            cursor: 'pointer',
+            width: 'min(320px, 80vw)'
+          }}
+        >
+          친구와 함께 경기
+        </button>
       </div>
     </div>
   );
@@ -76,9 +116,6 @@ const Index = () => {
           <h2 className="text-2xl font-bold text-gray-800 text-center">친구방 참가</h2>
         </div>
         <div className="text-gray-600 mb-4">초대 링크로 접속해 주세요.</div>
-        <Button onClick={() => setGameMode('home')} className="font-bold px-8 py-3 rounded-full text-gray-800 bg-gray-300 hover:bg-gray-400">
-          ← 홈으로
-        </Button>
       </div>
     );
   }

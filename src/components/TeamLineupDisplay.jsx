@@ -1,13 +1,13 @@
 import { Card, CardContent } from "@/components/ui/card";
 
 const TeamLineupDisplay = ({ teamName, selectedPlayers }) => {
-  const positions = ['C', 'SP', 'MR', 'CL', '1B', '2B', '3B', 'SS', 'LF', 'CF', 'RF', 'DH'];
+  const positions = ['C', 'P', 'MP', 'CP', '1B', '2B', '3B', 'SS', 'LF', 'CF', 'RF', 'DH'];
   const getPositionName = (pos) => {
     const positionNames = {
       'C': '포수',
-      'SP': '선발투수',
-      'MR': '중간투수',
-      'CL': '마무리투수',
+      'P': '선발 투수',
+      'MP': '중간 투수',
+      'CP': '마무리 투수',
       '1B': '1루수',
       '2B': '2루수',
       '3B': '3루수',
@@ -15,10 +15,11 @@ const TeamLineupDisplay = ({ teamName, selectedPlayers }) => {
       'LF': '좌익수',
       'CF': '중견수',
       'RF': '우익수',
-      'DH': '지명타자'
+      'DH': '지명 타자'
     };
     return positionNames[pos];
   };
+
   const fieldPositions = [
     { pos: 'CF', x: 50, y: 20, label: 'CF' },
     { pos: 'LF', x: 15, y: 30, label: 'LF' },
@@ -27,17 +28,19 @@ const TeamLineupDisplay = ({ teamName, selectedPlayers }) => {
     { pos: 'SS', x: 40, y: 45, label: 'SS' },
     { pos: '3B', x: 25, y: 55, label: '3B' },
     { pos: '1B', x: 75, y: 55, label: '1B' },
-    { pos: 'SP', x: 50, y: 50, label: 'P' },
+    { pos: 'P', x: 50, y: 50, label: 'P' },
     { pos: 'C', x: 50, y: 70, label: 'C' },
-    { pos: 'MR', x: 35, y: 80, label: 'MP' },
-    { pos: 'CL', x: 65, y: 80, label: 'CP' }
+    { pos: 'MP', x: 35, y: 80, label: 'MP' },
+    { pos: 'CP', x: 65, y: 80, label: 'CP' }
   ];
+
   return (
     <div className="w-full space-y-6">
       {/* Title */}
       <div className="bg-gray-700 text-white px-6 py-3 rounded-full text-center">
-        <h3 className="text-lg font-bold">{teamName} 선수</h3>
+        <h3 className="text-lg font-bold">{teamName}팀 선수</h3>
       </div>
+
       {/* Baseball Field with Selected Players */}
       <div className="relative w-80 h-64 mx-auto">
         {/* Outfield (brown area) */}
@@ -47,6 +50,7 @@ const TeamLineupDisplay = ({ teamName, selectedPlayers }) => {
           {/* Diamond outline */}
           <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 w-24 h-24 border-4 border-yellow-400 rotate-45"></div>
         </div>
+
         {/* Position markers with selected players */}
         {fieldPositions.map(({ pos, x, y, label }) => {
           const player = selectedPlayers[pos];
@@ -60,7 +64,7 @@ const TeamLineupDisplay = ({ teamName, selectedPlayers }) => {
                 {player ? (
                   <div className="w-10 h-10 rounded-full overflow-hidden">
                     <img 
-                      src="https://images.unsplash.com/photo-1582562124811-c09040d0a901?w=150&h=150&fit=crop&crop=face" 
+                      src={player.profileUrl || player.imageUrl || '/element/player-default.png'} 
                       alt={player.name} 
                       className="w-full h-full object-cover" 
                     />
@@ -73,6 +77,7 @@ const TeamLineupDisplay = ({ teamName, selectedPlayers }) => {
           );
         })}
       </div>
+
       {/* Selected Players Grid */}
       <div className="w-full max-w-md mx-auto px-4">
         <div className="grid grid-cols-3 gap-3">
@@ -85,7 +90,7 @@ const TeamLineupDisplay = ({ teamName, selectedPlayers }) => {
                   <div className="w-12 h-12 rounded-full bg-gray-300 mx-auto mb-2 overflow-hidden">
                     {player && (
                       <img 
-                        src="https://images.unsplash.com/photo-1582562124811-c09040d0a901?w=150&h=150&fit=crop&crop=face" 
+                        src={player.profileUrl || '/element/player-default.png'} 
                         alt={player.name} 
                         className="w-full h-full object-cover" 
                       />
@@ -100,6 +105,7 @@ const TeamLineupDisplay = ({ teamName, selectedPlayers }) => {
             );
           })}
         </div>
+
         {/* Additional positions row */}
         <div className="grid grid-cols-3 gap-3 mt-3">
           {positions.slice(9).map((pos) => {
@@ -111,7 +117,7 @@ const TeamLineupDisplay = ({ teamName, selectedPlayers }) => {
                   <div className="w-12 h-12 rounded-full bg-gray-300 mx-auto mb-2 overflow-hidden">
                     {player && (
                       <img 
-                        src="https://images.unsplash.com/photo-1582562124811-c09040d0a901?w=150&h=150&fit=crop&crop=face" 
+                        src={player.profileUrl || '/element/player-default.png'} 
                         alt={player.name} 
                         className="w-full h-full object-cover" 
                       />

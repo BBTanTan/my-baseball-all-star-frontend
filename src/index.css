@@ -105,8 +105,8 @@ All colors MUST be HSL.
     margin: 0;
     padding: 0;
     width: 100vw;
-    font-family: 'Pretendard', 'Noto Sans KR', Arial, sans-serif;
-    background-image: url('/main_back_ground.png');
+    font-family: 'yg-jalnan', 'Pretendard', 'Noto Sans KR', Arial, sans-serif;
+    background-image: url('/back_ground.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -130,7 +130,18 @@ All colors MUST be HSL.
     font-style: normal;
   }
 
+  @font-face {
+     font-family: 'DungGeunMo';
+     src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/DungGeunMo.woff') format('woff');
+     font-weight: normal;
+     font-style: normal;
+  }
+
   .font-jalnan {
     font-family: 'yg-jalnan', sans-serif;
+  }
+
+  .font-dunggeunmo {
+    font-family: 'DungGeunMo', sans-serif;
   }
 }
