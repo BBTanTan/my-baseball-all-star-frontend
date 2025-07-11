@@ -305,19 +305,8 @@ const TeamSelectionScreen = ({
   return (
     <div className="h-screen w-full flex flex-col items-center justify-center relative font-jalnan" style={{ background: 'url(/back_ground.jpg) center/cover no-repeat', backgroundColor: 'transparent', height: '100vh' }}>
       <div className="flex flex-col items-center w-full h-full z-10" style={{ background: 'transparent', borderRadius: '0', padding: '0', height: '100%' }}>
-        {/* 모드 선택 토글 */}
-        <div className="flex space-x-2 mb-4">
-          <Button
-            className={`px-4 py-2 rounded-full font-jalnan text-sm ${mode === 'manual' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'}`}
-            onClick={() => setMode('manual')}
-          >내가 직접 선택</Button>
-          <Button
-            className={`px-4 py-2 rounded-full font-jalnan text-sm ${mode === 'random' ? 'bg-green-500 text-white' : 'bg-gray-200 text-gray-700'}`}
-            onClick={() => setMode('random')}
-          >랜덤 선택</Button>
-        </div>
         {/* 타이틀 */}
-        <div className="text-lg text-[#FFFFFF] mb-2 font-normal font-jalnan" style={{ background: '#535353', borderRadius: '1.5rem', padding: '0.5rem 1.5rem', boxShadow: '#535353', fontWeight: 'normal' }}>
+        <div className="text-lg text-[#FFFFFF] mb-2 font-normal font-jalnan mt-8" style={{ background: '#535353', borderRadius: '1.5rem', padding: '0.5rem 1.5rem', boxShadow: '#535353', fontWeight: 'normal' }}>
           {teamName} 선수선택
         </div>
         {/* 필드 이미지 */}

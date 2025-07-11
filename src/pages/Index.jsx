@@ -1,10 +1,4 @@
 import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import SetupScreen from "@/components/SetupScreen";
-import TeamSelectionScreen from "@/components/TeamSelectionScreen";
-import TeamCompletionScreen from "@/components/TeamCompletionScreen";
-import GameLoadingScreen from "@/components/GameLoadingScreen";
-import ResultScreen from "@/components/ResultScreen";
 import FriendBattleHost from "@/components/FriendBattleHost";
 import FriendTeamSetupScreen from "@/components/FriendTeamSetupScreen";
 import FriendBattleJoin from "@/components/FriendBattleJoin";

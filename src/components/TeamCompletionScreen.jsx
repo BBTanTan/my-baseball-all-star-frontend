@@ -39,7 +39,7 @@ const TeamCompletionScreen = ({ teamName, selectedPlayers, onNext, onBack }) => 
     <div className="h-screen w-full flex flex-col items-center justify-center relative font-jalnan" style={{ background: 'url(/back_ground.jpg) center/cover no-repeat', backgroundColor: 'transparent', height: '100vh' }}>
       <div className="flex flex-col items-center w-full h-full z-10" style={{ background: 'transparent', borderRadius: '0', padding: '0', height: '100%' }}>
         {/* Title */}
-        <div className="text-lg text-[#FFFFFF] mb-2 font-normal font-jalnan" style={{ background: '#535353', borderRadius: '1.5rem', padding: '0.5rem 1.5rem', boxShadow: '#535353', fontWeight: 'normal' }}>
+        <div className="text-lg text-[#FFFFFF] mb-2 font-normal font-jalnan mt-8" style={{ background: '#535353', borderRadius: '1.5rem', padding: '0.5rem 1.5rem', boxShadow: '#535353', fontWeight: 'normal' }}>
           <h2 className="text-xl font-bold">{teamName} 선수</h2>
         </div>
         {/* 필드 이미지 및 선수 배치 */}
@@ -93,7 +93,7 @@ const TeamCompletionScreen = ({ teamName, selectedPlayers, onNext, onBack }) => 
           </div>
         </div>
         {/* 버튼 영역: TeamSelectionScreen과 동일하게 하단 고정 배치 */}
-        <div className="w-full flex justify-center items-center" style={{ position: 'absolute', bottom: '32px', left: 0, right: 0 }}>
+        <div className="w-full flex justify-center items-center mt-4">
           <div className="flex space-x-2 w-full max-w-md px-2">
             <Button 
               onClick={onBack}

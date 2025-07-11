@@ -14,6 +14,7 @@ const FriendTeamSetupScreen = ({ onComplete, onBack }) => {
   const handleSelect = (selectedMode) => {
     setMode(selectedMode);
     if (teamName) setStep(1);
+
   };
 
   // SetupScreen: 팀명, 모드 선택
@@ -74,7 +75,7 @@ const FriendTeamSetupScreen = ({ onComplete, onBack }) => {
               </div>
             ) : (
               <div className="flex flex-col items-center w-full mb-2 font-jalnan">
-                <div className="text-white text-3xl mb-2 font-jalnan w-full">{teamName}</div>
+                <div className="text-white text-3xl mb-2 font-jalnan w-full text-center">{teamName}</div>
                 <button
                   className="bg-white text-[#444] rounded-full px-3 py-1 mb-2 text-base font-jalnan w-full"
                   onClick={() => {
