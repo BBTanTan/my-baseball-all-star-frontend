@@ -43,7 +43,7 @@ const TeamCompletionScreen = ({ teamName, selectedPlayers, onNext, onBack }) => 
           <h2 className="text-xl font-bold">{teamName} 선수</h2>
         </div>
         {/* 필드 이미지 및 선수 배치 */}
-        <div className="relative w-full flex justify-center mb-2" style={{ minHeight: '180px', height: '40%' }}>
+        <div className="relative w-full flex justify-center mb-8" style={{ minHeight: '180px', height: '40%' }}>
           <img src="/element/field.png" alt="야구장" style={{ width: '100%', maxWidth: '260px', borderRadius: '1.5rem', height: '100%' }} />
           {fieldPositions.map(({ pos, x, y, label }) => {
             const player = selectedPlayers[pos];
