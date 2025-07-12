@@ -1,14 +1,15 @@
+/*선택 완료시 라인업 화면 */
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 
 const TeamCompletionScreen = ({ teamName, selectedPlayers, onNext, onBack }) => {
-  const positions = ['C', 'SP', 'MR', 'CL', '1B', '2B', '3B', 'SS', 'LF', 'CF', 'RF', 'DH'];
+  const positions = ['C', 'P', 'MP', 'CP', '1B', '2B', '3B', 'SS', 'LF', 'CF', 'RF', 'DH'];
   const getPositionName = (pos) => {
     const positionNames = {
       'C': '포수',
-      'SP': '선발투수',
-      'MR': '중간투수',
-      'CL': '마무리투수',
+      'P': '선발 투수',
+      'MP': '중간 투수',
+      'CP': '마무리 투수',
       '1B': '1루수',
       '2B': '2루수',
       '3B': '3루수',
@@ -21,111 +22,69 @@ const TeamCompletionScreen = ({ teamName, selectedPlayers, onNext, onBack }) => 
     return positionNames[pos];
   };
   const fieldPositions = [
-    { pos: 'CF', x: 50, y: 20, label: 'CF' },
+    { pos: 'CF', x: 50, y: 10, label: 'CF' },
     { pos: 'LF', x: 15, y: 30, label: 'LF' },
     { pos: 'RF', x: 85, y: 30, label: 'RF' },
-    { pos: '2B', x: 60, y: 45, label: '2B' },
-    { pos: 'SS', x: 40, y: 45, label: 'SS' },
+    { pos: '2B', x: 50, y: 30, label: '2B' },
+    { pos: 'SS', x: 30, y: 35, label: 'SS' },
     { pos: '3B', x: 25, y: 55, label: '3B' },
     { pos: '1B', x: 75, y: 55, label: '1B' },
-    { pos: 'SP', x: 50, y: 50, label: 'P' },
-    { pos: 'C', x: 50, y: 70, label: 'C' },
-    { pos: 'MR', x: 35, y: 80, label: 'MP' },
-    { pos: 'CL', x: 65, y: 80, label: 'CP' }
+    { pos: 'P', x: 50, y: 50, label: 'P' },
+    { pos: 'C', x: 50, y: 90, label: 'C' },
+    { pos: 'MP', x: 65, y: 80, label: 'MP' },
+    { pos: 'CP', x: 80, y: 80, label: 'CP' },
+    { pos: 'DH', x: 30, y: 80, label: 'DH' }
   ];
   return (
-    <div className="min-h-screen bg-gradient-to-b from-sky-300 to-sky-200 relative overflow-hidden">
-      {/* Clouds */}
-      <div className="absolute top-8 left-8 w-32 h-20 bg-white rounded-full opacity-90"></div>
-      <div className="absolute top-12 right-16 w-24 h-16 bg-white rounded-full opacity-80"></div>
-      <div className="absolute bottom-32 right-8 w-36 h-22 bg-white rounded-full opacity-85"></div>
-      <div className="flex flex-col items-center p-4 space-y-6">
+    <div className="h-screen w-full flex flex-col items-center justify-center relative font-jalnan" style={{ background: 'url(/back_ground.jpg) center/cover no-repeat', backgroundColor: 'transparent', height: '100vh' }}>
+      <div className="flex flex-col items-center w-full h-full z-10" style={{ background: 'transparent', borderRadius: '0', padding: '0', height: '100%' }}>
         {/* Title */}
-        <div className="bg-gray-700 text-white px-8 py-4 rounded-full mt-4">
+        <div className="text-lg text-[#FFFFFF] mb-2 font-normal font-jalnan mt-8" style={{ background: '#535353', borderRadius: '1.5rem', padding: '0.5rem 1.5rem', boxShadow: '#535353', fontWeight: 'normal' }}>
           <h2 className="text-xl font-bold">{teamName} 선수</h2>
         </div>
-        {/* Baseball Field with Selected Players */}
-        <div className="relative w-80 h-64 mx-auto">
-          {/* Outfield (brown area) */}
-          <div className="absolute bottom-0 w-full h-48 bg-orange-400 rounded-t-full"></div>
-          {/* Infield (green area) */}
-          <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-64 h-32 bg-green-500 rounded-t-full">
-            {/* Diamond outline */}
-            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 w-24 h-24 border-4 border-yellow-400 rotate-45"></div>
-          </div>
-          {/* Position markers with selected players */}
+        {/* 필드 이미지 및 선수 배치 */}
+        <div className="relative w-full flex justify-center mb-8" style={{ minHeight: '180px', height: '40%' }}>
+          <img src="/element/field.png" alt="야구장" style={{ width: '100%', maxWidth: '260px', borderRadius: '1.5rem', height: '100%' }} />
           {fieldPositions.map(({ pos, x, y, label }) => {
             const player = selectedPlayers[pos];
             return (
               <div
                 key={pos}
-                className="absolute transform -translate-x-1/2 -translate-y-1/2"
+                className={`absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer transition-all`}
                 style={{ left: `${x}%`, top: `${y}%` }}
               >
-                <div className="w-12 h-12 rounded-full border-2 bg-blue-500 border-blue-600 text-white p-1 flex items-center justify-center">
+                <div className={`w-10 h-10 rounded-full border-2 flex items-center justify-center text-xs font-normal bg-white border-blue-600 p-1`}>
                   {player ? (
-                    <div className="w-10 h-10 rounded-full overflow-hidden">
-                      <img 
-                        src="https://images.unsplash.com/photo-1582562124811-c09040d0a901?w=150&h=150&fit=crop&crop=face" 
-                        alt={player.name} 
-                        className="w-full h-full object-cover" 
-                      />
-                    </div>
+                    <img src={player.profileUrl || player.imageUrl || '/element/player-default.png'} alt={player.name} className="w-full h-full object-cover rounded-full" />
                   ) : (
-                    <span className="text-xs font-bold">{label}</span>
+                    <span className="w-full text-center font-normal font-jalnan">{label}</span>
                   )}
                 </div>
               </div>
             );
           })}
         </div>
-        {/* Selected Players Grid */}
-        <div className="w-full max-w-md px-4">
-          <div className="grid grid-cols-3 gap-3">
-            {positions.slice(0, 9).map((pos) => {
+        {/* 선수 라인업 박스 (스크롤) */}
+        <div className="w-full max-w-md px-2" style={{ height: '35%', overflowY: 'auto', background: 'rgba(255,255,255,0.8)', borderRadius: '1.5rem', marginBottom: '0.5rem' }}>
+          <div className="grid grid-cols-3 gap-3 py-3">
+            {positions.map((pos) => {
               const player = selectedPlayers[pos];
               return (
                 <Card key={pos} className="bg-white rounded-2xl">
                   <CardContent className="p-3 text-center">
-                    <div className="text-xs text-gray-600 mb-2">{getPositionName(pos)}</div>
+                    <div className="text-xs text-gray-600 mb-2 font-jalnan">{getPositionName(pos)}</div>
                     <div className="w-12 h-12 rounded-full bg-gray-300 mx-auto mb-2 overflow-hidden">
                       {player && (
                         <img 
-                          src="https://images.unsplash.com/photo-1582562124811-c09040d0a901?w=150&h=150&fit=crop&crop=face" 
+                          src={player.profileUrl || player.imageUrl || '/element/player-default.png'} 
                           alt={player.name} 
                           className="w-full h-full object-cover" 
                         />
                       )}
                     </div>
                     <div className="space-y-1">
-                      <div className="text-blue-600 font-bold text-xs">{player?.team || ''}</div>
-                      <div className="font-bold text-xs">{player?.name || ''}</div>
-                    </div>
-                  </CardContent>
-                </Card>
-              );
-            })}
-          </div>
-          {/* Additional positions row */}
-          <div className="grid grid-cols-3 gap-3 mt-3">
-            {positions.slice(9).map((pos) => {
-              const player = selectedPlayers[pos];
-              return (
-                <Card key={pos} className="bg-white rounded-2xl">
-                  <CardContent className="p-3 text-center">
-                    <div className="text-xs text-gray-600 mb-2">{getPositionName(pos)}</div>
-                    <div className="w-12 h-12 rounded-full bg-gray-300 mx-auto mb-2 overflow-hidden">
-                      {player && (
-                        <img 
-                          src="https://images.unsplash.com/photo-1582562124811-c09040d0a901?w=150&h=150&fit=crop&crop=face" 
-                          alt={player.name} 
-                          className="w-full h-full object-cover" 
-                        />
-                      )}
-                    </div>
-                    <div className="space-y-1">
-                      <div className="text-blue-600 font-bold text-xs">{player?.team || ''}</div>
-                      <div className="font-bold text-xs">{player?.name || ''}</div>
+                      <div className="text-blue-600 font-bold text-xs font-jalnan">{player?.club || player?.team || ''}</div>
+                      <div className="font-bold text-xs font-jalnan">{player?.name || ''}</div>
                     </div>
                   </CardContent>
                 </Card>
@@ -133,20 +92,22 @@ const TeamCompletionScreen = ({ teamName, selectedPlayers, onNext, onBack }) => 
             })}
           </div>
         </div>
-        {/* Action Buttons */}
-        <div className="flex space-x-4 mt-8">
-          <Button 
-            onClick={onBack}
-            className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold px-8 py-4 rounded-full"
-          >
-            뒤로가기
-          </Button>
-          <Button
-            onClick={onNext}
-            className="bg-green-500 hover:bg-green-600 text-white font-bold px-8 py-4 rounded-full"
-          >
-            선택완료
-          </Button>
+        {/* 버튼 영역: TeamSelectionScreen과 동일하게 하단 고정 배치 */}
+        <div className="w-full flex justify-center items-center mt-4">
+          <div className="flex space-x-2 w-full max-w-md px-2">
+            <Button 
+              onClick={onBack}
+              className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold px-8 py-4 rounded-full w-1/2"
+            >
+              뒤로가기
+            </Button>
+            <Button
+              onClick={onNext}
+              className="bg-green-500 hover:bg-green-600 text-white font-bold px-8 py-4 rounded-full w-1/2"
+            >
+              선택완료
+            </Button>
+          </div>
         </div>
       </div>
     </div>

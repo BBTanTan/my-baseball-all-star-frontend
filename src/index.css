@@ -102,9 +102,12 @@ All colors MUST be HSL.
   body, #root, #app {
     min-height: 100vh;
     height: 100vh;
-    margin: 0;
-    padding: 0;
-    width: 100vw;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100vw !important;
+    max-width: 100vw !important;
+    border-radius: 0 !important;
+    box-sizing: border-box;
     font-family: 'yg-jalnan', 'Pretendard', 'Noto Sans KR', Arial, sans-serif;
     background-image: url('/back_ground.png');
     background-size: cover;

@@ -1,12 +1,11 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { generatePlayers } from "@/utils/playerData";
 
 const TeamSelectionScreen = ({
   teamName,
   teamNumber,
-  mode,
+  mode: initialMode = 'manual',
   onNext,
   onBack
 }) => {
@@ -25,9 +24,9 @@ const TeamSelectionScreen = ({
     'RF': null,
     'DH': null
   });
-  const [allPlayers] = useState(() => generatePlayers());
   const [positionPlayerData, setPositionPlayerData] = useState([]);
   const [selectedPlayerList, setSelectedPlayerList] = useState([]);
+  const [mode, setMode] = useState(initialMode); // 모드 상태 추가
   const positions = ['C', 'P', 'MP', 'CP', '1B', '2B', '3B', 'SS', 'LF', 'CF', 'RF', 'DH'];
   
   useEffect(() => {
@@ -35,19 +34,45 @@ const TeamSelectionScreen = ({
       const randomTeam = {};
       const usedPlayers = new Set();
       positions.forEach(pos => {
-        const positionPlayers = allPlayers.filter(p => 
-          p.position === pos && !usedPlayers.has(`${p.name}-${p.team}`)
-        );
+        // 한글 포지션명으로 변환해서 찾기
+        const koreanPosition = getPositionName(pos);
+        const found = positionPlayerData.find(p => p.position === koreanPosition);
+        const positionPlayers = found ? found.players.filter(
+          p => !usedPlayers.has(`${p.name}-${p.club}`)
+        ) : [];
         if (positionPlayers.length > 0) {
           const randomIndex = Math.floor(Math.random() * positionPlayers.length);
           const selectedPlayer = positionPlayers[randomIndex];
           randomTeam[pos] = selectedPlayer;
-          usedPlayers.add(`${selectedPlayer.name}-${selectedPlayer.team}`);
+          usedPlayers.add(`${selectedPlayer.name}-${selectedPlayer.club}`);
         }
       });
       setSelectedPlayers(randomTeam);
+      // 선택된 선수 리스트도 업데이트
+      const playerList = Object.entries(randomTeam).map(([position, player]) => ({
+        ...player,
+        position
+      }));
+      setSelectedPlayerList(playerList);
+    } else {
+      // 수동 모드일 때 초기화
+      setSelectedPlayers({
+        'C': null,
+        'P': null,
+        'MP': null,
+        'CP': null,
+        '1B': null,
+        '2B': null,
+        '3B': null,
+        'SS': null,
+        'LF': null,
+        'CF': null,
+        'RF': null,
+        'DH': null
+      });
+      setSelectedPlayerList([]);
     }
-  }, [mode, allPlayers]);
+  }, [mode, positionPlayerData]);
   
   useEffect(() => {
     // 임시데이터
@@ -278,10 +303,10 @@ const TeamSelectionScreen = ({
     "KT 위즈": "https://i.namu.wiki/i/1I_O46xxWGvTC-arPbfuBwaYgmd0I9gOCfTSchy5Hf5zZ-blf38j7boUFED_abbT5R8Qsj_Ynb-b7x4zxPk4HQ.svg"
   };
   return (
-    <div className="min-h-screen w-full flex flex-col items-center justify-center relative font-jalnan" style={{ background: 'url(/back_ground.jpg) center/cover no-repeat', backgroundColor: 'transparent', height: '100vh' }}>
-      <div className="flex flex-col items-center w-full max-w-xs mx-auto z-10" style={{ background: 'transparent', borderRadius: '2rem', padding: '1.5rem 0', height: '100%' }}>
+    <div className="h-screen w-full flex flex-col items-center justify-center relative font-jalnan" style={{ background: 'url(/back_ground.jpg) center/cover no-repeat', backgroundColor: 'transparent', height: '100vh' }}>
+      <div className="flex flex-col items-center w-full h-full z-10" style={{ background: 'transparent', borderRadius: '0', padding: '0', height: '100%' }}>
         {/* 타이틀 */}
-        <div className="text-lg text-[#FFFFFF] mb-2 font-normal font-jalnan" style={{ background: '#535353', borderRadius: '1.5rem', padding: '0.5rem 1.5rem', boxShadow: '#535353', fontWeight: 'normal' }}>
+        <div className="text-lg text-[#FFFFFF] mb-2 font-normal font-jalnan mt-8" style={{ background: '#535353', borderRadius: '1.5rem', padding: '0.5rem 1.5rem', boxShadow: '#535353', fontWeight: 'normal' }}>
           {teamName} 선수선택
         </div>
         {/* 필드 이미지 */}
@@ -368,14 +393,14 @@ const TeamSelectionScreen = ({
                     <CardContent className="p-3 flex items-center space-x-3 font-normal">
                       <div className="w-12 h-12 rounded-full overflow-hidden flex-shrink-0">
                         <img 
-                          src={player.imageUrl || 'https://images.unsplash.com/photo-1582562124811-c09040d0a901?w=150&h=150&fit=crop&crop=face'} 
+                          src={player.profileUrl || '/element/player-default.png'} 
                           alt={player.name} 
                           className="w-full h-full object-cover" 
                         />
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="text-xs text-gray-600 mb-1 font-normal font-jalnan">{getPositionName(pos)}</div>
-                        <div className="text-blue-600 text-xs mb-1 font-normal font-jalnan">{player.team}</div>
+                        <div className="text-blue-600 text-xs mb-1 font-normal font-jalnan">{player.club}</div>
                         <div className="text-sm truncate font-normal font-jalnan">{player.name}</div>
                         <div className="text-xs text-gray-500 font-normal font-jalnan">{player.birthdate}</div>
                       </div>

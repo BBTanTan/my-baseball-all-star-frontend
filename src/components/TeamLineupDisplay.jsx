@@ -35,50 +35,8 @@ const TeamLineupDisplay = ({ teamName, selectedPlayers }) => {
   ];
 
   return (
-    <div className="w-full space-y-6">
-      {/* Title */}
-      <div className="bg-gray-700 text-white px-6 py-3 rounded-full text-center">
-        <h3 className="text-lg font-bold">{teamName}팀 선수</h3>
-      </div>
-
-      {/* Baseball Field with Selected Players */}
-      <div className="relative w-80 h-64 mx-auto">
-        {/* Outfield (brown area) */}
-        <div className="absolute bottom-0 w-full h-48 bg-orange-400 rounded-t-full"></div>
-        {/* Infield (green area) */}
-        <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-64 h-32 bg-green-500 rounded-t-full">
-          {/* Diamond outline */}
-          <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 w-24 h-24 border-4 border-yellow-400 rotate-45"></div>
-        </div>
-
-        {/* Position markers with selected players */}
-        {fieldPositions.map(({ pos, x, y, label }) => {
-          const player = selectedPlayers[pos];
-          return (
-            <div
-              key={pos}
-              className="absolute transform -translate-x-1/2 -translate-y-1/2"
-              style={{ left: `${x}%`, top: `${y}%` }}
-            >
-              <div className="w-12 h-12 rounded-full border-2 bg-blue-500 border-blue-600 text-white p-1 flex items-center justify-center">
-                {player ? (
-                  <div className="w-10 h-10 rounded-full overflow-hidden">
-                    <img 
-                      src={player.profileUrl || player.imageUrl || '/element/player-default.png'} 
-                      alt={player.name} 
-                      className="w-full h-full object-cover" 
-                    />
-                  </div>
-                ) : (
-                  <span className="text-xs font-bold">{label}</span>
-                )}
-              </div>
-            </div>
-          );
-        })}
-      </div>
-
-      {/* Selected Players Grid */}
+    <div className="w-full">
+      {/* 선수 그리드만 표시 */}
       <div className="w-full max-w-md mx-auto px-4">
         <div className="grid grid-cols-3 gap-3">
           {positions.slice(0, 9).map((pos) => {
