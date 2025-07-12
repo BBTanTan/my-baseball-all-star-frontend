@@ -30,11 +30,11 @@ const SoloBattleScreen = ({ onBack }) => {
 
   const handleTeam1Select = (mode) => {
     setCurrentTeamMode(mode);
-    setStep('team1-select');
+    setStep("team1-select");
   };
   const handleTeam2Select = (mode) => {
     setCurrentTeamMode(mode);
-    setStep('team2-select');
+    setStep("team2-select");
   };
   const handleTeam1Complete = (players) => {
     if (players) {

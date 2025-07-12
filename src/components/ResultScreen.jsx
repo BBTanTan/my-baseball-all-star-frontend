@@ -38,12 +38,12 @@ const ResultScreen = ({ team1Name, team2Name, team1Score, team2Score, onPlayAgai
               경기가 종료되었습니다
             </div>
             
-            <div className="flex justify-between items-center text-2xl font-bold">
+            <div className="flex justify-around items-center text-2xl font-bold">
               <span>{team1Name}</span>
               <span>{team2Name}</span>
             </div>
             
-            <div className="flex justify-between items-center text-6xl font-bold">
+            <div className="flex justify-around items-center text-6xl font-bold">
               <span>{finalTeam1Score}</span>
               <span className="text-lg text-gray-400">VS</span>
               <span>{finalTeam2Score}</span>
