@@ -1,7 +1,5 @@
 import { useState, useEffect } from "react";
-import FriendBattleHost from "@/components/FriendBattleHost";
 import FriendTeamSetupScreen from "@/components/FriendTeamSetupScreen";
-import FriendBattleJoin from "@/components/FriendBattleJoin";
 import SoloBattleScreen from "@/components/SoloBattleScreen";
 import Landing from "./Landing";
 
