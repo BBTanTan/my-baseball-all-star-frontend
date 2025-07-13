@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { SERVER_BASE_URL } from "@/config/env";
 
 const TeamSelectionScreen = ({
   teamName,
-  teamNumber,
   mode: initialMode = 'manual',
   onNext,
   onBack
@@ -31,29 +31,66 @@ const TeamSelectionScreen = ({
   
   useEffect(() => {
     if (mode === 'random') {
-      const randomTeam = {};
-      const usedPlayers = new Set();
-      positions.forEach(pos => {
-        // 한글 포지션명으로 변환해서 찾기
-        const koreanPosition = getPositionName(pos);
-        const found = positionPlayerData.find(p => p.position === koreanPosition);
-        const positionPlayers = found ? found.players.filter(
-          p => !usedPlayers.has(`${p.name}-${p.club}`)
-        ) : [];
-        if (positionPlayers.length > 0) {
-          const randomIndex = Math.floor(Math.random() * positionPlayers.length);
-          const selectedPlayer = positionPlayers[randomIndex];
-          randomTeam[pos] = selectedPlayer;
-          usedPlayers.add(`${selectedPlayer.name}-${selectedPlayer.club}`);
+      // 서버에서 랜덤 팀 요청
+      const fetchRandomTeam = async () => {
+        try {
+          const res = await fetch(`${SERVER_BASE_URL}/teams?mode=random`);
+          if (!res.ok) throw new Error('서버 오류');
+          const data = await res.json();
+          if (!Array.isArray(data.playerResponses)) {
+            console.error('서버 응답에 playerResponses 배열이 없습니다:', data);
+            return;
+          }
+          const positionMapKor = {
+            '포수': 'C',
+            '선발 투수': 'P',
+            '중간 투수': 'MP',
+            '마무리 투수': 'CP',
+            '1루수': '1B',
+            '2루수': '2B',
+            '3루수': '3B',
+            '유격수': 'SS',
+            '외야수': ['LF', 'CF', 'RF'],
+            '지명타자': 'DH'
+          };
+          const randomTeam = {};
+          let outfieldIdx = 0;
+          data.playerResponses.forEach(player => {
+            const pos = player.position;
+            if (pos === '외야수') {
+              const outfieldPositions = positionMapKor['외야수'];
+              if (outfieldIdx < outfieldPositions.length) {
+                randomTeam[outfieldPositions[outfieldIdx]] = {
+                  ...player,
+                  birthdate: player.dateOfBirth,
+                  team: player.club
+                };
+                outfieldIdx++;
+              }
+            } else {
+              const mappedPos = positionMapKor[pos];
+              if (mappedPos) {
+                randomTeam[mappedPos] = {
+                  ...player,
+                  birthdate: player.dateOfBirth,
+                  team: player.club
+                };
+              }
+            }
+          });
+          setSelectedPlayers(randomTeam);
+          const playerList = Object.entries(randomTeam).map(([position, player]) => ({
+            ...player,
+            position
+          }));
+          setSelectedPlayerList(playerList);
+          // 바로 TeamCompletionScreen으로 이동
+          onNext(randomTeam);
+        } catch (err) {
+          console.error('랜덤 팀 불러오기 실패:', err);
         }
-      });
-      setSelectedPlayers(randomTeam);
-      // 선택된 선수 리스트도 업데이트
-      const playerList = Object.entries(randomTeam).map(([position, player]) => ({
-        ...player,
-        position
-      }));
-      setSelectedPlayerList(playerList);
+      };
+      fetchRandomTeam();
     } else {
       // 수동 모드일 때 초기화
       setSelectedPlayers({
@@ -75,157 +112,22 @@ const TeamSelectionScreen = ({
   }, [mode, positionPlayerData]);
   
   useEffect(() => {
-    // 임시데이터
-    const tempData = [
-    {
-        "position": "마무리 투수",
-        "players": [
-            {
-                "id": 3,
-                "name": "양의지",
-                "club": "두산 베어스",
-                "position": "마무리 투수",
-                "score": 65.23,
-                "profileUrl": "https://6ptotvmi5753.edge.naverncp.com/KBO_IMAGE/person/middle/2025/99902.jpg"
-            }
-        ]
-    },
-    {
-        "position": "3루수",
-        "players": [
-            {
-                "id": 7,
-                "name": "김하성",
-                "club": "키움 히어로즈",
-                "position": "3루수",
-                "score": 70.89,
-                "profileUrl": "https://6ptotvmi5753.edge.naverncp.com/KBO_IMAGE/person/middle/2025/99906.jpg"
-            }
-        ]
-    },
-    {
-        "position": "외야수",
-        "players": [
-            {
-                "id": 9,
-                "name": "박건우",
-                "club": "NC 다이노스",
-                "position": "외야수",
-                "score": 60.23,
-                "profileUrl": "https://6ptotvmi5753.edge.naverncp.com/KBO_IMAGE/person/middle/2025/99908.jpg"
-            },
-            {
-                "id": 10,
-                "name": "홍창기",
-                "club": "LG 트윈스",
-                "position": "외야수",
-                "score": 58.7,
-                "profileUrl": "https://6ptotvmi5753.edge.naverncp.com/KBO_IMAGE/person/middle/2025/99909.jpg"
-            },
-            {
-                "id": 11,
-                "name": "김영웅",
-                "club": "삼성 라이온즈",
-                "position": "외야수",
-                "score": 0.0,
-                "profileUrl": "https://6ptotvmi5753.edge.naverncp.com/KBO_IMAGE/person/middle/2025/52430.jpg"
-            }
-        ]
-    },
-    {
-        "position": "2루수",
-        "players": [
-            {
-                "id": 6,
-                "name": "허경민",
-                "club": "두산 베어스",
-                "position": "2루수",
-                "score": 52.14,
-                "profileUrl": "https://6ptotvmi5753.edge.naverncp.com/KBO_IMAGE/person/middle/2025/99905.jpg"
-            }
-        ]
-    },
-    {
-        "position": "1루수",
-        "players": [
-            {
-                "id": 5,
-                "name": "안치홍",
-                "club": "롯데 자이언츠",
-                "position": "1루수",
-                "score": 48.76,
-                "profileUrl": "https://6ptotvmi5753.edge.naverncp.com/KBO_IMAGE/person/middle/2025/99904.jpg"
-            }
-        ]
-    },
-    {
-        "position": "포수",
-        "players": [
-            {
-                "id": 4,
-                "name": "오재일",
-                "club": "삼성 라이온즈",
-                "position": "포수",
-                "score": 50.32,
-                "profileUrl": "https://6ptotvmi5753.edge.naverncp.com/KBO_IMAGE/person/middle/2025/99903.jpg"
-            }
-        ]
-    },
-    {
-        "position": "선발 투수",
-        "players": [
-            {
-                "id": 1,
-                "name": "원태인",
-                "club": "삼성 라이온즈",
-                "position": "선발 투수",
-                "score": 54.66,
-                "profileUrl": "https://6ptotvmi5753.edge.naverncp.com/KBO_IMAGE/person/middle/2025/69446.jpg"
-            }
-        ]
-    },
-    {
-        "position": "지명타자",
-        "players": [
-            {
-                "id": 12,
-                "name": "임종성",
-                "club": "두산 베어스",
-                "position": "지명타자",
-                "score": 0.0,
-                "profileUrl": "https://6ptotvmi5753.edge.naverncp.com/KBO_IMAGE/person/middle/2025/54236.jpg"
-            }
-        ]
-    },
-    {
-        "position": "중간 투수",
-        "players": [
-            {
-                "id": 2,
-                "name": "김도영",
-                "club": "KIA 타이거즈",
-                "position": "중간 투수",
-                "score": 40.12,
-                "profileUrl": "https://6ptotvmi5753.edge.naverncp.com/KBO_IMAGE/person/middle/2025/99901.jpg"
-            }
-        ]
-    },
-    {
-        "position": "유격수",
-        "players": [
-            {
-                "id": 8,
-                "name": "이정후",
-                "club": "키움 히어로즈",
-                "position": "유격수",
-                "score": 72.35,
-                "profileUrl": "https://6ptotvmi5753.edge.naverncp.com/KBO_IMAGE/person/middle/2025/99907.jpg"
-            }
-        ]
-    }
-];
-    setPositionPlayerData(tempData);
+    // 서버에서 선수 리스트 가져오기
+    const fetchPlayers = async () => {
+      try {
+        const res = await fetch(`${SERVER_BASE_URL}/players`);
+        console.log('선수 데이터 불러오기:', res.body);
+        if (!res.ok) throw new Error('서버 오류');
+        const data = await res.json();
+        setPositionPlayerData(data);
+      } catch (err) {
+        console.error('선수 데이터 불러오기 실패:', err);
+        setPositionPlayerData([]); // 실패 시 빈 배열
+      }
+    };
+    fetchPlayers();
   }, []);
+
   const selectPlayer = (player) => {
     // 이미 선택된 포지션에 선수 있으면 교체, 없으면 추가
     setSelectedPlayers(prev => ({
@@ -300,10 +202,10 @@ const TeamSelectionScreen = ({
     "NC 다이노스": "https://www.ncdinos.com/m/assets/images/sub/emblem01.png",
     "LG 트윈스": "https://blog.kakaocdn.net/dna/bybTsV/btrzw2iB1K7/AAAAAAAAAAAAAAAAAAAAAO8bDBc9D5HY8yDiTj1WGrAJVP5-ktlJuOkpWJlyXw5z/img.png?credential=yqXZFxpELC7KVnFOS48ylbz2pIh7yKj8&expires=1753973999&allow_ip=&allow_referer=&signature=GHlI9Qcoa0YLPU6gLJ6CPB0%2FHHM%3D",
     "SSG 랜더스": "https://www.ssglanders.com/img/wyverns/emblem/new/emblem_01.png",
-    "KT 위즈": "https://i.namu.wiki/i/1I_O46xxWGvTC-arPbfuBwaYgmd0I9gOCfTSchy5Hf5zZ-blf38j7boUFED_abbT5R8Qsj_Ynb-b7x4zxPk4HQ.svg"
+    "KT WIZ": "https://i.namu.wiki/i/1I_O46xxWGvTC-arPbfuBwaYgmd0I9gOCfTSchy5Hf5zZ-blf38j7boUFED_abbT5R8Qsj_Ynb-b7x4zxPk4HQ.svg"
   };
   return (
-    <div className="h-screen w-full flex flex-col items-center justify-center relative font-jalnan" style={{ background: 'url(/back_ground.jpg) center/cover no-repeat', backgroundColor: 'transparent', height: '100vh' }}>
+    <div className="h-screen w-full flex flex-col items-center justify-center relative font-jalnan">
       <div className="flex flex-col items-center w-full h-full z-10" style={{ background: 'transparent', borderRadius: '0', padding: '0', height: '100%' }}>
         {/* 타이틀 */}
         <div className="text-lg text-[#FFFFFF] mb-2 font-normal font-jalnan mt-8" style={{ background: '#535353', borderRadius: '1.5rem', padding: '0.5rem 1.5rem', boxShadow: '#535353', fontWeight: 'normal' }}>
@@ -369,7 +271,7 @@ const TeamSelectionScreen = ({
                       <div className="flex-1 flex flex-col justify-center ml-4">
                         <div className="text-lg font-normal font-jalnan">{player.name}</div>
                         <div className="text-base font-normal text-gray-600 font-jalnan">{player.club}</div>
-                        <div className="text-base text-gray-500 font-jalnan">{player.birthdate}</div>
+                        <div className="text-base text-gray-500 font-jalnan">{player.dateOfBirth}</div>
                       </div>
                       {/* 구단 로고 */}
                       <div className="ml-4">
@@ -414,7 +316,9 @@ const TeamSelectionScreen = ({
         {/* 버튼 영역 */}
         <div className="flex space-x-2 mt-4 w-full" style={{ height: '20%' }}>
           <Button onClick={onBack} className="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-full flex-1 font-normal font-jalnan">뒤로가기</Button>
-          <Button onClick={handleNext} className={`px-4 py-2 rounded-full text-sm flex-1 font-normal font-jalnan ${isTeamComplete ? 'bg-green-500 hover:bg-green-600 text-white' : 'bg-gray-400 text-gray-600 cursor-not-allowed'}`} disabled={!isTeamComplete}>{isTeamComplete ? '선택완료' : '선택 미완료'}</Button>
+          {mode === 'manual' && (
+            <Button onClick={handleNext} className={`px-4 py-2 rounded-full text-sm flex-1 font-normal font-jalnan ${isTeamComplete ? 'bg-green-500 hover:bg-green-600 text-white' : 'bg-gray-400 text-gray-600 cursor-not-allowed'}`} disabled={!isTeamComplete}>{isTeamComplete ? '선택완료' : '선택 미완료'}</Button>
+          )}
         </div>
       </div>
     </div>

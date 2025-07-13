@@ -5,7 +5,7 @@ import PasswordSetupScreen from "@/components/PasswordSetupScreen";
 
 const FriendTeamSetupScreen = ({ onComplete, onBack }) => {
   const [step, setStep] = useState(0); // 0: Setup, 1: Select, 2: Complete, 3: Password
-  const [teamName, setTeamName] = useState("");
+  const [teamName, setTeamName] = useState('드림팀');
   const [editingTeamName, setEditingTeamName] = useState(true);
   const [tempTeamName, setTempTeamName] = useState("");
   const [mode, setMode] = useState("manual");
@@ -39,11 +39,6 @@ const FriendTeamSetupScreen = ({ onComplete, onBack }) => {
           <div style={{ background: '#444', color: 'white', borderRadius: '2.5rem', fontWeight: 'normal', fontSize: '1.2rem', padding: '0.5rem 2.5rem', margin: '0 auto', fontFamily: 'yg-jalnan', boxShadow: '#535353' }}>
             친구와 함께 경기
           </div>
-        </div>
-
-        <div className="z-10 mt-8 mb-2 text-lg text-white text-center drop-shadow" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.18)' }}>
-          원하는 팀 이름을 정하고<br />
-          선수 선택 방식을 골라주세요!
         </div>
 
         {/* 팀 카드 영역 (단일, 가운데 정렬) */}
