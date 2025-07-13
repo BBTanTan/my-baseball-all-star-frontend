@@ -115,10 +115,11 @@ All colors MUST be HSL.
     background-repeat: no-repeat;
   }
   
-  /* 특정 폰트 적용 예시 */
   .font-title {
-    font-family: 'Bagel Fat One', Arial, sans-serif;
+    font-family: 'BagelFatOne-Regular', Arial, sans-serif;
   }
+
+
   .font-body {
     font-family: 'Nanum Pen Script', cursive;
   }
@@ -138,6 +139,13 @@ All colors MUST be HSL.
      src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/DungGeunMo.woff') format('woff');
      font-weight: normal;
      font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'BagelFatOne-Regular';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_JAMO@1.0/BagelFatOne-Regular.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
   }
 
   .font-jalnan {

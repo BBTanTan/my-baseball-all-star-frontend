@@ -1,9 +1,12 @@
 import { useState, useEffect } from "react";
+import ResultScreen from "@/components/ResultScreen";
 
 const GameLoadingScreen = ({ team1Name, team2Name, onComplete }) => {
   const [currentInning, setCurrentInning] = useState(1);
   const [team1InningScores, setTeam1InningScores] = useState(Array(12).fill(0));
   const [team2InningScores, setTeam2InningScores] = useState(Array(12).fill(0));
+  const [step, setStep] = useState('loading');
+  const [finalScores, setFinalScores] = useState(null);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -13,7 +16,11 @@ const GameLoadingScreen = ({ team1Name, team2Name, onComplete }) => {
           // Calculate final scores
           const team1FinalScore = team1InningScores.slice(0, 9).reduce((sum, score) => sum + score, 0);
           const team2FinalScore = team2InningScores.slice(0, 9).reduce((sum, score) => sum + score, 0);
-          setTimeout(() => onComplete({ team1: team1FinalScore, team2: team2FinalScore }), 1000);
+          setTimeout(() => {
+            setFinalScores({ team1: team1FinalScore, team2: team2FinalScore });
+            setStep('result');
+            if (onComplete) onComplete({ team1: team1FinalScore, team2: team2FinalScore });
+          }, 1000);
           return 9;
         }
         // Simulate scoring for current inning
@@ -35,6 +42,28 @@ const GameLoadingScreen = ({ team1Name, team2Name, onComplete }) => {
     return () => clearInterval(interval);
   }, [onComplete, team1InningScores, team2InningScores]);
 
+  if (step === 'result' && finalScores) {
+    return (
+      <ResultScreen
+        team1Name={team1Name}
+        team2Name={team2Name}
+        team1Score={finalScores.team1}
+        team2Score={finalScores.team2}
+        onPlayAgain={() => {
+          setCurrentInning(1);
+          setTeam1InningScores(Array(12).fill(0));
+          setTeam2InningScores(Array(12).fill(0));
+          setStep('loading');
+          setFinalScores(null);
+        }}
+        onHome={() => {
+          if (onComplete) onComplete(null);
+        }}
+      />
+    );
+  }
+
+  // loading 화면
   return (
     <div className="min-h-screen w-full relative overflow-hidden">
       {/* Fullscreen background image */}
@@ -56,7 +85,7 @@ const GameLoadingScreen = ({ team1Name, team2Name, onComplete }) => {
       <div className="flex flex-col items-center pt-2 pb-0 px-2 space-y-2" style={{ position: "relative", zIndex: 1 }}>
         {/* Logo 이미지 */}
         <img
-          src="element/logo.png"
+          src="/element/logo.png"
           alt="Logo"
           className="w-56 h-56 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-96 lg:h-96 object-contain mb-2"
         />
