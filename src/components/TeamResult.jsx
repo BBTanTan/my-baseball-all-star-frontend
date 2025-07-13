@@ -1,3 +1,7 @@
+
+// 서버 주소 상수
+export const SERVER_BASE_URL = "https://server.myallstar.my/players";
+
 import React from "react";
 
 const mockResults = [
