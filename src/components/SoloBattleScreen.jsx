@@ -66,7 +66,7 @@ const SoloBattleScreen = ({ onBack }) => {
     style={{ minHeight: '100vh', minWidth: '100vw' }}
   />
 
-  <div className="z-10 mt-8 mb-2 text-center font-title" style={{ color: '#535353', fontSize: '2rem', display: 'inline-block', padding: '0.2em 0.7em', textStroke: '0.1px #fff', fontWeight: 'bold' }}>
+        <div className="z-10 mt-8 mb-2 text-center font-title" style={{ color: '#535353', fontSize: '2rem', display: 'inline-block', padding: '0.2em 0.7em', WebkitTextStroke: '0.1px rgba(255,255,255)', fontWeight: 'bold' }}>
     MY BASEBALL<br />
     ALL✪STAR
   </div>

@@ -7,10 +7,16 @@ const PasswordSetupScreen = ({ teamName = "드림팀", onComplete, onBack, onHom
   const [password, setPassword] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [showShareModal, setShowShareModal] = useState(false);
+  const [shareUrl, setShareUrl] = useState("");
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (password.length > 0) {
       setIsSubmitted(true);
+      // 실제로는 서버에 팀 정보 저장 후 URL 생성
+      // 예시: const url = await onComplete(password); setShareUrl(url);
+      // 여기서는 임시로 teamId=123456
+      const url = `${window.location.origin}/friend-battle/join?teamId=123456`;
+      setShareUrl(url);
     }
   };
 
@@ -70,13 +76,12 @@ const PasswordSetupScreen = ({ teamName = "드림팀", onComplete, onBack, onHom
           </div>
         )}
       </div>
-      {showShareModal && (
-        <ShareModal
-          shareUrl={window.location.href}
-          title={teamName + " 팀을 공유해요!"}
-          onClose={() => setShowShareModal(false)}
-        />
-      )}
+      <ShareModal
+        shareUrl={shareUrl}
+        title={teamName + " 팀을 공유해요!"}
+        open={showShareModal}
+        onClose={() => setShowShareModal(false)}
+      />
     </div>
   );
 };

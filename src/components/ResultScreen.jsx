@@ -24,10 +24,10 @@ const ResultScreen = ({ team1Name, team2Name, team1Score, team2Score, onPlayAgai
           backgroundColor: "transparent"
         }}
       />
-      <div className="flex flex-col items-center pt-2 pb-0 px-2 space-y-2" style={{ position: "relative", zIndex: 1 }}>
+      <div className="flex flex-col items-center space-around pt-2 pb-0 px-2 space-y-2" style={{ position: "relative", zIndex: 1 }}>
         {/* Logo 이미지 */}
         <img
-          src="element/logo.png"
+          src="/element/logo.png"
           alt="Logo"
           className="w-56 h-56 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-96 lg:h-96 object-contain"
         />
