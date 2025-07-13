@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import ShareButton from "./ShareModal";
 
 const ResultScreen = ({ team1Name, team2Name, team1Score, team2Score, onPlayAgain, onHome }) => {
   const finalTeam1Score = team1Score || Math.floor(Math.random() * 12) + 1;
   const finalTeam2Score = team2Score || Math.floor(Math.random() * 12) + 1;
-  const winner = finalTeam1Score > finalTeam2Score ? team1Name : team2Name;
 
   return (
     <div className="min-h-screen w-full relative overflow-hidden">
@@ -60,12 +60,12 @@ const ResultScreen = ({ team1Name, team2Name, team1Score, team2Score, onPlayAgai
         {/* Action Buttons */}
         <div className="w-full max-w-md mx-auto">
           <div className="flex space-x-4 w-full">
-            <Button
+            <ShareButton
               onClick={onPlayAgain}
               className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold px-8 py-4 rounded-full w-1/2"
             >
               공유하기
-            </Button>
+            </ShareButton>
             <Button
               onClick={onHome}
               className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold px-8 py-4 rounded-full w-1/2"

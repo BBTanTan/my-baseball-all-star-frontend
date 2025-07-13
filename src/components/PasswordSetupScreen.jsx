@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import ShareModal from "@/components/ShareModal";
 
-const PasswordSetupScreen = ({ teamName = "드림팀", onComplete, onBack }) => {
+const PasswordSetupScreen = ({ teamName = "드림팀", onComplete, onBack, onHome }) => {
   const [password, setPassword] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [showShareModal, setShowShareModal] = useState(false);
 
   const handleSubmit = () => {
     if (password.length > 0) {
@@ -53,13 +55,13 @@ const PasswordSetupScreen = ({ teamName = "드림팀", onComplete, onBack }) => 
           <div className="w-full max-w-md mx-auto mt-4">
             <div className="flex space-x-4 w-full">
               <Button
-                onClick={onComplete}
+                onClick={() => setShowShareModal(true)}
                 className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold px-8 py-4 rounded-full w-1/2"
               >
                 공유하기
               </Button>
               <Button
-                onClick={onBack}
+                onClick={onHome}
                 className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold px-8 py-4 rounded-full w-1/2"
               >
                 또 경기하기
@@ -68,6 +70,13 @@ const PasswordSetupScreen = ({ teamName = "드림팀", onComplete, onBack }) => 
           </div>
         )}
       </div>
+      {showShareModal && (
+        <ShareModal
+          shareUrl={window.location.href}
+          title={teamName + " 팀을 공유해요!"}
+          onClose={() => setShowShareModal(false)}
+        />
+      )}
     </div>
   );
 };

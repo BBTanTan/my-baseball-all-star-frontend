@@ -59,7 +59,7 @@ const PasswordVerificationScreen = ({ title, onVerify, onBack }) => {
         </Card>
         {/* Back Button */}
         <Button
-          onClick={onBack}
+          onClick={onHome}
           className="bg-white hover:bg-gray-50 text-gray-800 font-bold py-3 px-8 rounded-full"
         >
           뒤로가기

@@ -177,8 +177,9 @@ const FriendTeamSetupScreen = ({ onComplete, onBack }) => {
     return (
       <PasswordSetupScreen
         teamName={teamName}
+        onComplete={() => {/* 공유하기 동작 구현 필요 */}}
         onBack={() => setStep(0)}
-        onComplete={() => setStep(0)}
+        onHome={onBack} // 홈으로 이동
       />
     );
   }
