@@ -5,7 +5,7 @@ import PasswordSetupScreen from "@/components/PasswordSetupScreen";
 
 const FriendTeamSetupScreen = ({ onComplete, onBack }) => {
   const [step, setStep] = useState(0); // 0: Setup, 1: Select, 2: Complete, 3: Password
-  const [teamName, setTeamName] = useState('나눔팀');
+  const [teamName, setTeamName] = useState('나눔');
   const [editingTeamName, setEditingTeamName] = useState(false);
   const [mode, setMode] = useState("manual");
   const [selectedPlayers, setSelectedPlayers] = useState({});
@@ -50,8 +50,8 @@ const FriendTeamSetupScreen = ({ onComplete, onBack }) => {
             {editingTeamName ? (
               <div className="flex flex-col items-center w-full mb-2 font-jalnan">
                 <input
-                  value={tempTeamName}
-                  onChange={e => setTempTeamName(e.target.value)}
+                  value={teamName}
+                  onChange={e => setTeamName(e.target.value)}
                   className="text-gray-800 text-center rounded-full px-2 py-1 mb-2 w-full font-jalnan"
                   style={{ fontSize: '1.2rem', width: '100%' }}
                   maxLength={10}
@@ -59,11 +59,11 @@ const FriendTeamSetupScreen = ({ onComplete, onBack }) => {
                 />
                 <button
                   onClick={() => {
-                    setTeamName(tempTeamName);
+                    setTeamName(teamName);
                     setEditingTeamName(false);
                   }}
                   className="bg-white text-[#444] rounded-full px-4 py-1 text-base font-jalnan w-full"
-                  disabled={!tempTeamName}
+                  disabled={!teamName}
                 >
                   완료
                 </button>
@@ -74,7 +74,7 @@ const FriendTeamSetupScreen = ({ onComplete, onBack }) => {
                 <button
                   className="bg-white text-[#444] rounded-full px-3 py-1 mb-2 text-base font-jalnan w-full"
                   onClick={() => {
-                    setTempTeamName(teamName);
+                    setTeamName(teamName);
                     setEditingTeamName(true);
                   }}
                 >
