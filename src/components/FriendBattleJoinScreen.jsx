@@ -10,46 +10,83 @@ const SERVER_BASE_URL = import.meta.env.VITE_SERVER_BASE_URL;
 
 
 // 친구가 링크로 접속해서 join하는 화면
-// URL에서 teamId를 받아 상대팀 라인업을 보여주고, 내 팀을 선택할 수 있음
-const mockOpponentTeam = {
-  teamName: "상대팀",
-  selectedPlayers: {
-    // ...포지션별 mock 선수 정보
-    "투수": { name: "김상대", position: "투수", club: "삼성" },
-    "포수": { name: "박상대", position: "포수", club: "두산" },
-    // ...생략
-  },
-};
-
 const FriendBattleJoinScreen = () => {
   const [homeTeam, setHomeTeam] = useState(null);
+  const [homeTeamError, setHomeTeamError] = useState(false);
   const [showPasswordVerification, setShowPasswordVerification] = useState(false);
   const [step, setStep] = useState(0); // 0: 상대팀 라인업+내팀 선택, 1: 내팀 완성, 2: 상대팀 라인업 확인, 3: 내 팀 선택, 4: 게임 로딩
-  const [myTeamName, setMyTeamName] = useState("드림팀"); // 기본값을 "드림팀"으로 고정
+  const [myTeamName, setMyTeamName] = useState("드림"); // 기본값을 "드림팀"으로 고정
   const [mode, setMode] = useState("manual");
   const [selectedPlayers, setSelectedPlayers] = useState({});
   const [myTeamNameEdit, setMyTeamNameEdit] = useState(false);
-  const [tempMyTeamName, setTempMyTeamName] = useState("드림팀"); // 기본값도 "드림팀"
   const [searchParams, setSearchParams] = useSearchParams();
   const [gameScores, setGameScores] = useState(null);
 
   useEffect(() => {
-    // URL에서 teamUuid 추출
     const teamUuid = searchParams.get('teamUuid');
-    console.log("URL 파라미터:", teamUuid);
     if (teamUuid) {
       fetch(`${SERVER_BASE_URL}/teams/${teamUuid}`)
         .then(res => res.json())
         .then(data => {
-          console.log("상대팀 정보:", data);
+          console.log("팀 정보:", data);
+          if (!data || !data.teamId || !data.teamName || !data.players) {
+            setHomeTeamError(true);
+            return;
+          }
+          // 한글 포지션명 → 영문 포지션명 매핑 및 외야수 분배
+          const positionMapKor = {
+            '포수': 'C',
+            '선발 투수': 'P',
+            '중간 투수': 'MP',
+            '마무리 투수': 'CP',
+            '1루수': '1B',
+            '2루수': '2B',
+            '3루수': '3B',
+            '유격수': 'SS',
+            '외야수': ['LF', 'CF', 'RF'],
+            '지명타자': 'DH'
+          };
+          const selectedPlayers = {};
+          let outfieldIdx = 0;
+          data.players.forEach(player => {
+            const pos = player.position;
+            if (pos === '외야수') {
+              const outfieldPositions = positionMapKor['외야수'];
+              if (outfieldIdx < outfieldPositions.length) {
+                selectedPlayers[outfieldPositions[outfieldIdx]] = {
+                  ...player,
+                  birthdate: player.dateOfBirth,
+                  team: player.club
+                };
+                outfieldIdx++;
+              }
+            } else {
+              const mappedPos = positionMapKor[pos];
+              if (mappedPos) {
+                selectedPlayers[mappedPos] = {
+                  ...player,
+                  birthdate: player.dateOfBirth,
+                  team: player.club
+                };
+              }
+            }
+          });
+          // 모든 포지션이 반드시 존재하도록 보장
+          const allPositions = ['C', 'P', 'MP', 'CP', '1B', '2B', '3B', 'SS', 'LF', 'CF', 'RF', 'DH'];
+          allPositions.forEach(pos => {
+            if (!selectedPlayers[pos]) {
+              selectedPlayers[pos] = {};
+            }
+          });
           setHomeTeam({
             teamId: data.teamId,
-            teamName: data.teamName || mockOpponentTeam.teamName
+            teamName: data.teamName,
+            selectedPlayers
           });
         })
-        .catch(() => setHomeTeam(mockOpponentTeam));
+        .catch(() => setHomeTeamError(true));
     } else {
-      setHomeTeam(mockOpponentTeam);
+      setHomeTeamError(true);
     }
   }, []);
 
@@ -124,9 +161,20 @@ const FriendBattleJoinScreen = () => {
     );
   }
 
-  // 데이터가 아직 로딩 중일 때 로딩 화면 또는 빈 화면을 보여줌
-  if (!homeTeam) {
+  // 데이터가 아직 로딩 중일 때
+  if (!homeTeam && !homeTeamError) {
     return <div className="min-h-screen flex items-center justify-center">팀 정보를 불러오는 중...</div>;
+  }
+
+  // 에러 메시지
+  if (homeTeamError) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center font-jalnan bg-[#b3e3fd]">
+        <div className="bg-white text-red-500 rounded-2xl px-8 py-6 text-xl font-bold shadow-lg">
+          팀 정보를 찾을 수 없습니다.<br />링크를 다시 확인해 주세요.
+        </div>
+      </div>
+    );
   }
 
   // step === 0: 상대팀 라인업+내팀 선택
@@ -218,8 +266,8 @@ const FriendBattleJoinScreen = () => {
           {(myTeamNameEdit) ? (
             <div className="flex flex-col items-center w-full mb-2 font-jalnan">
               <input
-                value={tempMyTeamName}
-                onChange={e => setTempMyTeamName(e.target.value)}
+                value={myTeamName}
+                onChange={e => setMyTeamName(e.target.value)}
                 className="text-gray-800 text-center rounded-full px-2 py-1 mb-2 w-full font-jalnan"
                 style={{ fontSize: '1rem' }}
                 maxLength={10}
@@ -227,11 +275,11 @@ const FriendBattleJoinScreen = () => {
               />
               <button
                 onClick={() => {
-                  setMyTeamName(tempMyTeamName);
+                  setMyTeamName(myTeamName);
                   setMyTeamNameEdit(false);
                 }}
                 className="bg-white text-[#444] rounded-full px-4 py-1 text-base font-jalnan w-full"
-                disabled={!tempMyTeamName}
+                disabled={!myTeamName}
               >
                 완료
               </button>
@@ -242,7 +290,7 @@ const FriendBattleJoinScreen = () => {
               <button
                 className="bg-white text-[#444] rounded-full px-3 py-1 mb-2 text-base font-jalnan w-full"
                 onClick={() => {
-                  setTempMyTeamName(myTeamName);
+                  setMyTeamName(myTeamName);
                   setMyTeamNameEdit(true);
                 }}
               >
