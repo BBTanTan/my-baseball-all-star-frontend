@@ -101,12 +101,12 @@ const SoloBattleScreen = ({ onBack }) => {
           className="w-full h-full object-cover absolute inset-0 z-0"
           style={{ minHeight: '100vh', minWidth: '100vw' }}
         />
-        <div className="z-10 mt-20 mb-4 text-center font-title" style={{ color: '#535353', fontSize: '2rem', display: 'inline-block', padding: '0.2em 0.7em', WebkitTextStroke: '0.1px rgba(255,255,255)', fontWeight: 'bold' }}>
+      <div className="z-10 mt-20 mb-1 text-center font-title" style={{ color: "#535353", fontSize: "1.7rem", display: "inline-block", padding: "0.2em 0.7em", fontWeight: "bold", WebkitTextStroke: "0.1px #fff", textShadow: "0 0 2px #fff, 0 0 4px #fff" }}>
           MY BASEBALL<br />
           ALL✪STAR
         </div>
 
-        <div className="flex flex-col items-center z-10 mt-1 mb-4">
+        <div className="flex flex-col items-center z-10 mt-1 mb-5">
           <div style={{ background: '#444', color: 'white', borderRadius: '2.5rem', fontWeight: 'normal', fontSize: '1.2rem', padding: '0.5rem 2.5rem', margin: '0 auto', fontFamily: 'yg-jalnan', boxShadow: '#535353' }}>
             혼자 경기
           </div>
@@ -117,7 +117,7 @@ const SoloBattleScreen = ({ onBack }) => {
         <div className="flex flex-row space-evenly w-full z-10" style={{ width: '100%' }}>
           {/* 드림팀 카드 */}
           <div
-            className="flex-1 flex flex-col items-center bg-[#4ec16e] rounded-2xl py-4 px-2 mr-1 ml-2 font-jalnan"
+            className="flex-1 flex flex-col items-center bg-[#4ec16e] rounded-2xl py-4 px-2 mr-2 ml-2 font-jalnan"
             style={{ minWidth: '140px', maxWidth: '220px', flexGrow: 1, boxSizing: 'border-box', marginBottom: '10px' }}
           >
             {editingTeam1 ? (
@@ -170,7 +170,7 @@ const SoloBattleScreen = ({ onBack }) => {
           
           {/* 나눔팀 카드 */}
           <div
-            className="flex-1 flex flex-col items-center bg-[#4ec16e] rounded-2xl py-4 px-2 mr-2 ml-1 font-jalnan"
+            className="flex-1 flex flex-col items-center bg-[#4ec16e] rounded-2xl py-4 px-2 mr-2 font-jalnan"
             style={{ minWidth: '140px', maxWidth: '220px', flexGrow: 1, boxSizing: 'border-box', marginBottom: '10px' }}
           >
             {editingTeam2 ? (
@@ -223,7 +223,7 @@ const SoloBattleScreen = ({ onBack }) => {
         </div>
 
         {/* 대결 시작하기 버튼 */}
-        <div className="flex flex-col items-center z-10 mt-1 mb-12 w-full font-jalnan" style={{ maxWidth: '400px' }}>
+        <div className="flex flex-col items-center z-10 mt-3 mb-12 w-full font-jalnan" style={{ maxWidth: '400px' }}>
           <button
             style={{ background: '#444', color: 'white', borderRadius: '2.5rem', fontWeight: 'normal', fontSize: '1.2rem', padding: '0.5rem 2.5rem', margin: '0 auto', fontFamily: 'yg-jalnan', boxShadow: '#535353' }}
             onClick={handleStartMatch}

@@ -29,12 +29,12 @@ const FriendTeamSetupScreen = ({ onComplete, onBack }) => {
           style={{ minHeight: '100vh', minWidth: '100vw' }}
         />
 
-        <div className="z-10 mt-8 mb-2 text-center font-title" style={{ color: '#535353', fontSize: '2rem', display: 'inline-block', padding: '0.2em 0.7em', WebkitTextStroke: '0.01px #fff', textStroke: '0.1px #fff', fontWeight: 'bold', background: 'rgba(255,255,255,0.10)' }}>
+        <div className="z-10 mt-20 mb-2 text-center font-title" style={{ color: '#535353', fontSize: '2rem', display: 'inline-block', padding: '0.2em 0.7em', WebkitTextStroke: '0.01px #fff', fontWeight: 'bold'}}>
           MY BASEBALL<br />
           ALL✪STAR
         </div>
 
-        <div className="flex flex-col items-center z-10 mt-2 mb-4">
+        <div className="flex flex-col items-center z-10 mt-0 mb-2">
           <div style={{ background: '#444', color: 'white', borderRadius: '2.5rem', fontWeight: 'normal', fontSize: '1.2rem', padding: '0.5rem 2.5rem', margin: '0 auto', fontFamily: 'yg-jalnan', boxShadow: '#535353' }}>
             친구와 함께 경기
           </div>
@@ -70,7 +70,7 @@ const FriendTeamSetupScreen = ({ onComplete, onBack }) => {
               </div>
             ) : (
               <div className="flex flex-col items-center w-full mb-2 font-jalnan">
-                <div className="text-white text-3xl mb-2 font-jalnan w-full text-center">{teamName}</div>
+                <div className="text-white text-2xl mb-2 font-jalnan w-full text-center">{teamName}</div>
                 <button
                   className="bg-white text-[#444] rounded-full px-3 py-1 mb-2 text-base font-jalnan w-full"
                   onClick={() => {

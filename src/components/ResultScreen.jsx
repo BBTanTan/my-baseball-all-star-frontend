@@ -80,7 +80,7 @@ const ResultScreen = ({ team1Name, team2Name, team1Score, team2Score, onPlayAgai
         </div>
         <ShareModal
         shareUrl={shareUrl}
-        title={"경기 결과를 공유해요!"}
+        title={"친구들과 게임을 공유해요!"}
         open={showShareModal}
         onClose={() => setShowShareModal(false)}
       />
