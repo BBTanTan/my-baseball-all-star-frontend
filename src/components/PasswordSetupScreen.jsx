@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import ShareModal from "@/components/ShareModal";
-import { SERVER_BASE_URL } from "@/config/env";
+const SERVER_BASE_URL = import.meta.env.VITE_SERVER_BASE_URL;
 
 const PasswordSetupScreen = ({ teamName = "드림팀", playerIds = [], onComplete, onBack, onHome }) => {
   const [password, setPassword] = useState("");
@@ -27,6 +27,7 @@ const PasswordSetupScreen = ({ teamName = "드림팀", playerIds = [], onComplet
         });
         if (!res.ok) throw new Error("서버 오류");
         const data = await res.json();
+        console.log("팀 정보 저장 성공:", data);
         // 서버에서 teamUuid 반환
         const teamUuid = data.teamUuid || "test-uuid";
         const url = `${window.location.origin}/friend-battle/join?teamUuid=${teamUuid}`;

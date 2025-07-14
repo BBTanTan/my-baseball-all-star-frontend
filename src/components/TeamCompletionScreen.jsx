@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 
-const TeamCompletionScreen = ({ teamName, selectedPlayers, onNext, onBack }) => {
+const TeamCompletionScreen = ({ teamName, selectedPlayers, onNext, onBack, mode }) => {
   const positions = ['C', 'P', 'MP', 'CP', '1B', '2B', '3B', 'SS', 'LF', 'CF', 'RF', 'DH'];
   const getPositionName = (pos) => {
     const positionNames = {
@@ -96,7 +96,13 @@ const TeamCompletionScreen = ({ teamName, selectedPlayers, onNext, onBack }) => 
         <div className="w-full flex justify-center items-center mt-4">
           <div className="flex space-x-2 w-full max-w-md px-2">
             <Button 
-              onClick={onBack}
+              onClick={() => {
+                if (mode === 'random') {
+                  window.location.reload();
+                } else {
+                  onBack();
+                }
+              }}
               className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold px-8 py-4 rounded-full w-1/2"
             >
               뒤로가기

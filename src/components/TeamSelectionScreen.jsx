@@ -1,14 +1,19 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { SERVER_BASE_URL } from "@/config/env";
 
-const TeamSelectionScreen = ({
-  teamName,
-  mode: initialMode = 'manual',
-  onNext,
-  onBack
-}) => {
+const SERVER_BASE_URL = import.meta.env.VITE_SERVER_BASE_URL;
+
+const TeamSelectionScreen = (props) => {
+  console.log('TeamSelectionScreen 렌더링됨, props:', props);
+
+  const {
+    teamName,
+    mode: initialMode = 'manual',
+    onNext,
+    onBack
+  } = props;
+
   const [selectedPosition, setSelectedPosition] = useState('CF');
   const [selectedPlayers, setSelectedPlayers] = useState({
     'C': null,
@@ -30,13 +35,20 @@ const TeamSelectionScreen = ({
   const positions = ['C', 'P', 'MP', 'CP', '1B', '2B', '3B', 'SS', 'LF', 'CF', 'RF', 'DH'];
   
   useEffect(() => {
+    console.log('TeamSelectionScreen useEffect 실행, mode:', mode);
     if (mode === 'random') {
       // 서버에서 랜덤 팀 요청
       const fetchRandomTeam = async () => {
         try {
           const res = await fetch(`${SERVER_BASE_URL}/teams?mode=random`);
-          if (!res.ok) throw new Error('서버 오류');
+          if (!res.ok) {
+            console.error('랜덤팀 fetch 실패, status:', res.status, res.statusText);
+            const text = await res.text();
+            console.error('서버에서 받은 응답(텍스트):', text);
+            throw new Error('서버 오류');
+          }
           const data = await res.json();
+          console.log('랜덤팀 API 응답:', data); // 응답 구조 확인용
           if (!Array.isArray(data.playerResponses)) {
             console.error('서버 응답에 playerResponses 배열이 없습니다:', data);
             return;

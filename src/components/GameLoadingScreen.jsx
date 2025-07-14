@@ -51,8 +51,8 @@ const GameLoadingScreen = ({ team1Name, team2Name, onComplete }) => {
         team2Score={finalScores.team2}
         onPlayAgain={() => {
           setCurrentInning(1);
-          setTeam1InningScores(Array(12).fill(0));
-          setTeam2InningScores(Array(12).fill(0));
+          setTeam1InningScores(Array(9).fill(0));
+          setTeam2InningScores(Array(9).fill(0));
           setStep('loading');
           setFinalScores(null);
         }}
@@ -99,43 +99,32 @@ const GameLoadingScreen = ({ team1Name, team2Name, onComplete }) => {
               선택한 선수가<br />
               홈런을 날리는 중
             </div>
-            {/* Innings Display */}
-            <div className="grid grid-cols-12 gap-1 text-lg font-dunggeunmo">
-              {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((inning) => (
-                <div key={inning} className="text-center">
-                  <div className={`mb-1 ${inning <= currentInning ? 'text-white' : 'text-gray-600'}`}>
-                    {inning}
-                  </div>
+            {/* Innings Display (맨 위) */}
+            <div className="grid grid-cols-10 gap-1 text-lg font-dunggeunmo items-end mb-2">
+              <div className="col-span-1" />
+              {[1,2,3,4,5,6,7,8,9].map((inning) => (
+                <div key={inning} className="text-center col-span-1">
+                  <div className={`mb-1 ${inning <= currentInning ? 'text-white' : 'text-gray-600'}`}>{inning}</div>
                 </div>
               ))}
             </div>
             {/* Team Scores by Inning */}
             <div className="space-y-2 font-dunggeunmo">
-              <div className="grid grid-cols-12 gap-1 text-lg">
-                {team1InningScores.map((score, index) => (
-                  <div key={index} className="text-center">
-                    <span className={`text-yellow-400 ${index < currentInning ? 'font-normal' : 'text-gray-600'}`}>
-                      {index < currentInning ? score : ''}
-                    </span>
+              <div className="grid grid-cols-10 gap-1 text-lg items-center">
+                <div className="col-span-1 text-yellow-400 text-sm font-bold text-center">{team1Name}</div>
+                {team1InningScores.slice(0,9).map((score, index) => (
+                  <div key={index} className="text-center col-span-1">
+                    <span className={`text-yellow-400 ${index < currentInning ? 'font-normal' : 'text-gray-600'}`}>{index < currentInning ? score : ''}</span>
                   </div>
                 ))}
               </div>
-              <div className="text-yellow-400 text-sm font-bold text-left">
-                {team1Name}
-              </div>
-            </div>
-            <div className="space-y-2 font-dunggeunmo">
-              <div className="grid grid-cols-12 gap-1 text-lg">
-                {team2InningScores.map((score, index) => (
-                  <div key={index} className="text-center">
-                    <span className={`text-yellow-400 ${index < currentInning ? 'font-normal' : 'text-gray-600'}`}>
-                      {index < currentInning ? score : ''}
-                    </span>
+              <div className="grid grid-cols-10 gap-1 text-lg items-center">
+                <div className="col-span-1 text-yellow-400 text-sm font-bold text-center">{team2Name}</div>
+                {team2InningScores.slice(0,9).map((score, index) => (
+                  <div key={index} className="text-center col-span-1">
+                    <span className={`text-yellow-400 ${index < currentInning ? 'font-normal' : 'text-gray-600'}`}>{index < currentInning ? score : ''}</span>
                   </div>
                 ))}
-              </div>
-              <div className="text-yellow-400 text-sm font-bold text-left">
-                {team2Name}
               </div>
             </div>
           </div>

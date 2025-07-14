@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { SERVER_BASE_URL } from "../config/env";
 import { Button } from "@/components/ui/button";
 import TeamSelectionScreen from "@/components/TeamSelectionScreen";
 import TeamCompletionScreen from "@/components/TeamCompletionScreen";
 import GameLoadingScreen from "@/components/GameLoadingScreen";
 import ResultScreen from "@/components/ResultScreen";
+
+const SERVER_BASE_URL = import.meta.env.VITE_SERVER_BASE_URL;
 
 const SoloBattleScreen = ({ onBack }) => {
   const [step, setStep] = useState('setup');
@@ -33,116 +34,11 @@ const SoloBattleScreen = ({ onBack }) => {
 
   const handleTeam1Select = (mode) => {
     setCurrentTeamMode(mode);
-    if (mode === 'random') {
-      fetch(`${SERVER_BASE_URL}/teams?mode=random`)
-        .then(res => res.json())
-        .then(data => {
-          // 한글 포지션명 매핑
-          const positionMapKor = {
-            '포수': 'C',
-            '선발 투수': 'P',
-            '중간 투수': 'MP',
-            '마무리 투수': 'CP',
-            '1루수': '1B',
-            '2루수': '2B',
-            '3루수': '3B',
-            '유격수': 'SS',
-            '외야수': ['LF', 'CF', 'RF'],
-            '지명타자': 'DH'
-          };
-          const randomTeam = {};
-          let outfieldIdx = 0;
-          if (Array.isArray(data.playerResponses)) {
-            data.playerResponses.forEach(player => {
-              const pos = player.position;
-              if (pos === '외야수') {
-                const outfieldPositions = positionMapKor['외야수'];
-                if (outfieldIdx < outfieldPositions.length) {
-                  randomTeam[outfieldPositions[outfieldIdx]] = {
-                    ...player,
-                    birthdate: player.dateOfBirth,
-                    team: player.club
-                  };
-                  outfieldIdx++;
-                }
-              } else {
-                const mappedPos = positionMapKor[pos];
-                if (mappedPos) {
-                  randomTeam[mappedPos] = {
-                    ...player,
-                    birthdate: player.dateOfBirth,
-                    team: player.club
-                  };
-                }
-              }
-            });
-          }
-          setTeam1RandomPlayers(randomTeam);
-          setStep("team1-select");
-        })
-        .catch(() => {
-          alert('랜덤 팀 불러오기 실패');
-        });
-    } else {
-      setTeam1RandomPlayers(null);
-      setStep("team1-select");
-    }
+    setStep("team1-select");
   };
   const handleTeam2Select = (mode) => {
     setCurrentTeamMode(mode);
-    if (mode === 'random') {
-      fetch(`${SERVER_BASE_URL}/teams?mode=random`)
-        .then(res => res.json())
-        .then(data => {
-          const positionMapKor = {
-            '포수': 'C',
-            '선발 투수': 'P',
-            '중간 투수': 'MP',
-            '마무리 투수': 'CP',
-            '1루수': '1B',
-            '2루수': '2B',
-            '3루수': '3B',
-            '유격수': 'SS',
-            '외야수': ['LF', 'CF', 'RF'],
-            '지명타자': 'DH'
-          };
-          const randomTeam = {};
-          let outfieldIdx = 0;
-          if (Array.isArray(data.playerResponses)) {
-            data.playerResponses.forEach(player => {
-              const pos = player.position;
-              if (pos === '외야수') {
-                const outfieldPositions = positionMapKor['외야수'];
-                if (outfieldIdx < outfieldPositions.length) {
-                  randomTeam[outfieldPositions[outfieldIdx]] = {
-                    ...player,
-                    birthdate: player.dateOfBirth,
-                    team: player.club
-                  };
-                  outfieldIdx++;
-                }
-              } else {
-                const mappedPos = positionMapKor[pos];
-                if (mappedPos) {
-                  randomTeam[mappedPos] = {
-                    ...player,
-                    birthdate: player.dateOfBirth,
-                    team: player.club
-                  };
-                }
-              }
-            });
-          }
-          setTeam2RandomPlayers(randomTeam);
-          setStep("team2-select");
-        })
-        .catch(() => {
-          alert('랜덤 팀 불러오기 실패');
-        });
-    } else {
-      setTeam2RandomPlayers(null);
-      setStep("team2-select");
-    }
+    setStep("team2-select");
   };
   const handleTeam1Complete = (players) => {
     if (players) {
@@ -361,6 +257,7 @@ const SoloBattleScreen = ({ onBack }) => {
             selectedPlayers={team1Players}
             onNext={() => setStep('setup')}
             onBack={() => setStep('team1-select')}
+            mode={currentTeamMode}
           />
         )}
         {step === 'team2-select' && (
@@ -379,6 +276,7 @@ const SoloBattleScreen = ({ onBack }) => {
             selectedPlayers={team2Players}
             onNext={() => setStep('setup')}
             onBack={() => setStep('team2-select')}
+            mode={currentTeamMode} // mode prop 추가
           />
         )}
         {step === 'loading' && (
