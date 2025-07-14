@@ -1,12 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
+import { Button } from "@/components/ui/button";
+import ShareModal from "./ShareModal";
 
 const TeamResult = ({ teamName, results, onBack }) => {
+  const [showShareModal, setShowShareModal] = useState(false);
+  const shareUrl = window.location.href;
+
   // 결과 데이터 변환: 서버 결과를 화면에 맞게 가공
   const displayResults = (results && results.length > 0)
     ? results.map(r => {
-        const isWin = r.homeTeamScore > r.awayTeamScore;
+        let result;
+        if (r.homeTeamScore > r.awayTeamScore) {
+          result = "WIN";
+        } else if (r.homeTeamScore < r.awayTeamScore) {
+          result = "LOSE";
+        } else {
+          result = "DRAW";
+        }
         return {
-          result: isWin ? "WIN" : "LOSE",
+          result,
           myScore: r.homeTeamScore,
           opponentScore: r.awayTeamScore,
           opponentName: r.awayTeamName
@@ -35,9 +47,14 @@ const TeamResult = ({ teamName, results, onBack }) => {
             className="w-[90vw] max-w-xl bg-black rounded-[48px] flex items-center justify-center px-8 py-6 border-4 border-white shadow-lg"
             style={{ fontFamily: 'DungGeunMo, monospace', minHeight: '80px' }}
           >
-            <span className="text-yellow-400 text-xl font-bold text-center">
-              아직 경기 결과가 없습니다!<br />친구들에게 팀 링크를 공유해보세요
-            </span>
+            <div>
+              <span className="text-yellow-400 text-xl font-bold text-center block mb-10 mt-3">
+                아직 진행된 경기가 없습니다
+              </span>
+              <span className="text-white text-base text-l font-normal text-center block">
+                친구들에게 공유하고 <br />경기를 진행해 볼까요?
+              </span>
+            </div>
           </div>
         ) : (
           displayResults.map((r, idx) => (
@@ -49,7 +66,9 @@ const TeamResult = ({ teamName, results, onBack }) => {
               <span className={
                 r.result === "WIN"
                   ? "text-yellow-400 text-2xl font-normal mr-4"
-                  : "text-gray-400 text-2xl font-normal mr-4"
+                  : r.result === "DRAW"
+                    ? "text-blue-400 text-2xl font-normal mr-4"
+                    : "text-gray-400 text-2xl font-normal mr-4"
               }>
                 {r.result}
               </span>
@@ -57,7 +76,9 @@ const TeamResult = ({ teamName, results, onBack }) => {
               <span className={
                 r.result === "WIN"
                   ? "text-green-400 text-3xl font-normal mx-2"
-                  : "text-gray-400 text-3xl font-normal mx-2"
+                  : r.result === "DRAW"
+                    ? "text-blue-400 text-3xl font-normal mx-2"
+                    : "text-gray-400 text-3xl font-normal mx-2"
               }>
                 {r.myScore}
               </span>
@@ -65,7 +86,9 @@ const TeamResult = ({ teamName, results, onBack }) => {
               <span className={
                 r.result === "LOSE"
                   ? "text-red-400 text-3xl font-normal mx-2"
-                  : "text-white text-3xl font-normal mx-2"
+                  : r.result === "DRAW"
+                    ? "text-blue-400 text-3xl font-normal mx-2"
+                    : "text-white text-3xl font-normal mx-2"
               }>
                 {r.opponentScore}
               </span>
@@ -74,13 +97,28 @@ const TeamResult = ({ teamName, results, onBack }) => {
           ))
         )}
       </div>
-      {/* 뒤로가기 버튼 */}
-      <button
-        onClick={onBack}
-        className="bg-white text-[#555] font-bold py-3 px-8 rounded-full text-xl mb-8"
-      >
-        뒤로가기
-      </button>
+      <div className="w-full max-w-md mx-auto mt-4">
+        <div className="flex space-x-4 w-full">
+          <Button
+            onClick={() => setShowShareModal(true)}
+            className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold px-8 py-4 rounded-full w-1/2"
+          >
+            공유하기
+          </Button>
+          <Button
+            onClick={onBack}
+            className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold px-8 py-4 rounded-full w-1/2"
+          >
+            또 경기하기
+          </Button>
+        </div>
+      </div>
+      <ShareModal
+        shareUrl={shareUrl}
+        title={teamName + " 팀을 공유해요!"}
+        open={showShareModal}
+        onClose={() => setShowShareModal(false)}
+      />
     </div>
   );
 };

@@ -82,43 +82,6 @@ const ShareModal = ({ shareUrl, open, onClose, title }) => {
             </button>
           </div>
 
-          {/* SNS 버튼 */}
-          <div className="flex justify-around mt-2 flex-wrap gap-2">
-            <FacebookShareButton url={shareUrl}>
-              <FacebookIcon size={40} round />
-            </FacebookShareButton>
-            <TwitterShareButton url={shareUrl}>
-              <TwitterIcon size={40} round />
-            </TwitterShareButton>
-            <LineShareButton url={shareUrl}>
-              <LineIcon size={40} round />
-            </LineShareButton>
-            <WhatsappShareButton url={shareUrl}>
-              <WhatsappIcon size={40} round />
-            </WhatsappShareButton>
-            {/* 카카오톡: SDK 활용 실제 공유 */}
-            <button
-              onClick={handleKakaoShare}
-              className="flex flex-col items-center"
-              title="카카오톡으로 공유"
-              type="button"
-            >
-              <img src="/logos/kakao.png" alt="Kakao" style={{ width: 40, height: 40, borderRadius: '50%' }} />
-              <span className="text-xs mt-1">카카오톡</span>
-            </button>
-            {/* 인스타그램: 직접 공유 불가, 프로필 링크 안내 */}
-            <a
-              href="https://www.instagram.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex flex-col items-center"
-              title="인스타그램"
-            >
-              <img src="/logos/instagram.png" alt="Instagram" style={{ width: 40, height: 40, borderRadius: '50%' }} />
-              <span className="text-xs mt-1">인스타그램</span>
-            </a>
-          </div>
-
           {/* 닫기 */}
           <Dialog.Close asChild>
             <button className="absolute top-2 right-2 text-xl">×</button>
