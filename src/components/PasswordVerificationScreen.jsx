@@ -13,7 +13,7 @@ const PasswordVerificationScreen = ({ teamName, teamId, onBack }) => {
       return;
     }
     try {
-      const res = await fetch(`${import.meta.env.VITE_SERVER_BASE_URL}/teams/${teamId}`, {
+      const res = await fetch(`${import.meta.env.VITE_SERVER_BASE_URL}/play-results/${teamId}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ password })
