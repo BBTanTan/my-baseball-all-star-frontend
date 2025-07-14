@@ -81,18 +81,6 @@ const ShareModal = ({ shareUrl, open, onClose, title }) => {
               {copied ? "복사됨!" : "복사"}
             </button>
           </div>
-          {/* 테스트용 팀 대결 참여하기 안내 */}
-          <div className="mt-2 mb-4 text-center">
-            <a
-              href={shareUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block bg-[#e28a3d] text-white font-bold rounded-full px-6 py-3 text-base shadow hover:bg-[#d07a2c]"
-            >
-              팀 대결 참여하기 (테스트용)
-            </a>
-            <div className="text-xs text-gray-500 mt-2">* 실제 서버 연결 전까지 테스트용 페이지로 이동합니다.</div>
-          </div>
 
           {/* SNS 버튼 */}
           <div className="flex justify-around mt-2 flex-wrap gap-2">
