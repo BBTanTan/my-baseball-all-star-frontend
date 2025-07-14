@@ -92,10 +92,10 @@ const GameLoadingScreen = ({ team1Name, team2Name, onComplete }) => {
         {/* Game Status Board */}
         <div className="bg-black text-white p-6 rounded-3xl border-4 border-gray-300 w-full max-w-md">
           <div className="text-center space-y-4">
-            <div className="text-green-400 text-lg font-bold">
+            <div className="text-green-400 text-lg font-bold font-dunggeunmo">
               경기가 시작되었습니다
             </div>
-            <div className="text-sm text-gray-300">
+            <div className="text-sm text-gray-300 font-dunggeunmo">
               선택한 선수가<br />
               홈런을 날리는 중
             </div>
