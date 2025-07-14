@@ -1,4 +1,4 @@
-import useFixViewportHeight from "../hooks/useFixViewportHeight";
+import useFixViewportHeight from "/src/hooks/useFixViewportHeight";
 
 const MobileLayout = ({ children }) => {
   useFixViewportHeight();
