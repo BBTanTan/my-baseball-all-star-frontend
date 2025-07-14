@@ -100,8 +100,8 @@ All colors MUST be HSL.
   }
 
   body, #root, #app {
-    min-height: 100vh;
-    height: 100vh;
+    min-height: 100%;
+    height: auto;
     margin: 0 !important;
     padding: 0 !important;
     width: 100vw !important;
