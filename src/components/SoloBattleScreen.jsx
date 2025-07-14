@@ -5,11 +5,15 @@ import TeamCompletionScreen from "@/components/TeamCompletionScreen";
 import GameLoadingScreen from "@/components/GameLoadingScreen";
 import ResultScreen from "@/components/ResultScreen";
 
+const SERVER_BASE_URL = import.meta.env.VITE_SERVER_BASE_URL;
+
 const SoloBattleScreen = ({ onBack }) => {
   const [step, setStep] = useState('setup');
   const [team1Name, setTeam1Name] = useState('드림팀');
   const [team2Name, setTeam2Name] = useState('나눔팀');
   const [team1Players, setTeam1Players] = useState(null);
+  const [team1RandomPlayers, setTeam1RandomPlayers] = useState(null);
+  const [team2RandomPlayers, setTeam2RandomPlayers] = useState(null);
   const [team2Players, setTeam2Players] = useState(null);
   const [currentTeamMode, setCurrentTeamMode] = useState('manual');
   const [gameScores, setGameScores] = useState(null);
@@ -48,13 +52,45 @@ const SoloBattleScreen = ({ onBack }) => {
       setStep('team2-complete');
     }
   };
-  const handleStartMatch = () => setStep('loading');
+  const handleStartMatch = async () => {
+    // 팀 정보와 선수 id 추출
+    if (!(team1Players && team2Players)) return;
+    setStep('loading');
+    const homeTeam = {
+      teamName: team1Name,
+      playerIds: Object.values(team1Players).map(p => p?.id).filter(Boolean)
+    };
+    const awayTeam = {
+      teamName: team2Name,
+      playerIds: Object.values(team2Players).map(p => p?.id).filter(Boolean)
+    };
+    try {
+      const res = await fetch(`${SERVER_BASE_URL}/plays/solo`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ homeTeam, awayTeam })
+      });
+      if (!res.ok) throw new Error('서버 오류');
+      const result = await res.json();
+      console.log('대결 결과:', result);
+      // result: { homeTeam: { teamName, teamScore }, awayTeam: { teamName, teamScore } }
+      setGameScores({
+        team1: result.homeTeam.teamScore,
+        team2: result.awayTeam.teamScore,
+        team1Name: result.homeTeam.teamName,
+        team2Name: result.awayTeam.teamName
+      });
+      // GameLoadingScreen에서 onComplete 호출 시 결과 화면으로 이동
+    } catch (err) {
+      alert('대결 시작 요청 실패: ' + err.message);
+    }
+  };
   const handleGameComplete = (scores) => {
-    setGameScores(scores);
     setStep('result');
   };
 
-  // step === 'setup'일 때만 디자인 화면, 나머지는 기존 로직
   if (step === 'setup') {
     return (
       <div className="min-h-screen w-full flex flex-col items-center justify-between relative bg-[#b3e3fd] overflow-x-hidden font-jalnan">
@@ -77,10 +113,6 @@ const SoloBattleScreen = ({ onBack }) => {
     </div>
   </div>
   
-  <div className="z-10 mt-8 mb-2 text-lg text-white text-center drop-shadow" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.18)' }}>
-    원하는 팀 이름을 정하고<br />
-    선수 선택 방식을 골라주세요!
-  </div>
   
   {/* 팀 카드 영역 */}
   <div className="flex flex-row space-between w-full z-10" style={{ width: '100%' }}>
@@ -192,7 +224,7 @@ const SoloBattleScreen = ({ onBack }) => {
   </div>
 
   {/* 대결 시작하기 버튼 */}
-  <div className="flex flex-col items-center z-10 mt-8 mb-8 w-full font-jalnan" style={{ maxWidth: '400px' }}>
+  <div className="flex flex-col items-center z-10 mt-1 mb-12 w-full font-jalnan" style={{ maxWidth: '400px' }}>
     <button
       style={{ background: '#444', color: 'white', borderRadius: '2.5rem', fontWeight: 'normal', fontSize: '1.2rem', padding: '0.5rem 2.5rem', margin: '0 auto', fontFamily: 'yg-jalnan', boxShadow: '#535353' }}
       onClick={handleStartMatch}
@@ -214,6 +246,7 @@ const SoloBattleScreen = ({ onBack }) => {
             teamName={team1Name}
             teamNumber={1}
             mode={currentTeamMode}
+            selectedPlayers={team1RandomPlayers}
             onNext={handleTeam1Complete}
             onBack={() => setStep('setup')}
           />
@@ -224,6 +257,7 @@ const SoloBattleScreen = ({ onBack }) => {
             selectedPlayers={team1Players}
             onNext={() => setStep('setup')}
             onBack={() => setStep('team1-select')}
+            mode={currentTeamMode}
           />
         )}
         {step === 'team2-select' && (
@@ -231,6 +265,7 @@ const SoloBattleScreen = ({ onBack }) => {
             teamName={team2Name}
             teamNumber={2}
             mode={currentTeamMode}
+            selectedPlayers={team2RandomPlayers}
             onNext={handleTeam2Complete}
             onBack={() => setStep('setup')}
           />
@@ -241,6 +276,7 @@ const SoloBattleScreen = ({ onBack }) => {
             selectedPlayers={team2Players}
             onNext={() => setStep('setup')}
             onBack={() => setStep('team2-select')}
+            mode={currentTeamMode} // mode prop 추가
           />
         )}
         {step === 'loading' && (

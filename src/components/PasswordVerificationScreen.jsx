@@ -1,25 +1,40 @@
-
 import { useState } from "react";
 import TeamResult from "./TeamResult";
 
-// 임시: 실제 생성시 저장된 비밀번호와 비교해야 함
-const MOCK_TEAM_PASSWORD = "1234";
-
-const PasswordVerificationScreen = ({ teamName = "팀 이름", onBack }) => {
+const PasswordVerificationScreen = ({ teamName, teamId, onBack }) => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [showResult, setShowResult] = useState(false);
+  const [teamResultData, setTeamResultData] = useState(null);
 
-  const handleVerify = () => {
-    if (password === MOCK_TEAM_PASSWORD) {
-      setShowResult(true);
-    } else {
-      setError("비밀번호가 올바르지 않습니다.");
+  const handleVerify = async () => {
+    setError("");
+    if (!teamId) {
+      setError("팀 정보가 없습니다.");
+      return;
+    }
+    try {
+      const res = await fetch(`${import.meta.env.VITE_SERVER_BASE_URL}/play-results/${teamId}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ password })
+      });
+      if (!res.ok) {
+        setError("비밀번호가 올바르지 않습니다.");
+        return;
+      }
+      const data = await res.json();
+      console.log("팀 결과 데이터:", data);
+      setTeamResultData(data);
+    } catch (err) {
+      setError("서버 오류: " + err.message);
     }
   };
 
-  if (showResult) {
-    return <TeamResult teamName={teamName} onBack={onBack} />;
+  if (teamResultData) {
+    return <TeamResult 
+    teamName={teamName}
+    results={teamResultData.playResults} 
+    onBack={onBack} />;
   }
 
   return (
@@ -30,7 +45,7 @@ const PasswordVerificationScreen = ({ teamName = "팀 이름", onBack }) => {
       </div>
       {/* 게임 결과 확인 타이틀 */}
       <div className="bg-[#555] text-white rounded-full px-8 py-4 mb-4 text-xl font-normal">
-        {`{${teamName}} 게임 결과 확인하기`}
+        {`${teamName} 게임 결과 확인하기`}
       </div>
       {/* 팀 생성자만 확인 가능 안내 */}
       <div className="bg-[#4ec16e] text-white rounded-xl px-8 py-3 mb-6 text-lg font-normal">

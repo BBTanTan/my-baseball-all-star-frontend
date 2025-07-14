@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 
-const TeamCompletionScreen = ({ teamName, selectedPlayers, onNext, onBack }) => {
+const TeamCompletionScreen = ({ teamName, selectedPlayers, onNext, onBack, mode }) => {
   const positions = ['C', 'P', 'MP', 'CP', '1B', '2B', '3B', 'SS', 'LF', 'CF', 'RF', 'DH'];
   const getPositionName = (pos) => {
     const positionNames = {
@@ -36,7 +36,7 @@ const TeamCompletionScreen = ({ teamName, selectedPlayers, onNext, onBack }) => 
     { pos: 'DH', x: 30, y: 80, label: 'DH' }
   ];
   return (
-    <div className="h-screen w-full flex flex-col items-center justify-center relative font-jalnan" style={{ background: 'url(/back_ground.jpg) center/cover no-repeat', backgroundColor: 'transparent', height: '100vh' }}>
+    <div className="h-screen w-full flex flex-col items-center justify-center relative font-jalnan">
       <div className="flex flex-col items-center w-full h-full z-10" style={{ background: 'transparent', borderRadius: '0', padding: '0', height: '100%' }}>
         {/* Title */}
         <div className="text-lg text-[#FFFFFF] mb-2 font-normal font-jalnan mt-8" style={{ background: '#535353', borderRadius: '1.5rem', padding: '0.5rem 1.5rem', boxShadow: '#535353', fontWeight: 'normal' }}>
@@ -72,7 +72,7 @@ const TeamCompletionScreen = ({ teamName, selectedPlayers, onNext, onBack }) => 
               return (
                 <Card key={pos} className="bg-white rounded-2xl">
                   <CardContent className="p-3 text-center">
-                    <div className="text-xs text-gray-600 mb-2 font-jalnan">{getPositionName(pos)}</div>
+                    <div className="text-s text-gray-600 mb-2 font-jalnan">{getPositionName(pos)}</div>
                     <div className="w-12 h-12 rounded-full bg-gray-300 mx-auto mb-2 overflow-hidden">
                       {player && (
                         <img 
@@ -83,8 +83,8 @@ const TeamCompletionScreen = ({ teamName, selectedPlayers, onNext, onBack }) => 
                       )}
                     </div>
                     <div className="space-y-1">
-                      <div className="text-blue-600 font-bold text-xs font-jalnan">{player?.club || player?.team || ''}</div>
-                      <div className="font-bold text-xs font-jalnan">{player?.name || ''}</div>
+                      <div className="text-blue-600 font-normal text-xs font-jalnan">{player?.club || player?.team || ''}</div>
+                      <div className="font-normal text-xs font-jalnan">{player?.name || ''}</div>
                     </div>
                   </CardContent>
                 </Card>
@@ -96,7 +96,13 @@ const TeamCompletionScreen = ({ teamName, selectedPlayers, onNext, onBack }) => 
         <div className="w-full flex justify-center items-center mt-4">
           <div className="flex space-x-2 w-full max-w-md px-2">
             <Button 
-              onClick={onBack}
+              onClick={() => {
+                if (mode === 'random') {
+                  window.location.reload();
+                } else {
+                  onBack();
+                }
+              }}
               className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold px-8 py-4 rounded-full w-1/2"
             >
               뒤로가기

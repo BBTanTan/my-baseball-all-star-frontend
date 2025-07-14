@@ -3,6 +3,11 @@ import { useEffect, useState } from "react";
 import TeamCompletionScreen from "@/components/TeamCompletionScreen";
 import TeamSelectionScreen from "@/components/TeamSelectionScreen";
 import GameLoadingScreen from "@/components/GameLoadingScreen";
+import ResultScreen from "@/components/ResultScreen";
+import { useSearchParams } from "react-router-dom";
+
+const SERVER_BASE_URL = import.meta.env.VITE_SERVER_BASE_URL;
+
 
 // 친구가 링크로 접속해서 join하는 화면
 // URL에서 teamId를 받아 상대팀 라인업을 보여주고, 내 팀을 선택할 수 있음
@@ -17,33 +22,64 @@ const mockOpponentTeam = {
 };
 
 const FriendBattleJoinScreen = () => {
+  const [homeTeam, setHomeTeam] = useState(null);
   const [showPasswordVerification, setShowPasswordVerification] = useState(false);
-  const [opponentTeam, setOpponentTeam] = useState(null);
   const [step, setStep] = useState(0); // 0: 상대팀 라인업+내팀 선택, 1: 내팀 완성, 2: 상대팀 라인업 확인, 3: 내 팀 선택, 4: 게임 로딩
-  const [myTeamName, setMyTeamName] = useState("");
+  const [myTeamName, setMyTeamName] = useState("드림팀"); // 기본값을 "드림팀"으로 고정
   const [mode, setMode] = useState("manual");
   const [selectedPlayers, setSelectedPlayers] = useState({});
   const [myTeamNameEdit, setMyTeamNameEdit] = useState(false);
-  const [tempMyTeamName, setTempMyTeamName] = useState("");
+  const [tempMyTeamName, setTempMyTeamName] = useState("드림팀"); // 기본값도 "드림팀"
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [gameScores, setGameScores] = useState(null);
+
   useEffect(() => {
-    // fetch(`/api/friend-team/${teamId}`)
-    setOpponentTeam(mockOpponentTeam);
+    // URL에서 teamUuid 추출
+    const teamUuid = searchParams.get('teamUuid');
+    console.log("URL 파라미터:", teamUuid);
+    if (teamUuid) {
+      fetch(`${SERVER_BASE_URL}/teams/${teamUuid}`)
+        .then(res => res.json())
+        .then(data => {
+          console.log("상대팀 정보:", data);
+          setHomeTeam({
+            teamId: data.teamId,
+            teamName: data.teamName || mockOpponentTeam.teamName
+          });
+        })
+        .catch(() => setHomeTeam(mockOpponentTeam));
+    } else {
+      setHomeTeam(mockOpponentTeam);
+    }
   }, []);
 
-  if (!opponentTeam) return <div>로딩중...</div>;
-
-  // 게임 로딩 화면 (대결 시작)
   if (showPasswordVerification) {
-    return <PasswordVerificationScreen teamName={myTeamName} onBack={() => setShowPasswordVerification(false)} />;
+    return <PasswordVerificationScreen 
+    teamName={homeTeam.teamName} 
+    teamId={homeTeam?.teamId}
+    onBack={() => setShowPasswordVerification(false)} />;
   }
+  // step === 4: 로딩 화면 (이동)
   if (step === 4) {
     return (
       <GameLoadingScreen
-        team1Name={opponentTeam.teamName}
+        team1Name={homeTeam.teamName}
         team2Name={myTeamName}
-        myTeam={{ teamName: myTeamName, selectedPlayers }}
-        opponentTeam={opponentTeam}
-        onBack={() => setStep(0)}
+        onComplete={() => setStep(5)}
+      />
+    );
+  }
+
+  // step === 5: 결과 화면 (이동)
+  if (step === 5 && gameScores) {
+    return (
+      <ResultScreen
+        team1Name={gameScores.team1Name}
+        team2Name={gameScores.team2Name}
+        team1Score={gameScores.team1}
+        team2Score={gameScores.team2}
+        onPlayAgain={() => setStep(0)}
+        onHome={() => setStep(0)}
       />
     );
   }
@@ -64,8 +100,8 @@ const FriendBattleJoinScreen = () => {
   if (step === 2) {
     return (
       <TeamCompletionScreen
-        selectedPlayers={opponentTeam.selectedPlayers}
-        teamName={opponentTeam.teamName}
+        selectedPlayers={homeTeam.selectedPlayers}
+        teamName={homeTeam.teamName}
         isOpponent
         onNext={() => setStep(0)}
         onBack={() => setStep(0)}
@@ -88,11 +124,49 @@ const FriendBattleJoinScreen = () => {
     );
   }
 
+  // 데이터가 아직 로딩 중일 때 로딩 화면 또는 빈 화면을 보여줌
+  if (!homeTeam) {
+    return <div className="min-h-screen flex items-center justify-center">팀 정보를 불러오는 중...</div>;
+  }
+
   // step === 0: 상대팀 라인업+내팀 선택
   // 선택완료/미완료 상태
   const positionsCount = 12;
   const selectedCount = Object.keys(selectedPlayers).length;
   const isComplete = selectedCount === positionsCount && Object.values(selectedPlayers).every(Boolean);
+
+  // 대결 시작 버튼 핸들러: 여기서 서버에 요청 보내고 로딩/결과 처리
+  const handleStartMatch = async () => {
+    if (!homeTeam || !isComplete || !myTeamName) return;
+    setStep(4); // 로딩 화면으로 이동
+    const homeTeamId = homeTeam.teamId;
+    const awayTeam = {
+      teamName: myTeamName,
+      playerIds: Object.values(selectedPlayers).map(p => p?.id).filter(Boolean)
+    };
+    try {
+      // fetch의 URL이 올바른지 확인 (환경변수 문제 시 콘솔로 확인)
+      console.log('대결 요청 URL:', `${SERVER_BASE_URL}/plays/friend`);
+      const res = await fetch(`${SERVER_BASE_URL}/plays/friend`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ homeTeamId, awayTeam })
+      });
+      if (!res.ok) throw new Error('서버 오류');
+      const result = await res.json();
+      console.log('대결 결과:', result);
+      setGameScores({
+        team1: result.homeTeam.teamScore,
+        team2: result.awayTeam.teamScore,
+        team1Name: result.homeTeam.teamName,
+        team2Name: result.awayTeam.teamName
+      });
+    } catch (err) {
+      alert('대결 시작 요청 실패: ' + err.message);
+      setStep(0);
+    }
+  };
+
   return (
     <div className="min-h-screen w-full flex flex-col items-center justify-between relative bg-[#b3e3fd] overflow-x-hidden font-jalnan">
       {/* 배경 */}
@@ -104,7 +178,7 @@ const FriendBattleJoinScreen = () => {
       {/* 안내 */}
       <div className="z-10 mt-2 mb-4 text-center">
         <div style={{ background: '#444', color: 'white', borderRadius: '2.5rem', fontWeight: 'normal', fontSize: '1.2rem', padding: '0.5rem 2.5rem', margin: '0 auto', fontFamily: 'yg-jalnan', boxShadow: '#535353' }}>
-          {opponentTeam.teamName} 과의 경기를 준비하세요
+          {homeTeam.teamName} 과의 경기를 준비하세요
         </div>
       </div>
       {/* 카드 영역 */}
@@ -114,7 +188,7 @@ const FriendBattleJoinScreen = () => {
         className="flex-1 flex flex-col items-center bg-[#4ec16e] rounded-2xl py-4 px-2 mx-2 font-jalnan"
         style={{ minWidth: '140px', maxWidth: '220px', flexGrow: 1, boxSizing: 'border-box', marginBottom: '10px' }}
       >          
-        <div className="text-white text-2xl font-jalnan mb-2">{opponentTeam.teamName}팀</div>
+        <div className="text-white text-2xl font-jalnan mb-2">{homeTeam.teamName}팀</div>
           <button
             className="bg-white text-[#444] rounded-full px-3 py-1 mb-2 text-base font-jalnan w-full invisible"
             tabIndex={-1}
@@ -141,13 +215,13 @@ const FriendBattleJoinScreen = () => {
             className="flex-1 flex flex-col items-center bg-[#4ec16e] rounded-2xl py-4 px-2 mx-2 font-jalnan"
             style={{ minWidth: '140px', maxWidth: '220px', flexGrow: 1, boxSizing: 'border-box', marginBottom: '10px' }}
           >          
-          {(myTeamNameEdit || !myTeamName) ? (
+          {(myTeamNameEdit) ? (
             <div className="flex flex-col items-center w-full mb-2 font-jalnan">
               <input
                 value={tempMyTeamName}
                 onChange={e => setTempMyTeamName(e.target.value)}
                 className="text-gray-800 text-center rounded-full px-2 py-1 mb-2 w-full font-jalnan"
-                style={{ fontSize: '0.8rem' }}
+                style={{ fontSize: '1rem' }}
                 maxLength={10}
                 placeholder="팀 이름을 입력하세요"
               />
@@ -208,9 +282,7 @@ const FriendBattleJoinScreen = () => {
       <div className="flex flex-col items-center z-10 mb-8 w-full font-jalnan" style={{ maxWidth: '400px' }}>
         <button
           style={{ background: '#444', color: 'white', borderRadius: '2.5rem', fontWeight: 'normal', fontSize: '1.2rem', padding: '0.5rem 2.5rem', fontFamily: 'yg-jalnan', boxShadow: '#535353' }}
-          onClick={() => {
-            if (isComplete && myTeamName) setStep(4);
-          }}
+          onClick={handleStartMatch}
           disabled={!isComplete || !myTeamName}
         >
           대결 시작
@@ -224,5 +296,6 @@ const FriendBattleJoinScreen = () => {
       </div>
     </div>
   );
-}
+};
+
 export default FriendBattleJoinScreen;
