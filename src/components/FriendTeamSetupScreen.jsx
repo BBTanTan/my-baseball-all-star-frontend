@@ -5,9 +5,8 @@ import PasswordSetupScreen from "@/components/PasswordSetupScreen";
 
 const FriendTeamSetupScreen = ({ onComplete, onBack }) => {
   const [step, setStep] = useState(0); // 0: Setup, 1: Select, 2: Complete, 3: Password
-  const [teamName, setTeamName] = useState('드림팀');
-  const [editingTeamName, setEditingTeamName] = useState(true);
-  const [tempTeamName, setTempTeamName] = useState("");
+  const [teamName, setTeamName] = useState('나눔팀');
+  const [editingTeamName, setEditingTeamName] = useState(false);
   const [mode, setMode] = useState("manual");
   const [selectedPlayers, setSelectedPlayers] = useState({});
 
@@ -98,7 +97,7 @@ const FriendTeamSetupScreen = ({ onComplete, onBack }) => {
               );
             })()}
             <button
-              className={`w-full bg-[#e28a3d] text-white rounded-full py-2 mt-2 mb-2 font-jalnan ${mode === 'random' ? 'border-2 border-yellow-400' : ''}`}
+              className="w-full bg-[#e28a3d] text-white rounded-full py-2 mt-2 mb-2 font-jalnan"
               style={{ fontSize: '1rem' }}
               onClick={() => handleSelect('random')}
               disabled={!teamName}
@@ -173,6 +172,7 @@ const FriendTeamSetupScreen = ({ onComplete, onBack }) => {
       <PasswordSetupScreen
         teamName={teamName}
         onComplete={() => {/* 공유하기 동작 구현 필요 */}}
+        playerIds={Object.values(selectedPlayers).map(p => p?.id).filter(Boolean)}
         onBack={() => setStep(0)}
         onHome={onBack} // 홈으로 이동
       />

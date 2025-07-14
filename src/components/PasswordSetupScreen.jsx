@@ -1,22 +1,40 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import ShareModal from "@/components/ShareModal";
+import { SERVER_BASE_URL } from "@/config/env";
 
-const PasswordSetupScreen = ({ teamName = "드림팀", onComplete, onBack, onHome }) => {
+const PasswordSetupScreen = ({ teamName = "드림팀", playerIds = [], onComplete, onBack, onHome }) => {
   const [password, setPassword] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [showShareModal, setShowShareModal] = useState(false);
   const [shareUrl, setShareUrl] = useState("");
 
   const handleSubmit = async () => {
+    console.log("팀 목록 : ", playerIds);
     if (password.length > 0) {
-      setIsSubmitted(true);
-      // 실제로는 서버에 팀 정보 저장 후 URL 생성
-      // 예시: const url = await onComplete(password); setShareUrl(url);
-      // 여기서는 임시로 teamId=123456
-      const url = `${window.location.origin}/friend-battle/join?teamId=123456`;
-      setShareUrl(url);
+      try {
+        // 서버로 팀 정보 전송
+        const res = await fetch(`${SERVER_BASE_URL}/teams`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            teamName,
+            playerIds,
+            password
+          })
+        });
+        if (!res.ok) throw new Error("서버 오류");
+        const data = await res.json();
+        // 서버에서 teamUuid 반환
+        const teamUuid = data.teamUuid || "test-uuid";
+        const url = `${window.location.origin}/friend-battle/join?teamUuid=${teamUuid}`;
+        setShareUrl(url);
+        setIsSubmitted(true);
+      } catch (err) {
+        alert("팀 정보 저장 실패: " + err.message);
+      }
     }
   };
 

@@ -72,7 +72,7 @@ const TeamCompletionScreen = ({ teamName, selectedPlayers, onNext, onBack }) => 
               return (
                 <Card key={pos} className="bg-white rounded-2xl">
                   <CardContent className="p-3 text-center">
-                    <div className="text-xs text-gray-600 mb-2 font-jalnan">{getPositionName(pos)}</div>
+                    <div className="text-s text-gray-600 mb-2 font-jalnan">{getPositionName(pos)}</div>
                     <div className="w-12 h-12 rounded-full bg-gray-300 mx-auto mb-2 overflow-hidden">
                       {player && (
                         <img 
@@ -83,8 +83,8 @@ const TeamCompletionScreen = ({ teamName, selectedPlayers, onNext, onBack }) => 
                       )}
                     </div>
                     <div className="space-y-1">
-                      <div className="text-blue-600 font-bold text-xs font-jalnan">{player?.club || player?.team || ''}</div>
-                      <div className="font-bold text-xs font-jalnan">{player?.name || ''}</div>
+                      <div className="text-blue-600 font-normal text-xs font-jalnan">{player?.club || player?.team || ''}</div>
+                      <div className="font-normal text-xs font-jalnan">{player?.name || ''}</div>
                     </div>
                   </CardContent>
                 </Card>
