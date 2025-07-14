@@ -44,7 +44,7 @@ const Index = () => {
         />
         <button
           onClick={() => setGameMode('solo')}
-          className="font-jalnan mb-6"
+          className="font-jalnan mb-2"
           style={{
             padding: '0.5rem 1rem',
             fontSize: '1.5rem',
@@ -52,7 +52,6 @@ const Index = () => {
             background: '#FFFFFF',
             color: '#535353',
             fontWeight: 'normal',
-            boxShadow: '0 4px 24px rgba(0,0,0,0.2)',
             border: 'none',
             cursor: 'pointer',
             width: 'min(320px, 80vw)'
@@ -70,7 +69,6 @@ const Index = () => {
             background: '#FFFFFF',
             color: '#535353',
             fontWeight: 'normal',
-            boxShadow: '0 4px 24px rgba(0,0,0,0.2)',
             border: 'none',
             cursor: 'pointer',
             width: 'min(320px, 80vw)'
