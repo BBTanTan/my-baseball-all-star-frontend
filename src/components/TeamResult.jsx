@@ -4,9 +4,16 @@ const TeamResult = ({ teamName, results, onBack }) => {
   // 결과 데이터 변환: 서버 결과를 화면에 맞게 가공
   const displayResults = (results && results.length > 0)
     ? results.map(r => {
-        const isWin = r.homeTeamScore > r.awayTeamScore;
+        let result;
+        if (r.homeTeamScore > r.awayTeamScore) {
+          result = "WIN";
+        } else if (r.homeTeamScore < r.awayTeamScore) {
+          result = "LOSE";
+        } else {
+          result = "DRAW";
+        }
         return {
-          result: isWin ? "WIN" : "LOSE",
+          result,
           myScore: r.homeTeamScore,
           opponentScore: r.awayTeamScore,
           opponentName: r.awayTeamName
@@ -49,7 +56,9 @@ const TeamResult = ({ teamName, results, onBack }) => {
               <span className={
                 r.result === "WIN"
                   ? "text-yellow-400 text-2xl font-normal mr-4"
-                  : "text-gray-400 text-2xl font-normal mr-4"
+                  : r.result === "DRAW"
+                    ? "text-blue-400 text-2xl font-normal mr-4"
+                    : "text-gray-400 text-2xl font-normal mr-4"
               }>
                 {r.result}
               </span>
@@ -57,7 +66,9 @@ const TeamResult = ({ teamName, results, onBack }) => {
               <span className={
                 r.result === "WIN"
                   ? "text-green-400 text-3xl font-normal mx-2"
-                  : "text-gray-400 text-3xl font-normal mx-2"
+                  : r.result === "DRAW"
+                    ? "text-blue-400 text-3xl font-normal mx-2"
+                    : "text-gray-400 text-3xl font-normal mx-2"
               }>
                 {r.myScore}
               </span>
@@ -65,7 +76,9 @@ const TeamResult = ({ teamName, results, onBack }) => {
               <span className={
                 r.result === "LOSE"
                   ? "text-red-400 text-3xl font-normal mx-2"
-                  : "text-white text-3xl font-normal mx-2"
+                  : r.result === "DRAW"
+                    ? "text-blue-400 text-3xl font-normal mx-2"
+                    : "text-white text-3xl font-normal mx-2"
               }>
                 {r.opponentScore}
               </span>
