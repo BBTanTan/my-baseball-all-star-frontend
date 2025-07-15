@@ -98,7 +98,7 @@ const TeamCompletionScreen = ({ teamName, selectedPlayers, onNext, onBack, mode 
             <Button 
               onClick={() => {
                 if (mode === 'random') {
-                  window.location.reload();
+                  onBack()
                 } else {
                   onBack();
                 }

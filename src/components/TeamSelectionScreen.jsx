@@ -225,7 +225,7 @@ const TeamSelectionScreen = (props) => {
         </div>
         {/* 필드 이미지 */}
         <div className="relative w-full flex justify-center mb-2" style={{ minHeight: '180px', height: '40%' }}>
-          <img src="/element/field.png" alt="야구장" style={{ width: '100%', maxWidth: '260px', borderRadius: '1.5rem', height: '100%' }} />
+          <img src="/element/field.png" alt="야구장" style={{ width: '100%', maxWidth: '90%', borderRadius: '1.5rem', height: '100%' }} />
           {/* 포지션 마커: 이미지 좌표 고정 */}
           {fieldPositions.map(({ pos, x, y, label }) => {
             const player = selectedPlayers[pos];
@@ -281,9 +281,9 @@ const TeamSelectionScreen = (props) => {
                       </div>
                       {/* 선수 정보 */}
                       <div className="flex-1 flex flex-col justify-center ml-4">
-                        <div className="text-lg font-normal font-jalnan">{player.name}</div>
-                        <div className="text-base font-normal text-gray-600 font-jalnan">{player.club}</div>
-                        <div className="text-base text-gray-500 font-jalnan">{player.dateOfBirth}</div>
+                        <div className="text-base font-normal font-jalnan">{player.name}</div>
+                        <div className="text-sm font-normal text-gray-600 font-jalnan">{player.club}</div>
+                        <div className="text-sm text-gray-500 font-jalnan">{player.dateOfBirth}</div>
                       </div>
                       {/* 구단 로고 */}
                       <div className="ml-4">
@@ -313,10 +313,10 @@ const TeamSelectionScreen = (props) => {
                         />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <div className="text-xs text-gray-600 mb-1 font-normal font-jalnan">{getPositionName(pos)}</div>
-                        <div className="text-blue-600 text-xs mb-1 font-normal font-jalnan">{player.club}</div>
-                        <div className="text-sm truncate font-normal font-jalnan">{player.name}</div>
-                        <div className="text-xs text-gray-500 font-normal font-jalnan">{player.birthdate}</div>
+                        <div className="text-[10px] text-gray-600 mb-1 font-normal font-jalnan">{getPositionName(pos)}</div>
+                        <div className="text-blue-600 text-[10px] mb-1 font-normal font-jalnan">{player.club}</div>
+                        <div className="text-xs truncate font-normal font-jalnan">{player.name}</div>
+                        <div className="text-[10px] text-gray-500 font-normal font-jalnan">{player.birthdate}</div>
                       </div>
                     </CardContent>
                   </Card>
