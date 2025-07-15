@@ -216,17 +216,17 @@ const FriendBattleJoinScreen = () => {
   };
 
   return (
-    <div className="min-h-screen w-full flex flex-col items-center justify-between relative bg-[#b3e3fd] overflow-x-hidden font-jalnan">
+    <div className="min-h-screen w-full flex flex-col items-center justify-center relative bg-[#b3e3fd] overflow-x-hidden font-jalnan">
       {/* 배경 */}
       <img src="/back_ground.png" alt="Home Background" className="w-full h-full object-cover absolute inset-0 z-0" style={{ minHeight: '100vh', minWidth: '100vw' }} />
       {/* 타이틀 */}
-      <div className="z-10 mt-20 mb-1 text-center font-title" style={{ color: "#535353", fontSize: "1.7rem", display: "inline-block", padding: "0.2em 0.7em", fontWeight: "bold", WebkitTextStroke: "0.1px #fff", textShadow: "0 0 2px #fff, 0 0 4px #fff", lineHeight: "0.9" }}>
+      <div className="z-10 mb-1 text-center font-title" style={{ color: "#535353", fontSize: "1.7rem", display: "inline-block", padding: "0.2em 0.7em", fontWeight: "bold", WebkitTextStroke: "0.1px #fff", textShadow: "0 0 2px #fff, 0 0 4px #fff", lineHeight: "0.9" }}>
         MY BASEBALL<br />ALL✪STAR
       </div>
       {/* 안내 */}
       <div className="z-10 mt-2 mb-4 text-center">
         <div style={{ background: '#444', color: 'white', borderRadius: '2.5rem', fontWeight: 'normal', fontSize: '1.2rem', padding: '0.5rem 2.5rem', margin: '0 auto', fontFamily: 'yg-jalnan', boxShadow: '#535353' }}>
-          {homeTeam.teamName} 과의 경기를 준비하세요
+          {homeTeam.teamName}팀과의 경기를 준비하세요
         </div>
       </div>
       {/* 카드 영역 */}
@@ -235,7 +235,7 @@ const FriendBattleJoinScreen = () => {
         <div
           className="flex-1 flex flex-col items-center bg-[#4ec16e] rounded-2xl py-4 px-2 mx-2 font-jalnan"
           style={{ minWidth: '140px', maxWidth: '220px', flexGrow: 1, boxSizing: 'border-box', marginBottom: '10px' }}
-        >          
+        >             
           <div className="text-white text-2xl font-jalnan mb-2">{homeTeam.teamName}팀</div>
             <button
               className="bg-white text-[#444] rounded-full px-3 py-1 mb-2 text-base font-jalnan w-full invisible"
@@ -262,7 +262,7 @@ const FriendBattleJoinScreen = () => {
           <div
             className="flex-1 flex flex-col items-center bg-[#4ec16e] rounded-2xl py-4 px-2 mx-2 font-jalnan"
             style={{ minWidth: '140px', maxWidth: '220px', flexGrow: 1, boxSizing: 'border-box', marginBottom: '10px' }}
-          >          
+          > 
           {(myTeamNameEdit) ? (
             <div className="flex flex-col items-center w-full mb-2 font-jalnan">
               <input
