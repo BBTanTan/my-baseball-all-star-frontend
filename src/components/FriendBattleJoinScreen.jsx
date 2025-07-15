@@ -220,7 +220,7 @@ const FriendBattleJoinScreen = () => {
       {/* 배경 */}
       <img src="/back_ground.png" alt="Home Background" className="w-full h-full object-cover absolute inset-0 z-0" style={{ minHeight: '100vh', minWidth: '100vw' }} />
       {/* 타이틀 */}
-        <div className="z-10 mt-8 mb-2 text-center font-title" style={{ color: '#535353', fontSize: '2rem', display: 'inline-block', padding: '0.2em 0.7em', WebkitTextStroke: '0.1px rgba(255,255,255)', fontWeight: 'bold' }}>
+      <div className="z-10 mt-20 mb-1 text-center font-title" style={{ color: "#535353", fontSize: "1.7rem", display: "inline-block", padding: "0.2em 0.7em", fontWeight: "bold", WebkitTextStroke: "0.1px #fff", textShadow: "0 0 2px #fff, 0 0 4px #fff", lineHeight: "0.9" }}>
         MY BASEBALL<br />ALL✪STAR
       </div>
       {/* 안내 */}
@@ -230,35 +230,35 @@ const FriendBattleJoinScreen = () => {
         </div>
       </div>
       {/* 카드 영역 */}
-      <div className="flex flex-row justify-around w-full z-10" style={{ width: '100%' }}>
+      <div className="flex flex-row justify-center items-center w-full z-10" style={{ width: '100%' }}>
         {/* 상대팀 카드 */}
-      <div
-        className="flex-1 flex flex-col items-center bg-[#4ec16e] rounded-2xl py-4 px-2 mx-2 font-jalnan"
-        style={{ minWidth: '140px', maxWidth: '220px', flexGrow: 1, boxSizing: 'border-box', marginBottom: '10px' }}
-      >          
-        <div className="text-white text-2xl font-jalnan mb-2">{homeTeam.teamName}팀</div>
-          <button
-            className="bg-white text-[#444] rounded-full px-3 py-1 mb-2 text-base font-jalnan w-full invisible"
-            tabIndex={-1}
-            aria-hidden="true"
-          >
-            더미
-          </button>
-          <img src="/element/field.png" alt="Field" style={{ width: '90px', margin: '16px 0' }} />
-          <div className="bg-white rounded-full px-4 py-1 mt-2 mb-2 text-base font-jalnan text-[#aaa] border-2 border-[#aaa]">선수 선택 완료</div>
-          <button
-            className="w-full bg-[#e28a3d] text-white rounded-full py-2 mt-2 mb-8 font-jalnan"
-            style={{ fontSize: '1rem' }}
-            onClick={() => setStep(2)}
-          >
+        <div
+          className="flex-1 flex flex-col items-center bg-[#4ec16e] rounded-2xl py-4 px-2 mx-2 font-jalnan"
+          style={{ minWidth: '140px', maxWidth: '220px', flexGrow: 1, boxSizing: 'border-box', marginBottom: '10px' }}
+        >          
+          <div className="text-white text-2xl font-jalnan mb-2">{homeTeam.teamName}팀</div>
+            <button
+              className="bg-white text-[#444] rounded-full px-3 py-1 mb-2 text-base font-jalnan w-full invisible"
+              tabIndex={-1}
+              aria-hidden="true"
+            >
+              더미
+            </button>
+            <img src="/element/field.png" alt="Field" style={{ width: '90px', margin: '16px 0' }} />
+            <div className="bg-white rounded-full px-4 py-1 mt-2 mb-2 text-base font-jalnan text-[#aaa] border-2 border-[#aaa]">선수 선택 완료</div>
+            <button
+              className="w-full bg-[#e28a3d] text-white rounded-full py-2 mt-2 mb-8 font-jalnan"
+              style={{ fontSize: '1rem' }}
+              onClick={() => setStep(2)}
+            >
 
-            <span>
-              상대 팀 <span style={{ color: '#ffe066' }}>라인업</span>
-              <div style={{ paddingTop: '1px' }}>확인하기</div>
-            </span>
-          </button>
-        </div>
-        {/* 내 팀 카드 */}
+              <span>
+                상대 팀 <span style={{ color: '#ffe066' }}>라인업</span>
+                <div style={{ paddingTop: '1px' }}>확인하기</div>
+              </span>
+            </button>
+          </div>
+          {/* 내 팀 카드 */}
           <div
             className="flex-1 flex flex-col items-center bg-[#4ec16e] rounded-2xl py-4 px-2 mx-2 font-jalnan"
             style={{ minWidth: '140px', maxWidth: '220px', flexGrow: 1, boxSizing: 'border-box', marginBottom: '10px' }}

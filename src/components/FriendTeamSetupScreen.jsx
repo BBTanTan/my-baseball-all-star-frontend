@@ -18,6 +18,9 @@ const FriendTeamSetupScreen = ({ onComplete, onBack }) => {
 
   // SetupScreen: 팀명, 모드 선택
   if (step === 0) {
+    const positionsCount = 12;
+    const selectedCount = Object.keys(selectedPlayers).length;
+    const isComplete = selectedCount === positionsCount && Object.values(selectedPlayers).every(Boolean);
     console.log("팀 완성:", selectedPlayers, teamName);
     return (
       <div className="min-h-screen w-full flex flex-col items-center justify-between relative bg-[#b3e3fd] overflow-x-hidden font-jalnan">
@@ -29,7 +32,7 @@ const FriendTeamSetupScreen = ({ onComplete, onBack }) => {
           style={{ minHeight: '100vh', minWidth: '100vw' }}
         />
 
-        <div className="z-10 mt-20 mb-2 text-center font-title" style={{ color: '#535353', fontSize: '2rem', display: 'inline-block', padding: '0.2em 0.7em', WebkitTextStroke: '0.01px #fff', fontWeight: 'bold'}}>
+        <div className="z-10 mt-20 mb-1 text-center font-title" style={{ color: "#535353", fontSize: "1.7rem", display: "inline-block", padding: "0.2em 0.7em", fontWeight: "bold", WebkitTextStroke: "0.1px #fff", textShadow: "0 0 2px #fff, 0 0 4px #fff", lineHeight: "0.9" }}>
           MY BASEBALL<br />
           ALL✪STAR
         </div>
@@ -120,7 +123,7 @@ const FriendTeamSetupScreen = ({ onComplete, onBack }) => {
           <button
             style={{ background: '#444', color: 'white', borderRadius: '2.5rem', fontWeight: 'normal', fontSize: '1.2rem', padding: '0.5rem 2.5rem', fontFamily: 'yg-jalnan', boxShadow: '#535353' }}
             onClick={() => setStep(3)}
-            disabled={!teamName}
+            disabled={!teamName || !isComplete}
           >
             대결 시작하기
           </button>
