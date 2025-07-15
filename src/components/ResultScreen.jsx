@@ -64,15 +64,24 @@ const ResultScreen = ({ team1Name, team2Name, team1Score, team2Score, onPlayAgai
         {/* Action Buttons */}
         <div className="w-full max-w-md mx-auto">
           <div className="flex space-x-4 w-full">
+            {typeof onHome === 'function' ? (
+              <Button
+                onClick={onHome}
+                className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold px-8 py-4 rounded-full w-1/2"
+              >
+                홈으로
+              </Button>
+            ) : (
+                <Button
+                  onClick={() => setShowShareModal(true)}
+                  className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold px-8 py-4 rounded-full w-1/2"
+                >
+                  공유하기
+                </Button>
+            )}
             <Button
-              onClick={() => setShowShareModal(true)}
-              className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold px-8 py-4 rounded-full w-1/2"
-            >
-              공유하기
-            </Button>
-            <Button
-              onClick={onHome}
-              className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold px-8 py-4 rounded-full w-1/2"
+                  onClick={onPlayAgain}
+                  className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold px-8 py-4 rounded-full w-1/2"
             >
               또 경기하기
             </Button>

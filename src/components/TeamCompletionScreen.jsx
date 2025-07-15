@@ -96,13 +96,7 @@ const TeamCompletionScreen = ({ teamName, selectedPlayers, onNext, onBack, mode 
         <div className="w-full flex justify-center items-center mt-4">
           <div className="flex space-x-2 w-full max-w-md px-2">
             <Button 
-              onClick={() => {
-                if (mode === 'random') {
-                  onBack()
-                } else {
-                  onBack();
-                }
-              }}
+              onClick={onBack}
               className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold px-8 py-4 rounded-full w-1/2"
             >
               뒤로가기

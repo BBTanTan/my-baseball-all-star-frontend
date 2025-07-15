@@ -11,11 +11,12 @@ const TeamSelectionScreen = (props) => {
     teamName,
     mode: initialMode = 'manual',
     onNext,
-    onBack
+    onBack,
+    selectedPlayers: externalSelectedPlayers // 추가: 외부에서 전달된 selectedPlayers
   } = props;
 
   const [selectedPosition, setSelectedPosition] = useState('CF');
-  const [selectedPlayers, setSelectedPlayers] = useState({
+  const [selectedPlayers, setSelectedPlayers] = useState(externalSelectedPlayers || {
     'C': null,
     'P': null,
     'MP': null,

@@ -115,8 +115,11 @@ const FriendBattleJoinScreen = () => {
         team2Name={gameScores.team2Name}
         team1Score={gameScores.team1}
         team2Score={gameScores.team2}
-        onPlayAgain={() => setStep(0)}
-        onHome={() => setStep(0)}
+        onPlayAgain={() => {
+          setSelectedPlayers({});
+          setStep(0);
+        }}
+        onHome={() => { window.location.href = '/'; }}
       />
     );
   }
@@ -128,7 +131,10 @@ const FriendBattleJoinScreen = () => {
         selectedPlayers={selectedPlayers}
         teamName={myTeamName}
         onNext={() => setStep(0)}
-        onBack={() => setStep(0)}
+        onBack={() => {
+          setSelectedPlayers({});
+          setStep(0);
+        }}
       />
     );
   }
@@ -156,7 +162,10 @@ const FriendBattleJoinScreen = () => {
           setSelectedPlayers(players);
           setStep(1);
         }}
-        onBack={() => setStep(0)}
+        onBack={() => {
+              setTeam1Players(null);
+              setStep('setup');
+        }}
       />
     );
   }
@@ -220,7 +229,7 @@ const FriendBattleJoinScreen = () => {
       {/* 배경 */}
       <img src="/back_ground.png" alt="Home Background" className="w-full h-full object-cover absolute inset-0 z-0" style={{ minHeight: '100vh', minWidth: '100vw' }} />
       {/* 타이틀 */}
-      <div className="z-10 mb-1 text-center font-title" style={{ color: "#535353", fontSize: "1.7rem", display: "inline-block", padding: "0.2em 0.7em", fontWeight: "bold", WebkitTextStroke: "0.1px #fff", textShadow: "0 0 2px #fff, 0 0 4px #fff", lineHeight: "0.9" }}>
+      <div className="z-10 mb-1 text-center font-title" style={{ color: "#535353", fontSize: "1.7rem", display: "inline-block", padding: "0.2em 0.7em", fontWeight: "bold", textShadow: "0 0 2px #fff, 0 0 4px #fff", lineHeight: "0.9" }}>
         MY BASEBALL<br />ALL✪STAR
       </div>
       {/* 안내 */}
