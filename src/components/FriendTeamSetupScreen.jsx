@@ -18,9 +18,12 @@ const FriendTeamSetupScreen = ({ onComplete, onBack }) => {
 
   // SetupScreen: 팀명, 모드 선택
   if (step === 0) {
+    const positionsCount = 12;
+    const selectedCount = Object.keys(selectedPlayers).length;
+    const isComplete = selectedCount === positionsCount && Object.values(selectedPlayers).every(Boolean);
     console.log("팀 완성:", selectedPlayers, teamName);
     return (
-      <div className="min-h-screen w-full flex flex-col items-center justify-between relative bg-[#b3e3fd] overflow-x-hidden font-jalnan">
+      <div className="min-h-screen w-full flex flex-col items-center justify-center relative bg-[#b3e3fd] overflow-x-hidden font-jalnan">
         {/* 상단 구름+타이틀 */}
         <img
           src="/back_ground.png"
@@ -29,19 +32,19 @@ const FriendTeamSetupScreen = ({ onComplete, onBack }) => {
           style={{ minHeight: '100vh', minWidth: '100vw' }}
         />
 
-        <div className="z-10 mt-20 mb-2 text-center font-title" style={{ color: '#535353', fontSize: '2rem', display: 'inline-block', padding: '0.2em 0.7em', WebkitTextStroke: '0.01px #fff', fontWeight: 'bold'}}>
+        <div className="z-10 mb-1 text-center font-title" style={{ color: "#535353", fontSize: "1.7rem", display: "inline-block", padding: "0.2em 0.7em", fontWeight: "bold", WebkitTextStroke: "0.1px #fff", textShadow: "0 0 2px #fff, 0 0 4px #fff", lineHeight: "0.9" }}>
           MY BASEBALL<br />
           ALL✪STAR
         </div>
 
-        <div className="flex flex-col items-center z-10 mt-0 mb-2">
-          <div style={{ background: '#444', color: 'white', borderRadius: '2.5rem', fontWeight: 'normal', fontSize: '1.2rem', padding: '0.5rem 2.5rem', margin: '0 auto', fontFamily: 'yg-jalnan', boxShadow: '#535353' }}>
+        <div className="flex flex-col items-center z-10 mt-0 mb-5">
+          <div style={{ background: '#444', color: 'white', borderRadius: '2.5rem', fontWeight: 'normal', fontSize: '1.2rem', padding: '0.5rem 2.5rem', fontFamily: 'yg-jalnan', boxShadow: '#535353' }}>
             친구와 함께 경기
           </div>
         </div>
 
         {/* 팀 카드 영역 (단일, 가운데 정렬) */}
-        <div className="flex justify-center w-full z-10" style={{ width: '100%' }}>
+        <div className="flex justify-center items-center w-full z-10" style={{ width: '100%' }}>
           <div
             className="flex flex-col items-center bg-[#4ec16e] rounded-2xl py-4 px-2 mx-2 font-jalnan"
             style={{ width: '260px', boxSizing: 'border-box', marginBottom: '10px' }}
@@ -116,11 +119,11 @@ const FriendTeamSetupScreen = ({ onComplete, onBack }) => {
         </div>
 
         {/* 다음 버튼들 */}
-        <div className="flex flex-col items-center z-10 mb-8 w-full font-jalnan" style={{ maxWidth: '400px' }}>
+        <div className="flex flex-col items-center z-10 mb-8 mt-3 w-full font-jalnan" style={{ maxWidth: '400px' }}>
           <button
             style={{ background: '#444', color: 'white', borderRadius: '2.5rem', fontWeight: 'normal', fontSize: '1.2rem', padding: '0.5rem 2.5rem', fontFamily: 'yg-jalnan', boxShadow: '#535353' }}
             onClick={() => setStep(3)}
-            disabled={!teamName}
+            disabled={!teamName || !isComplete}
           >
             대결 시작하기
           </button>
