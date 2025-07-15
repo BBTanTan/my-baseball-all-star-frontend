@@ -7,7 +7,6 @@ const Landing = ({ onStart }) => {
         src="/landing.png" 
         alt="Home" 
         className="w-full h-full object-cover absolute inset-0 z-0" 
-        style={{ minHeight: '100vh', minWidth: '100vw' }}
       />
       <div className="z-10 flex flex-col items-center justify-start gap-1" style={{ position: 'absolute', top: '2vh', left: '50%', transform: 'translateX(-50%)' }}>
         <img
