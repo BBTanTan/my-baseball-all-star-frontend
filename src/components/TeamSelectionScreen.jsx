@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 
-const SERVER_BASE_URL = import.meta.env.VITE_SERVER_BASE_URL;
+const SERVER_BASE_URL = import.meta.env.VITE_APP_SERVER_BASE_URL;
 
 const TeamSelectionScreen = (props) => {
   console.log('TeamSelectionScreen 렌더링됨, props:', props);
@@ -40,7 +40,9 @@ const TeamSelectionScreen = (props) => {
       // 서버에서 랜덤 팀 요청
       const fetchRandomTeam = async () => {
         try {
+          console.log('랜덤 팀 요청 시작',SERVER_BASE_URL);;
           const res = await fetch(`${SERVER_BASE_URL}/teams?mode=random`);
+
           if (!res.ok) {
             console.error('랜덤팀 fetch 실패, status:', res.status, res.statusText);
             const text = await res.text();
