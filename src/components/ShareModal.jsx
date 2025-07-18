@@ -62,21 +62,22 @@ const ShareModal = ({ shareUrl, open, onClose, title }) => {
       <Dialog.Portal>
         <Dialog.Overlay className="bg-black/40 fixed inset-0 z-50" />
         <Dialog.Content 
-          className="bg-white rounded-2xl shadow-xl p-6 w-[90vw] max-w-md fixed top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 z-50"
+          className="bg-white rounded-2xl shadow-xl p-6 w-[90vw] max-w-xs fixed top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 z-50"
+          style={{ boxSizing: 'border-box' }}
           aria-describedby="share-description"
         >
-          <Dialog.Title className="text-lg font-bold mb-2">{title || "공유하기"}</Dialog.Title>
-          <p className="text-sm text-gray-600 mb-4" id="share-description">이 링크를 친구에게 공유해보세요!</p>
+          <Dialog.Title className="text-lg font-bold mb-2 text-center">친구들과 게임을 공유해요!</Dialog.Title>
+          <p className="text-sm text-gray-600 mb-4 text-center" id="share-description">이 링크를 친구에게 공유해보세요!</p>
           {/* 공유 링크 */}
-          <div className="flex items-center gap-2 mb-4">
-            <input
-              readOnly
-              className="flex-1 border rounded-full px-3 py-1 text-sm"
-              value={shareUrl}
-            />
+          <div className="mb-4">
+            <div className="w-full font-normal border rounded-md px-3 py-1 text-sm mb-2 bg-gray-50 text-gray-800 text-center select-all truncate">
+              {shareUrl}
+            </div>
+          </div>
+          <div className="flex justify-center mb-4">
             <button
               onClick={handleCopy}
-              className="bg-gray-800 text-white px-3 py-1 rounded-full text-sm"
+              className="bg-gray-800 w-3/5 text-white px-3 py-1 rounded-full text-sm"
             >
               {copied ? "복사됨!" : "복사"}
             </button>

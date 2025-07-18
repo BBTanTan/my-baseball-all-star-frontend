@@ -119,7 +119,7 @@ const FriendTeamSetupScreen = ({ onComplete, onBack }) => {
         </div>
 
         {/* 다음 버튼들 */}
-        <div className="flex flex-col items-center z-10 mb-8 mt-3 w-full font-jalnan" style={{ maxWidth: '400px' }}>
+        <div className="flex flex-col items-center z-10 mb-8 w-full font-jalnan" style={{ maxWidth: '400px' }}>
           <button
             style={{ background: '#444', color: 'white', borderRadius: '2.5rem', fontWeight: 'normal', fontSize: '1.2rem', padding: '0.5rem 2.5rem', fontFamily: 'yg-jalnan', boxShadow: '#535353' }}
             onClick={() => setStep(3)}
@@ -155,18 +155,37 @@ const FriendTeamSetupScreen = ({ onComplete, onBack }) => {
 
   // 팀 완성 화면
   if (step === 2) {
-    return (
-      <div>
-        <TeamCompletionScreen
-          selectedPlayers={selectedPlayers}
-          teamName={teamName}
-          onNext={() => {
-            setStep(0)
-          }}
+    if (mode === 'random') {
+      return (
+        <div>
+          <TeamCompletionScreen
+            selectedPlayers={selectedPlayers}
+            teamName={teamName}
+            onBack={() => {
+              setSelectedPlayers({});
+              setStep(0);
+            }}
+            onNext={() => {
+              setStep(0)
+            }}
+            mode={mode}
+          />
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <TeamCompletionScreen
+            selectedPlayers={selectedPlayers}
+            teamName={teamName}
+            onNext={() => {
+              setStep(0)
+            }}
           onBack={() => setStep(1)}
-        />
-      </div>
-    );
+          />
+        </div>
+      );
+    }
   }
 
   // step === 3: 패스워드 설정 화면

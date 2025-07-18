@@ -37,7 +37,6 @@ const Landing = ({ onStart }) => {
             background: '#FFFFFF',
             color: '#535353',
             fontWeight: 'normal',
-            boxShadow: '0 4px 24px rgba(0,0,0,0.2)',
             border: 'none',
             cursor: 'pointer',
             width: 'min(240px, 60vw)'
