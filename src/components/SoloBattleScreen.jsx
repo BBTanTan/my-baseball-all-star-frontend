@@ -75,8 +75,6 @@ const SoloBattleScreen = ({ onBack }) => {
       });
       if (!res.ok) throw new Error('서버 오류');
       const result = await res.json();
-      console.log('대결 결과:', result);
-      // result: { homeTeam: { teamName, teamScore }, awayTeam: { teamName, teamScore } }
       setGameScores({
         team1: result.homeTeam.teamScore,
         team2: result.awayTeam.teamScore,

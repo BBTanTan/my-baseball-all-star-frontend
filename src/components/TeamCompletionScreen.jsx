@@ -38,7 +38,7 @@ const TeamCompletionScreen = ({ teamName, selectedPlayers, onNext, onBack, mode 
   ];
   return (
     <MobileLayout outerBg="transparent" innerBg="transparent">
-    <div className="h-screen w-full flex flex-col items-center justify-start relative font-jalnan">
+    <div className="h-screen w-full flex flex-col items-center justify-start relative font-jalnan p-1">
       <div className="flex flex-col items-center w-full z-10" style={{ background: 'transparent', borderRadius: '0', padding: '0', height: '100%' }}>
         {/* Title */}
         <div className="text-lg text-[#FFFFFF] mb-2 font-normal font-jalnan mt-8" style={{ background: '#535353', borderRadius: '1.5rem', padding: '0.5rem 1.5rem', boxShadow: '#535353', fontWeight: 'normal' }}>

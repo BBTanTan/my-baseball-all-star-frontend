@@ -29,7 +29,6 @@ const FriendBattleJoinScreen = () => {
       fetch(`${SERVER_BASE_URL}/teams/${teamUuid}`)
         .then(res => res.json())
         .then(data => {
-          console.log("팀 정보:", data);
           if (!data || !data.teamId || !data.teamName || !data.players) {
             setHomeTeamError(true);
             return;
@@ -203,8 +202,6 @@ const FriendBattleJoinScreen = () => {
       playerIds: Object.values(selectedPlayers).map(p => p?.id).filter(Boolean)
     };
     try {
-      // fetch의 URL이 올바른지 확인 (환경변수 문제 시 콘솔로 확인)
-      console.log('대결 요청 URL:', `${SERVER_BASE_URL}/plays/friend`);
       const res = await fetch(`${SERVER_BASE_URL}/plays/friend`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -212,7 +209,6 @@ const FriendBattleJoinScreen = () => {
       });
       if (!res.ok) throw new Error('서버 오류');
       const result = await res.json();
-      console.log('대결 결과:', result);
       setGameScores({
         team1: result.homeTeam.teamScore,
         team2: result.awayTeam.teamScore,

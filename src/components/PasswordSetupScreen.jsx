@@ -11,7 +11,6 @@ const PasswordSetupScreen = ({ teamName = "드림팀", playerIds = [], onComplet
   const [shareUrl, setShareUrl] = useState("");
 
   const handleSubmit = async () => {
-    console.log("팀 목록 : ", playerIds);
     if (password.length > 0) {
       try {
         // 서버로 팀 정보 전송
@@ -28,8 +27,6 @@ const PasswordSetupScreen = ({ teamName = "드림팀", playerIds = [], onComplet
         });
         if (!res.ok) throw new Error("서버 오류");
         const data = await res.json();
-        console.log("팀 정보 저장 성공:", data);
-        // 서버에서 teamUuid 반환
         const teamUuid = data.teamUuid || "test-uuid";
         const url = `${window.location.origin}/friend-battle/join?teamUuid=${teamUuid}`;
         setShareUrl(url);
