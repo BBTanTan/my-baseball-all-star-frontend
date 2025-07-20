@@ -243,7 +243,13 @@ const FriendBattleJoinScreen = () => {
           className="flex-1 flex flex-col items-center bg-[#4ec16e] rounded-2xl py-4 px-2 mx-2 font-jalnan"
           style={{ minWidth: '140px', maxWidth: '220px', flexGrow: 1, boxSizing: 'border-box', marginBottom: '10px' }}
         >             
-          <div className="text-white text-2xl font-jalnan mb-2">{homeTeam.teamName}팀</div>
+          <div
+            className="text-white text-2xl font-jalnan mb-2 w-full text-center truncate min-w-0"
+            style={{ fontSize: 'clamp(1rem, 3vw, 1.25rem)' }}
+            title={homeTeam.teamName}
+          >
+            {homeTeam.teamName}팀
+          </div>
             <button
               className="bg-white text-[#444] rounded-full px-3 py-1 mb-2 text-base font-jalnan w-full invisible"
               tabIndex={-1}
@@ -293,7 +299,13 @@ const FriendBattleJoinScreen = () => {
             </div>
           ) : (
             <>
-              <div className="text-white text-2xl font-jalnan mb-2 w-full text-center">{myTeamName}</div>
+              <div
+                className="text-white text-2xl font-jalnan mb-2 w-full text-center truncate min-w-0"
+                style={{ fontSize: 'clamp(1rem, 3vw, 1.25rem)' }}
+                title={myTeamName}
+              >
+                {myTeamName}
+              </div>
               <button
                 className="bg-white text-[#444] rounded-full px-3 py-1 mb-2 text-base font-jalnan w-full"
                 onClick={() => {
