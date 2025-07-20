@@ -24,6 +24,12 @@ const FriendTeamSetupScreen = ({ onComplete, onBack }) => {
     console.log("팀 완성:", selectedPlayers, teamName);
     return (
       <div className="min-h-screen w-full flex flex-col items-center justify-center relative bg-[#b3e3fd] overflow-x-hidden font-jalnan">
+        <button
+          onClick={onBack}
+          className="absolute top-4 left-4 z-20 text-[#444] rounded-full w-10 h-10 flex items-center justify-center font-jalnan shadow border-2 border-[#b3e3fd]"
+          style={{ backgroundImage: "url('/element/home.png')", backgroundSize: 'cover', backgroundPosition: 'center' }}
+        >
+        </button>
         {/* 상단 구름+타이틀 */}
         <img
           src="/back_ground.png"
