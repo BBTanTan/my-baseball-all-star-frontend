@@ -40,7 +40,7 @@ const PasswordVerificationScreen = ({ teamName, teamId, onBack }) => {
   return (
     <div className="min-h-screen w-full flex flex-col items-center justify-start relative font-jalnan mt-7" style={{ backgroundImage: "url('/back_ground.png')", backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' }}>
       {/* 타이틀 */}
-      <div className="mt-16 mb-6 text-center font-title text-3xl font-bold text-[#535353]" style={{ WebkitTextStroke: '0.5px #fff', textStroke: '0.5px #fff' }}>
+      <div className="z-10 mt-20 mb-1 text-center font-title font-extrabold" style={{ color: "#535353", fontSize: "1.7rem", display: "inline-block", padding: "0.2em 0.7em", fontWeight: "200", textShadow: "0 0 2px #fff, 0 0 4px #fff", lineHeight: "0.9" }}>
         MY BASEBALL<br />ALL✪STAR
       </div>
       {/* 게임 결과 확인 타이틀 */}

@@ -5,6 +5,7 @@ import TeamSelectionScreen from "@/components/TeamSelectionScreen";
 import GameLoadingScreen from "@/components/GameLoadingScreen";
 import ResultScreen from "@/components/ResultScreen";
 import { useSearchParams } from "react-router-dom";
+import MobileLayout from "./layout/MobileLayout";
 
 const SERVER_BASE_URL = import.meta.env.VITE_SERVER_BASE_URL;
 
@@ -225,11 +226,12 @@ const FriendBattleJoinScreen = () => {
   };
 
   return (
+    <MobileLayout>
     <div className="min-h-screen w-full flex flex-col items-center justify-center relative bg-[#b3e3fd] overflow-x-hidden font-jalnan">
       {/* 배경 */}
-      <img src="/back_ground.png" alt="Home Background" className="w-full h-full object-cover absolute inset-0 z-0" style={{ minHeight: '100vh', minWidth: '100vw' }} />
+      <img src="/back_ground.png" alt="Home Background" className="w-full h-full object-cover absolute inset-0 z-0"/>
       {/* 타이틀 */}
-      <div className="z-10 mb-1 text-center font-title" style={{ color: "#535353", fontSize: "1.7rem", display: "inline-block", padding: "0.2em 0.7em", fontWeight: "bold", textShadow: "0 0 2px #fff, 0 0 4px #fff", lineHeight: "0.9" }}>
+      <div className="z-10 mt-20 mb-1 text-center font-title font-extrabold" style={{ color: "#535353", fontSize: "1.7rem", display: "inline-block", padding: "0.2em 0.7em", fontWeight: "200", textShadow: "0 0 2px #fff, 0 0 4px #fff", lineHeight: "0.9" }}>
         MY BASEBALL<br />ALL✪STAR
       </div>
       {/* 안내 */}
@@ -352,6 +354,7 @@ const FriendBattleJoinScreen = () => {
         </button>
       </div>
     </div>
+    </MobileLayout>
   );
 };
 
