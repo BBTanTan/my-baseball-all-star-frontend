@@ -4,11 +4,11 @@ import MobileLayout from "../components/layout/MobileLayout";
 const Landing = ({ onStart }) => {
   return (
     <MobileLayout>
-    <div className="min-h-screen w-full flex flex-col items-center justify-center relative">
+    <div className="min-h-screen w-full flex flex-col items-center justify-center relative bg-black">
       <img 
         src="/landing.png" 
         alt="Home" 
-        className="w-full h-full object-contain absolute inset-0 z-0" 
+        className="w-full h-full object-cover absolute inset-0 z-0" 
       />
       <div className="z-10 flex flex-col items-center justify-start gap-1" style={{ position: 'absolute', top: '2vh', left: '50%', transform: 'translateX(-50%)' }}>
         <img

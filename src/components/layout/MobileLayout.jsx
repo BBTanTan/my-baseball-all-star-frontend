@@ -9,10 +9,10 @@ const MobileLayout = ({
     style={{ background: outerBg }}
   >
     <div
-      className={`relative w-full max-w-[430px] min-h-screen mx-auto overflow-hidden ${className}`}
-      style={{
+        className={`relative w-full max-w-[430px] min-h-screen mx-auto overflow-hidden ${className}`}
+        style={{
         background: innerBg,
-      }}
+        }}
     >
       {children}
     </div>
