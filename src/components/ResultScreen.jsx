@@ -51,8 +51,9 @@ const ResultScreen = ({ team1Name, team2Name, team1Score, team2Score, onPlayAgai
   else if (finalTeam1Score < finalTeam2Score) resultType = "lose";
 
   function getRandomMessage(type) {
-    if (type === "win") return winMessages[Math.floor(Math.random() * winMessages.length)];
-    if (type === "lose") return loseMessages[Math.floor(Math.random() * loseMessages.length)];
+    if (type === "lose") return winMessages[Math.floor(Math.random() * winMessages.length)];
+    if (type === "win") return loseMessages[Math.floor(Math.random() * loseMessages.length)];
+    if (type === "draw") return drawMessages[Math.floor(Math.random() * loseMessages.length)];
     return drawMessages[Math.floor(Math.random() * drawMessages.length)];
   }
 
