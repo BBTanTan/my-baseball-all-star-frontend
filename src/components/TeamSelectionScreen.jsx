@@ -218,8 +218,8 @@ const TeamSelectionScreen = (props) => {
           {teamName} 선수선택
         </div>
         {/* 필드 이미지 */}
-        <div className="relative w-full flex justify-center mb-2" style={{ minHeight: '180px', height: '40%' }}>
-          <img src="/element/field.png" alt="야구장" style={{ width: '100%', maxWidth: '90%', borderRadius: '1.5rem', height: '100%' }} />
+        <div className="relative w-full flex justify-center mb-2" style={{ minHeight: '35%', height: '35%' }}>
+          <img src="/element/field.png" alt="야구장" style={{ width: '80%', maxWidth: '90%', borderRadius: '1.5rem', height: '100%' }} />
           {/* 포지션 마커: 이미지 좌표 고정 */}
           {fieldPositions.map(({ pos, x, y, label }) => {
             const player = selectedPlayers[pos];

@@ -94,7 +94,6 @@ const TeamCompletionScreen = ({ teamName, selectedPlayers, onNext, onBack, mode 
             })}
           </div>
         </div>
-        {/* 버튼 영역: TeamSelectionScreen과 동일하게 하단 고정 배치 */}
         <div className="w-full flex justify-center items-center mt-4">
           <div className="flex space-x-2 w-full max-w-md px-2">
             <Button 
