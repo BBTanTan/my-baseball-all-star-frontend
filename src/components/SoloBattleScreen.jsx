@@ -4,6 +4,7 @@ import TeamSelectionScreen from "@/components/TeamSelectionScreen";
 import TeamCompletionScreen from "@/components/TeamCompletionScreen";
 import GameLoadingScreen from "@/components/GameLoadingScreen";
 import ResultScreen from "@/components/ResultScreen";
+import MobileLayout from "./layout/MobileLayout";
 
 const SERVER_BASE_URL = import.meta.env.VITE_SERVER_BASE_URL;
 
@@ -93,7 +94,8 @@ const SoloBattleScreen = ({ onBack }) => {
 
   if (step === 'setup') {
     return (
-      <div className="min-h-screen w-full flex flex-col items-center relative bg-[#b3e3fd] font-jalnan">
+      <MobileLayout>
+      <div className="w-full flex flex-col items-center relative bg-[#b3e3fd] font-jalnan overflow-hidden">
         {/* 홈 버튼 */}
         <button
           onClick={onBack}
@@ -106,7 +108,6 @@ const SoloBattleScreen = ({ onBack }) => {
           src="/back_ground.png"
           alt="Home Background"
           className="w-full h-full object-cover absolute inset-0 z-0"
-          style={{ minHeight: '100vh', minWidth: '100vw' }}
         />
       <div className="z-10 mt-20 mb-1 text-center font-title font-extrabold" style={{ color: "#535353", fontSize: "1.7rem", display: "inline-block", padding: "0.2em 0.7em", fontWeight: "900", textShadow: "0 0 2px #fff, 0 0 4px #fff", lineHeight: "0.9" }}>
           MY BASEBALL<br />
@@ -240,6 +241,7 @@ const SoloBattleScreen = ({ onBack }) => {
           </button>
         </div>
       </div>
+      </MobileLayout>
     );
   }
   // step이 setup이 아닐 때는 기존 로직대로 화면 전환
