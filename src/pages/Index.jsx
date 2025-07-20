@@ -28,7 +28,7 @@ const Index = () => {
       <img
         src="/landing.png"
         alt="Home Background"
-        className="w-full h-full object-contain absolute inset-0 z-0" 
+        className="w-full h-full object-cover absolute inset-0 z-0" 
       />
       <div className="z-10 flex flex-col items-center justify-start gap-1" style={{ position: 'absolute', top: '2vh', left: '50%', transform: 'translateX(-50%)' }}>
         <img
