@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import ShareModal from "./ShareModal";
+import MobileLayout from "./layout/MobileLayout";
 
 const TeamResult = ({ teamName, results, onBack }) => {
   const [showShareModal, setShowShareModal] = useState(false);
@@ -27,15 +28,11 @@ const TeamResult = ({ teamName, results, onBack }) => {
     : [];
 
   return (
-    <div
-      className="min-h-screen w-full flex flex-col items-center justify-start relative font-jalnan"
-      style={{
-        backgroundImage: "url('/landing.png')",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-      }}
-    >
+    <MobileLayout>
+    <div className="min-h-screen w-full flex flex-col items-center justify-start relative bg-[#b3e3fd] overflow-x-hidden font-jalnan">
+      <img src="/landing.png" alt="Home Background" className="w-full h-full object-cover absolute inset-0 z-0"/>
+      <div className="mt-10 relative z-10 w-full flex flex-col items-center">
+
       {/* 타이틀 */}
       <div className="text-lg text-[#FFFFFF] mb-2 font-normal font-jalnan mt-12 mb-8" style={{ background: '#535353', borderRadius: '1.5rem', padding: '0.5rem 1.5rem', boxShadow: '#535353', fontWeight: 'normal' }}>
           {`${teamName} 게임 결과 확인하기`}
@@ -44,7 +41,7 @@ const TeamResult = ({ teamName, results, onBack }) => {
       <div className="w-full flex flex-col items-center gap-6 mb-8">
         {displayResults.length === 0 ? (
           <div
-            className="w-[90vw] max-w-xl bg-black rounded-[48px] flex items-center justify-center px-8 py-6 border-4 border-white shadow-lg"
+            className="w-[90%] max-w-xl bg-black rounded-[48px] flex items-center justify-center px-8 py-6 border-4 border-white shadow-lg"
             style={{ fontFamily: 'DungGeunMo, monospace', minHeight: '80px' }}
           >
             <div>
@@ -60,7 +57,7 @@ const TeamResult = ({ teamName, results, onBack }) => {
           displayResults.map((r, idx) => (
             <div
               key={idx}
-              className="w-[90vw] max-w-xl bg-black rounded-[48px] flex items-center justify-between px-8 py-6 border-4 border-white shadow-lg"
+              className="w-[90%] max-w-xl bg-black rounded-[48px] flex items-center justify-between px-8 py-6 border-4 border-white shadow-lg"
               style={{ fontFamily: 'DungGeunMo, monospace' }}
             >
               <span className={
@@ -97,7 +94,7 @@ const TeamResult = ({ teamName, results, onBack }) => {
           ))
         )}
       </div>
-      <div className="w-full max-w-md mx-auto mt-4">
+      <div className="w-4/5 max-w-md mx-auto mt-4">
         <div className="flex space-x-4 w-full">
           <Button
             onClick={() => setShowShareModal(true)}
@@ -113,6 +110,7 @@ const TeamResult = ({ teamName, results, onBack }) => {
           </Button>
         </div>
       </div>
+      </div>
       <ShareModal
         shareUrl={shareUrl}
         title={teamName + " 팀을 공유해요!"}
@@ -120,6 +118,7 @@ const TeamResult = ({ teamName, results, onBack }) => {
         onClose={() => setShowShareModal(false)}
       />
     </div>
+    </MobileLayout>
   );
 };
 

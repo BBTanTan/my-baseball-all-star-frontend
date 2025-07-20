@@ -69,27 +69,15 @@ const GameLoadingScreen = ({ team1Name, team2Name, onComplete }) => {
     <MobileLayout>
     <div className="min-h-screen w-full relative overflow-hidden">
       {/* Fullscreen background image */}
-      <div
-        style={{
-          position: "fixed",
-          top: 0,
-          left: 0,
-          width: "100vw",
-          height: "100vh",
-          zIndex: 0,
-          backgroundImage: "url('/landing.png')",
-          backgroundRepeat: "no-repeat",
-          backgroundPosition: "center",
-          backgroundSize: "cover",
-          backgroundColor: "transparent"
-        }}
-      />
+      <img src="/landing.png" alt="Home Background" className="w-full h-full object-cover absolute inset-0 z-0"/>
+
       <div className="flex flex-col items-center pt-2 pb-0 px-2 space-y-2" style={{ position: "relative", zIndex: 1 }}>
         {/* Logo 이미지 */}
         <img
           src="/element/logo.png"
           alt="Logo"
-          className="w-56 h-56 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-96 lg:h-96 object-contain mb-2"
+          className="mb-2"
+          style={{ width: '55vw', maxWidth: '200px', height: 'auto' }}
         />
         {/* Game Status Board */}
         <div className="bg-black text-white p-6 rounded-3xl border-4 border-gray-300 w-full max-w-md">
