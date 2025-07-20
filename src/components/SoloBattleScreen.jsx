@@ -93,7 +93,14 @@ const SoloBattleScreen = ({ onBack }) => {
 
   if (step === 'setup') {
     return (
-      <div className="min-h-screen w-full flex flex-col items-center relative bg-[#b3e3fd] overflow-x-hidden font-jalnan">
+      <div className="min-h-screen w-full flex flex-col items-center relative bg-[#b3e3fd] font-jalnan">
+        {/* 홈 버튼 */}
+        <button
+          onClick={onBack}
+          className="absolute top-4 left-4 z-20 text-[#444] rounded-full w-12 h-12 flex items-center justify-center font-jalnan shadow border-2 border-[#b3e3fd]"
+          style={{ backgroundImage: "url('/element/home.png')", backgroundSize: 'cover', backgroundPosition: 'center' }}
+        >
+        </button>
         {/* 상단 구름+타이틀 */}
         <img
           src="/back_ground.png"
