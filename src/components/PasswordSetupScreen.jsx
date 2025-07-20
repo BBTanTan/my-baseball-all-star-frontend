@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import ShareModal from "@/components/ShareModal";
+import MobileLayout from "./layout/MobileLayout";
 const SERVER_BASE_URL = import.meta.env.VITE_SERVER_BASE_URL;
 
 const PasswordSetupScreen = ({ teamName = "드림팀", playerIds = [], onComplete, onBack, onHome }) => {
@@ -40,11 +41,12 @@ const PasswordSetupScreen = ({ teamName = "드림팀", playerIds = [], onComplet
   };
 
   return (
-    <div className="min-h-screen bg-[#b3e3fd] relative overflow-hidden flex flex-col items-center justify-center font-jalnan">
+    <MobileLayout>
+    <div className="min-h-screen bg-[#b3e3fd] relative overflow-hidden flex flex-col items-center justify-start font-jalnan">
       {/* 구름 이미지 */}
-      <img src="/back_ground.png" alt="Home Background" className="w-full h-full object-cover absolute inset-0 z-0" style={{ minHeight: "100vh", minWidth: "100vw" }} />
+      <img src="/back_ground.png" alt="Home Background" className="w-full h-full object-cover absolute inset-0 z-0" />
       {/* 타이틀 */}
-      <div className="z-10 mb-1 text-center font-title" style={{ color: "#535353", fontSize: "1.7rem", display: "inline-block", padding: "0.2em 0.7em", fontWeight: "bold", WebkitTextStroke: "0.1px #fff", textShadow: "0 0 2px #fff, 0 0 4px #fff", lineHeight: "0.9" }}>
+      <div className="z-10 mt-20 mb-1 text-center font-title font-extrabold" style={{ color: "#535353", fontSize: "1.7rem", display: "inline-block", padding: "0.2em 0.7em", fontWeight: "900", textShadow: "0 0 2px #fff, 0 0 4px #fff", lineHeight: "0.9" }}>
           MY BASEBALL<br />
           ALL✪STAR
         </div>
@@ -103,6 +105,7 @@ const PasswordSetupScreen = ({ teamName = "드림팀", playerIds = [], onComplet
         onClose={() => setShowShareModal(false)}
       />
     </div>
+    </MobileLayout>
   );
 };
 

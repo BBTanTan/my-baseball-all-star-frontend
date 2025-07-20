@@ -2,6 +2,7 @@ import { useState } from "react";
 import TeamSelectionScreen from "@/components/TeamSelectionScreen";
 import TeamCompletionScreen from "@/components/TeamCompletionScreen";
 import PasswordSetupScreen from "@/components/PasswordSetupScreen";
+import MobileLayout from "./layout/MobileLayout";
 
 const FriendTeamSetupScreen = ({ onComplete, onBack }) => {
   const [step, setStep] = useState(0); // 0: Setup, 1: Select, 2: Complete, 3: Password
@@ -23,6 +24,7 @@ const FriendTeamSetupScreen = ({ onComplete, onBack }) => {
     const isComplete = selectedCount === positionsCount && Object.values(selectedPlayers).every(Boolean);
     console.log("팀 완성:", selectedPlayers, teamName);
     return (
+      <MobileLayout>
       <div className="min-h-screen w-full flex flex-col items-center justify-center relative bg-[#b3e3fd] overflow-x-hidden font-jalnan">
         <button
           onClick={onBack}
@@ -35,10 +37,9 @@ const FriendTeamSetupScreen = ({ onComplete, onBack }) => {
           src="/back_ground.png"
           alt="Home Background"
           className="w-full h-full object-cover absolute inset-0 z-0"
-          style={{ minHeight: '100vh', minWidth: '100vw' }}
         />
 
-        <div className="z-10 mb-1 text-center font-title" style={{ color: "#535353", fontSize: "1.7rem", display: "inline-block", padding: "0.2em 0.7em", fontWeight: "bold", WebkitTextStroke: "0.1px #fff", textShadow: "0 0 2px #fff, 0 0 4px #fff", lineHeight: "0.9" }}>
+        <div className="z-10 mt-20 mb-1 text-center font-title font-extrabold" style={{ color: "#535353", fontSize: "1.7rem", display: "inline-block", padding: "0.2em 0.7em", fontWeight: "900", textShadow: "0 0 2px #fff, 0 0 4px #fff", lineHeight: "0.9" }}>
           MY BASEBALL<br />
           ALL✪STAR
         </div>
@@ -141,6 +142,7 @@ const FriendTeamSetupScreen = ({ onComplete, onBack }) => {
           </button>
         </div>
       </div>
+      </MobileLayout>
     );
   }
 
