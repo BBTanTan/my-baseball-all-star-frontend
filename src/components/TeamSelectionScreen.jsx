@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import MobileLayout from "./layout/MobileLayout";
 
 const SERVER_BASE_URL = import.meta.env.VITE_SERVER_BASE_URL;
 
@@ -218,6 +219,7 @@ const TeamSelectionScreen = (props) => {
     "KT WIZ": "https://i.namu.wiki/i/1I_O46xxWGvTC-arPbfuBwaYgmd0I9gOCfTSchy5Hf5zZ-blf38j7boUFED_abbT5R8Qsj_Ynb-b7x4zxPk4HQ.svg"
   };
   return (
+    <MobileLayout outerBg="transparent" innerBg="transparent">
     <div className="h-screen w-full flex flex-col items-center justify-center relative font-jalnan">
       <div className="flex flex-col items-center w-full h-full z-10" style={{ background: 'transparent', borderRadius: '0', padding: '0', height: '100%' }}>
         {/* 타이틀 */}
@@ -335,6 +337,7 @@ const TeamSelectionScreen = (props) => {
         </div>
       </div>
     </div>
+    </MobileLayout>
   );
 };
 

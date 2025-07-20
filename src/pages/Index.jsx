@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import FriendTeamSetupScreen from "@/components/FriendTeamSetupScreen";
 import SoloBattleScreen from "@/components/SoloBattleScreen";
 import Landing from "./Landing";
+import MobileLayout from "../components/layout/MobileLayout";
 
 const Index = () => {
   const [showLanding, setShowLanding] = useState(true);
@@ -21,20 +22,20 @@ const Index = () => {
   }, []);
 
   const HomeScreen = () => (
+    <MobileLayout>
     <div className="min-h-screen w-full flex flex-col items-center justify-center relative overflow-hidden">
       {/* 전체 배경 이미지는 landing.png 하나로 */}
       <img
         src="/landing.png"
         alt="Home Background"
-        className="w-full h-full object-cover absolute inset-0 z-0"
-        style={{ minHeight: '100vh', minWidth: '100vw' }}
+        className="w-full h-full object-contain absolute inset-0 z-0" 
       />
       <div className="z-10 flex flex-col items-center justify-start gap-1" style={{ position: 'absolute', top: '2vh', left: '50%', transform: 'translateX(-50%)' }}>
         <img
           src="/element/logo.png"
           alt="Logo"
           className="mb-2"
-          style={{ width: '55vw', maxWidth: '75vw', height: 'auto' }}
+          style={{ width: '55vw', maxWidth: '200px', height: 'auto' }}
         />
         <img
           src="/element/baseball-cap.png"
@@ -54,7 +55,7 @@ const Index = () => {
             fontWeight: 'normal',
             border: 'none',
             cursor: 'pointer',
-            width: 'min(320px, 80vw)'
+            width: 'min(300px, 80vw)'
           }}
         >
           혼자 경기
@@ -71,13 +72,14 @@ const Index = () => {
             fontWeight: 'normal',
             border: 'none',
             cursor: 'pointer',
-            width: 'min(320px, 80vw)'
+            width: 'min(300px, 80vw)'
           }}
         >
           친구와 함께 경기
         </button>
       </div>
     </div>
+    </MobileLayout>
   );
 
   if (showLanding) {

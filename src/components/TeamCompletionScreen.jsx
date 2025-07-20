@@ -1,6 +1,7 @@
 /*선택 완료시 라인업 화면 */
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import MobileLayout from "./layout/MobileLayout";
 
 const TeamCompletionScreen = ({ teamName, selectedPlayers, onNext, onBack, mode }) => {
   const positions = ['C', 'P', 'MP', 'CP', '1B', '2B', '3B', 'SS', 'LF', 'CF', 'RF', 'DH'];
@@ -36,6 +37,7 @@ const TeamCompletionScreen = ({ teamName, selectedPlayers, onNext, onBack, mode 
     { pos: 'DH', x: 30, y: 80, label: 'DH' }
   ];
   return (
+    <MobileLayout outerBg="transparent" innerBg="transparent">
     <div className="h-screen w-full flex flex-col items-center justify-start relative font-jalnan">
       <div className="flex flex-col items-center w-full z-10" style={{ background: 'transparent', borderRadius: '0', padding: '0', height: '100%' }}>
         {/* Title */}
@@ -111,6 +113,7 @@ const TeamCompletionScreen = ({ teamName, selectedPlayers, onNext, onBack, mode 
         </div>
       </div>
     </div>
+    </MobileLayout>
   );
 };
 

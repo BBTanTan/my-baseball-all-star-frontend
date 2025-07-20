@@ -1,25 +1,27 @@
 import { useState } from "react";
+import MobileLayout from "../components/layout/MobileLayout";
 
 const Landing = ({ onStart }) => {
   return (
-    <div className="min-h-screen w-full flex flex-col items-center justify-center relative bg-black">
+    <MobileLayout>
+    <div className="min-h-screen w-full flex flex-col items-center justify-center relative">
       <img 
         src="/landing.png" 
         alt="Home" 
-        className="w-full h-full object-cover absolute inset-0 z-0" 
+        className="w-full h-full object-contain absolute inset-0 z-0" 
       />
       <div className="z-10 flex flex-col items-center justify-start gap-1" style={{ position: 'absolute', top: '2vh', left: '50%', transform: 'translateX(-50%)' }}>
         <img
           src="/element/logo.png"
           alt="Logo"
           className="mb-2"
-          style={{ width: '55vw', maxWidth: '75vw', height: 'auto' }}
+          style={{ width: '55vw', maxWidth: '200px', height: 'auto' }}
         />
         <img
           src="/element/baseball-cap.png"
           alt="Baseball Cap"
           className="mb-2"
-          style={{ width: '120px', height: '120px', maxWidth: '30vw', maxHeight: '30vw', objectFit: 'contain' }}
+          style={{ width: '30vw', height: '120px', maxWidth: '30vw', maxHeight: '30vw', objectFit: 'contain' }}
         />
         <img
           src="/element/title.png"
@@ -46,6 +48,8 @@ const Landing = ({ onStart }) => {
         </button>
       </div>
     </div>
+  </MobileLayout>
+
   );
 };
 

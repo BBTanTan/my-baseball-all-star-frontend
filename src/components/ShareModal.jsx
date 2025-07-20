@@ -66,7 +66,9 @@ const ShareModal = ({ shareUrl, open, onClose, title }) => {
           style={{ boxSizing: 'border-box' }}
           aria-describedby="share-description"
         >
-          <Dialog.Title className="text-lg font-bold mb-2 text-center">친구들과 게임을 공유해요!</Dialog.Title>
+          <Dialog.Title 
+            className="text-lg font-bold mb-2 text-center"
+            style={{color: "#535353"}}>친구들과 게임을 공유해요!</Dialog.Title>
           <p className="text-sm text-gray-600 mb-4 text-center" id="share-description">이 링크를 친구에게 공유해보세요!</p>
           {/* 공유 링크 */}
           <div className="mb-4">
@@ -77,7 +79,8 @@ const ShareModal = ({ shareUrl, open, onClose, title }) => {
           <div className="flex justify-center mb-4">
             <button
               onClick={handleCopy}
-              className="bg-gray-800 w-3/5 text-white px-3 py-1 rounded-full text-sm"
+              className="w-3/5 text-white px-3 py-1 rounded-full text-sm"
+              style={{ backgroundColor : "#535353"}}
             >
               {copied ? "복사됨!" : "복사"}
             </button>

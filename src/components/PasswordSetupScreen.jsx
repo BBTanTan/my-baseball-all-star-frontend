@@ -44,9 +44,10 @@ const PasswordSetupScreen = ({ teamName = "드림팀", playerIds = [], onComplet
       {/* 구름 이미지 */}
       <img src="/back_ground.png" alt="Home Background" className="w-full h-full object-cover absolute inset-0 z-0" style={{ minHeight: "100vh", minWidth: "100vw" }} />
       {/* 타이틀 */}
-      <div className="z-10 mt-6 mb-1 text-center font-title" style={{ color: "#535353", fontSize: "1.7rem", display: "inline-block", padding: "0.2em 0.7em", fontWeight: "bold", WebkitTextStroke: "0.1px #fff", textShadow: "0 0 2px #fff, 0 0 4px #fff" }}>
-        MY BASEBALL<br />ALL✪STAR
-      </div>
+      <div className="z-10 mb-1 text-center font-title" style={{ color: "#535353", fontSize: "1.7rem", display: "inline-block", padding: "0.2em 0.7em", fontWeight: "bold", WebkitTextStroke: "0.1px #fff", textShadow: "0 0 2px #fff, 0 0 4px #fff", lineHeight: "0.9" }}>
+          MY BASEBALL<br />
+          ALL✪STAR
+        </div>
       {/* 메인 카드 */}
       <div className="flex flex-col items-center w-full z-10 mt-4" style={{ width: '60vw', maxWidth: '400px' }}>
         <div className="bg-[#444] text-white rounded-full px-6 py-3 mb-3 font-jalnan text-xl font-bold w-full text-center">
