@@ -4,7 +4,7 @@ import TeamCompletionScreen from "@/components/TeamCompletionScreen";
 import TeamSelectionScreen from "@/components/TeamSelectionScreen";
 import GameLoadingScreen from "@/components/GameLoadingScreen";
 import ResultScreen from "@/components/ResultScreen";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import MobileLayout from "./layout/MobileLayout";
 
 const SERVER_BASE_URL = import.meta.env.VITE_SERVER_BASE_URL;
@@ -12,6 +12,7 @@ const SERVER_BASE_URL = import.meta.env.VITE_SERVER_BASE_URL;
 
 // 친구가 링크로 접속해서 join하는 화면
 const FriendBattleJoinScreen = () => {
+  const navigate = useNavigate();
   const [homeTeam, setHomeTeam] = useState(null);
   const [homeTeamError, setHomeTeamError] = useState(false);
   const [showPasswordVerification, setShowPasswordVerification] = useState(false);
@@ -223,145 +224,153 @@ const FriendBattleJoinScreen = () => {
 
   return (
     <MobileLayout>
-    <div className="min-h-screen w-full flex flex-col items-center justify-center relative bg-[#b3e3fd] overflow-x-hidden font-jalnan">
-      {/* 배경 */}
-      <img src="/back_ground.png" alt="Home Background" className="w-full h-full object-cover absolute inset-0 z-0"/>
-      {/* 타이틀 */}
-      <div className="z-10 mt-20 mb-1 text-center font-title font-extrabold" style={{ color: "#535353", fontSize: "1.7rem", display: "inline-block", padding: "0.2em 0.7em", fontWeight: "200", textShadow: "0 0 2px #fff, 0 0 4px #fff", lineHeight: "0.9" }}>
-        MY BASEBALL<br />ALL✪STAR
-      </div>
-      {/* 안내 */}
-      <div className="z-10 mt-2 mb-4 text-center">
-        <div style={{ background: '#444', color: 'white', borderRadius: '2.5rem', fontWeight: 'normal', fontSize: '1.2rem', padding: '0.5rem 2.5rem', margin: '0 auto', fontFamily: 'yg-jalnan', boxShadow: '#535353' }}>
-          {homeTeam.teamName}팀과의 경기를 준비하세요
+      <div className="min-h-screen w-full flex flex-col items-center justify-center relative bg-[#b3e3fd] overflow-x-hidden font-jalnan">
+        {/* 홈 버튼 */}
+        <button
+          onClick={() => navigate("/")}
+          className="absolute top-4 left-4 z-20 text-[#444] rounded-full w-10 h-10 flex items-center justify-center font-jalnan shadow border-2 border-[#b3e3fd]"
+          style={{ backgroundImage: "url('/element/home.png')", backgroundSize: 'cover', backgroundPosition: 'center' }}
+          aria-label="홈으로"
+        >
+        </button>
+        {/* 배경 */}
+        <img src="/back_ground.png" alt="Home Background" className="w-full h-full object-cover absolute inset-0 z-0"/>
+        {/* 타이틀 */}
+        <div className="z-10 mt-20 mb-1 text-center font-title font-extrabold" style={{ color: "#535353", fontSize: "1.7rem", display: "inline-block", padding: "0.2em 0.7em", fontWeight: "200", textShadow: "0 0 2px #fff, 0 0 4px #fff", lineHeight: "0.9" }}>
+          MY BASEBALL<br />ALL✪STAR
         </div>
-      </div>
-      {/* 카드 영역 */}
-      <div className="flex flex-row justify-center items-center w-full z-10" style={{ width: '100%' }}>
-        {/* 상대팀 카드 */}
-        <div
-          className="flex-1 flex flex-col items-center bg-[#4ec16e] rounded-2xl py-4 px-2 mx-2 font-jalnan"
-          style={{ minWidth: '140px', maxWidth: '220px', flexGrow: 1, boxSizing: 'border-box', marginBottom: '10px' }}
-        >             
-          <div
-            className="text-white text-2xl font-jalnan mb-2 w-full text-center truncate min-w-0"
-            style={{ fontSize: 'clamp(1rem, 3vw, 1.25rem)' }}
-            title={homeTeam.teamName}
-          >
-            {homeTeam.teamName}팀
+        {/* 안내 */}
+        <div className="z-10 mt-2 mb-4 text-center">
+          <div style={{ background: '#444', color: 'white', borderRadius: '2.5rem', fontWeight: 'normal', fontSize: '1.2rem', padding: '0.5rem 2.5rem', margin: '0 auto', fontFamily: 'yg-jalnan', boxShadow: '#535353' }}>
+            {homeTeam.teamName}팀과의 경기를 준비하세요
           </div>
-            <button
-              className="bg-white text-[#444] rounded-full px-3 py-1 mb-2 text-base font-jalnan w-full invisible"
-              tabIndex={-1}
-              aria-hidden="true"
-            >
-              더미
-            </button>
-            <img src="/element/field.png" alt="Field" style={{ width: '90px', margin: '16px 0' }} />
-            <div className="bg-white rounded-full px-4 py-1 mt-2 mb-2 text-base font-jalnan text-[#aaa] border-2 border-[#aaa]">선수 선택 완료</div>
-            <button
-              className="w-full bg-[#e28a3d] text-white rounded-full py-2 mt-2 mb-8 font-jalnan"
-              style={{ fontSize: '1rem' }}
-              onClick={() => setStep(2)}
-            >
-
-              <span>
-                상대 팀 <span style={{ color: '#ffe066' }}>라인업</span>
-                <div style={{ paddingTop: '1px' }}>확인하기</div>
-              </span>
-            </button>
-          </div>
-          {/* 내 팀 카드 */}
+        </div>
+        {/* 카드 영역 */}
+        <div className="flex flex-row justify-center items-center w-full z-10" style={{ width: '100%' }}>
+          {/* 상대팀 카드 */}
           <div
             className="flex-1 flex flex-col items-center bg-[#4ec16e] rounded-2xl py-4 px-2 mx-2 font-jalnan"
             style={{ minWidth: '140px', maxWidth: '220px', flexGrow: 1, boxSizing: 'border-box', marginBottom: '10px' }}
-          > 
-          {(myTeamNameEdit) ? (
-            <div className="flex flex-col items-center w-full mb-2 font-jalnan">
-              <input
-                value={myTeamName}
-                onChange={e => setMyTeamName(e.target.value)}
-                className="text-gray-800 text-center rounded-full px-2 py-1 mb-2 w-full font-jalnan"
-                style={{ fontSize: '1rem' }}
-                maxLength={10}
-                placeholder="팀 이름을 입력하세요"
-              />
+          >             
+            <div
+              className="text-white text-2xl font-jalnan mb-2 w-full text-center truncate min-w-0"
+              style={{ fontSize: 'clamp(1rem, 3vw, 1.25rem)' }}
+              title={homeTeam.teamName}
+            >
+              {homeTeam.teamName}팀
+            </div>
               <button
-                onClick={() => {
-                  setMyTeamName(myTeamName);
-                  setMyTeamNameEdit(false);
-                }}
-                className="bg-white text-[#444] rounded-full px-4 py-1 text-base font-jalnan w-full"
-                disabled={!myTeamName}
+                className="bg-white text-[#444] rounded-full px-3 py-1 mb-2 text-base font-jalnan w-full invisible"
+                tabIndex={-1}
+                aria-hidden="true"
               >
-                완료
+                더미
+              </button>
+              <img src="/element/field.png" alt="Field" style={{ width: '90px', margin: '16px 0' }} />
+              <div className="bg-white rounded-full px-4 py-1 mt-2 mb-2 text-base font-jalnan text-[#aaa] border-2 border-[#aaa]">선수 선택 완료</div>
+              <button
+                className="w-full bg-[#e28a3d] text-white rounded-full py-2 mt-2 mb-8 font-jalnan"
+                style={{ fontSize: '1rem' }}
+                onClick={() => setStep(2)}
+              >
+
+                <span>
+                  상대 팀 <span style={{ color: '#ffe066' }}>라인업</span>
+                  <div style={{ paddingTop: '1px' }}>확인하기</div>
+                </span>
               </button>
             </div>
-          ) : (
-            <>
-              <div
-                className="text-white text-2xl font-jalnan mb-2 w-full text-center truncate min-w-0"
-                style={{ fontSize: 'clamp(1rem, 3vw, 1.25rem)' }}
-                title={myTeamName}
-              >
-                {myTeamName}
+            {/* 내 팀 카드 */}
+            <div
+              className="flex-1 flex flex-col items-center bg-[#4ec16e] rounded-2xl py-4 px-2 mx-2 font-jalnan"
+              style={{ minWidth: '140px', maxWidth: '220px', flexGrow: 1, boxSizing: 'border-box', marginBottom: '10px' }}
+            > 
+            {(myTeamNameEdit) ? (
+              <div className="flex flex-col items-center w-full mb-2 font-jalnan">
+                <input
+                  value={myTeamName}
+                  onChange={e => setMyTeamName(e.target.value)}
+                  className="text-gray-800 text-center rounded-full px-2 py-1 mb-2 w-full font-jalnan"
+                  style={{ fontSize: '1rem' }}
+                  maxLength={10}
+                  placeholder="팀 이름을 입력하세요"
+                />
+                <button
+                  onClick={() => {
+                    setMyTeamName(myTeamName);
+                    setMyTeamNameEdit(false);
+                  }}
+                  className="bg-white text-[#444] rounded-full px-4 py-1 text-base font-jalnan w-full"
+                  disabled={!myTeamName}
+                >
+                  완료
+                </button>
               </div>
-              <button
-                className="bg-white text-[#444] rounded-full px-3 py-1 mb-2 text-base font-jalnan w-full"
-                onClick={() => {
-                  setMyTeamName(myTeamName);
-                  setMyTeamNameEdit(true);
-                }}
-              >
-                팀 이름 변경하기
-              </button>
-            </>
-          )}
-          <img src="/element/field.png" alt="Field" style={{ width: '90px', margin: '16px 0' }} />
-          <div className={`bg-white rounded-full px-4 py-1 mt-2 mb-2 text-base font-jalnan ${isComplete ? 'text-[#2ca24c] border-2 border-[#2ca24c]' : 'text-[#aaa] border-2 border-[#aaa]'}`}>
-            {isComplete ? '선수 선택 완료' : '선수 선택 미완료'}
+            ) : (
+              <>
+                <div
+                  className="text-white text-2xl font-jalnan mb-2 w-full text-center truncate min-w-0"
+                  style={{ fontSize: 'clamp(1rem, 3vw, 1.25rem)' }}
+                  title={myTeamName}
+                >
+                  {myTeamName}
+                </div>
+                <button
+                  className="bg-white text-[#444] rounded-full px-3 py-1 mb-2 text-base font-jalnan w-full"
+                  onClick={() => {
+                    setMyTeamName(myTeamName);
+                    setMyTeamNameEdit(true);
+                  }}
+                >
+                  팀 이름 변경하기
+                </button>
+              </>
+            )}
+            <img src="/element/field.png" alt="Field" style={{ width: '90px', margin: '16px 0' }} />
+            <div className={`bg-white rounded-full px-4 py-1 mt-2 mb-2 text-base font-jalnan ${isComplete ? 'text-[#2ca24c] border-2 border-[#2ca24c]' : 'text-[#aaa] border-2 border-[#aaa]'}`}>
+              {isComplete ? '선수 선택 완료' : '선수 선택 미완료'}
+            </div>
+            <button
+              className="w-full bg-[#e28a3d] text-white rounded-full py-2 mt-2 mb-2 font-jalnan"
+              style={{ fontSize: '1rem' }}
+              onClick={() => {
+                setMode('random');
+                setStep(3);
+              }}
+              disabled={!myTeamName}
+            >
+              선수 <span style={{ color: '#ffe066' }}>랜덤</span> 선택
+            </button>
+            <button
+              className="w-full bg-[#e28a3d] text-white rounded-full py-2 mb-2 font-jalnan"
+              style={{ fontSize: '1rem' }}
+              onClick={() => {
+                setMode('manual');
+                setStep(3);
+              }}
+              disabled={!myTeamName}
+            >
+              선수 <span style={{ color: '#ffe066' }}>내가</span> 선택
+            </button>
           </div>
+        </div>
+        {/* 하단 버튼 */}
+        <div className="flex flex-col items-center z-10 mb-8 w-full font-jalnan" style={{ maxWidth: '400px' }}>
           <button
-            className="w-full bg-[#e28a3d] text-white rounded-full py-2 mt-2 mb-2 font-jalnan"
-            style={{ fontSize: '1rem' }}
-            onClick={() => {
-              setMode('random');
-              setStep(3);
-            }}
-            disabled={!myTeamName}
+            style={{ background: '#444', color: 'white', borderRadius: '2.5rem', fontWeight: 'normal', fontSize: '1.2rem', padding: '0.5rem 2.5rem', fontFamily: 'yg-jalnan', boxShadow: '#535353' }}
+            onClick={handleStartMatch}
+            disabled={!isComplete || !myTeamName}
           >
-            선수 <span style={{ color: '#ffe066' }}>랜덤</span> 선택
+            대결 시작
           </button>
           <button
-            className="w-full bg-[#e28a3d] text-white rounded-full py-2 mb-2 font-jalnan"
-            style={{ fontSize: '1rem' }}
-            onClick={() => {
-              setMode('manual');
-              setStep(3);
-            }}
-            disabled={!myTeamName}
+            style={{ background: '#eee', color: '#aaa', borderRadius: '2.5rem', fontWeight: 'normal', fontSize: '1.2rem', padding: '0.5rem 2.5rem', margin: '0.5em auto 0', fontFamily: 'yg-jalnan', boxShadow: '#535353' }}
+            onClick={() => setShowPasswordVerification(true)}
           >
-            선수 <span style={{ color: '#ffe066' }}>내가</span> 선택
+            내 팀 전적 확인
           </button>
         </div>
       </div>
-      {/* 하단 버튼 */}
-      <div className="flex flex-col items-center z-10 mb-8 w-full font-jalnan" style={{ maxWidth: '400px' }}>
-        <button
-          style={{ background: '#444', color: 'white', borderRadius: '2.5rem', fontWeight: 'normal', fontSize: '1.2rem', padding: '0.5rem 2.5rem', fontFamily: 'yg-jalnan', boxShadow: '#535353' }}
-          onClick={handleStartMatch}
-          disabled={!isComplete || !myTeamName}
-        >
-          대결 시작
-        </button>
-        <button
-          style={{ background: '#eee', color: '#aaa', borderRadius: '2.5rem', fontWeight: 'normal', fontSize: '1.2rem', padding: '0.5rem 2.5rem', margin: '0.5em auto 0', fontFamily: 'yg-jalnan', boxShadow: '#535353' }}
-          onClick={() => setShowPasswordVerification(true)}
-        >
-          내 팀 전적 확인
-        </button>
-      </div>
-    </div>
     </MobileLayout>
   );
 };
