@@ -6,7 +6,6 @@ import MobileLayout from "./layout/MobileLayout";
 const SERVER_BASE_URL = import.meta.env.VITE_SERVER_BASE_URL;
 
 const TeamSelectionScreen = (props) => {
-  console.log('TeamSelectionScreen 렌더링됨, props:', props);
 
   const {
     teamName,
@@ -37,22 +36,16 @@ const TeamSelectionScreen = (props) => {
   const positions = ['C', 'P', 'MP', 'CP', '1B', '2B', '3B', 'SS', 'LF', 'CF', 'RF', 'DH'];
   
   useEffect(() => {
-    console.log('TeamSelectionScreen useEffect 실행, mode:', mode);
     if (mode === 'random') {
-      // 서버에서 랜덤 팀 요청
       const fetchRandomTeam = async () => {
         try {
           const res = await fetch(`${SERVER_BASE_URL}/teams?mode=random`);
           if (!res.ok) {
-            console.error('랜덤팀 fetch 실패, status:', res.status, res.statusText);
             const text = await res.text();
-            console.error('서버에서 받은 응답(텍스트):', text);
             throw new Error('서버 오류');
           }
           const data = await res.json();
-          console.log('랜덤팀 API 응답:', data); // 응답 구조 확인용
           if (!Array.isArray(data.playerResponses)) {
-            console.error('서버 응답에 playerResponses 배열이 없습니다:', data);
             return;
           }
           const positionMapKor = {
@@ -101,7 +94,6 @@ const TeamSelectionScreen = (props) => {
           // 바로 TeamCompletionScreen으로 이동
           onNext(randomTeam);
         } catch (err) {
-          console.error('랜덤 팀 불러오기 실패:', err);
         }
       };
       fetchRandomTeam();
@@ -130,7 +122,6 @@ const TeamSelectionScreen = (props) => {
     const fetchPlayers = async () => {
       try {
         const res = await fetch(`${SERVER_BASE_URL}/players`);
-        console.log('선수 데이터 불러오기:', res.body);
         if (!res.ok) throw new Error('서버 오류');
         const data = await res.json();
         setPositionPlayerData(data);
@@ -227,8 +218,8 @@ const TeamSelectionScreen = (props) => {
           {teamName} 선수선택
         </div>
         {/* 필드 이미지 */}
-        <div className="relative w-full flex justify-center mb-2" style={{ minHeight: '180px', height: '40%' }}>
-          <img src="/element/field.png" alt="야구장" style={{ width: '100%', maxWidth: '90%', borderRadius: '1.5rem', height: '100%' }} />
+        <div className="relative w-full flex justify-center mb-2" style={{ minHeight: '35%', height: '35%' }}>
+          <img src="/element/field.png" alt="야구장" style={{ width: '80%', maxWidth: '90%', borderRadius: '1.5rem', height: '100%' }} />
           {/* 포지션 마커: 이미지 좌표 고정 */}
           {fieldPositions.map(({ pos, x, y, label }) => {
             const player = selectedPlayers[pos];

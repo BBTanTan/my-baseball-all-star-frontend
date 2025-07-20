@@ -22,7 +22,6 @@ const FriendTeamSetupScreen = ({ onComplete, onBack }) => {
     const positionsCount = 12;
     const selectedCount = Object.keys(selectedPlayers).length;
     const isComplete = selectedCount === positionsCount && Object.values(selectedPlayers).every(Boolean);
-    console.log("팀 완성:", selectedPlayers, teamName);
     return (
       <MobileLayout>
       <div className="min-h-screen w-full flex flex-col items-center justify-center relative bg-[#b3e3fd] overflow-x-hidden font-jalnan">

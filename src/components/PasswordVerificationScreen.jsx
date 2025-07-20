@@ -23,7 +23,6 @@ const PasswordVerificationScreen = ({ teamName, teamId, onBack }) => {
         return;
       }
       const data = await res.json();
-      console.log("팀 결과 데이터:", data);
       setTeamResultData(data);
     } catch (err) {
       setError("서버 오류: " + err.message);

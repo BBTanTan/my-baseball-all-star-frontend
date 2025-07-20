@@ -75,8 +75,6 @@ const SoloBattleScreen = ({ onBack }) => {
       });
       if (!res.ok) throw new Error('서버 오류');
       const result = await res.json();
-      console.log('대결 결과:', result);
-      // result: { homeTeam: { teamName, teamScore }, awayTeam: { teamName, teamScore } }
       setGameScores({
         team1: result.homeTeam.teamScore,
         team2: result.awayTeam.teamScore,
@@ -246,7 +244,7 @@ const SoloBattleScreen = ({ onBack }) => {
   }
   // step이 setup이 아닐 때는 기존 로직대로 화면 전환
   return (
-    <div className="min-h-screen p-4">
+    <div className="min-h-screen">
       <div className="max-w-4xl mx-auto">
         {step === 'team1-select' && (
           <TeamSelectionScreen 
