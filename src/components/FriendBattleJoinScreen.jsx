@@ -103,6 +103,8 @@ const FriendBattleJoinScreen = () => {
       <GameLoadingScreen
         team1Name={homeTeam.teamName}
         team2Name={myTeamName}
+        team1FinalScore={gameScores.team1}
+        team2FinalScore={gameScores.team2}
         onComplete={() => setStep(5)}
       />
     );
@@ -196,7 +198,6 @@ const FriendBattleJoinScreen = () => {
   // 대결 시작 버튼 핸들러: 여기서 서버에 요청 보내고 로딩/결과 처리
   const handleStartMatch = async () => {
     if (!homeTeam || !isComplete || !myTeamName) return;
-    setStep(4); // 로딩 화면으로 이동
     const homeTeamId = homeTeam.teamId;
     const awayTeam = {
       teamName: myTeamName,
@@ -216,6 +217,7 @@ const FriendBattleJoinScreen = () => {
         team1Name: result.homeTeam.teamName,
         team2Name: result.awayTeam.teamName
       });
+      setStep(4);
     } catch (err) {
       alert('대결 시작 요청 실패: ' + err.message);
       setStep(0);

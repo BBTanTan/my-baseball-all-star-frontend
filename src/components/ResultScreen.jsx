@@ -4,8 +4,8 @@ import ShareModal from "./ShareModal";
 import MobileLayout from "./layout/MobileLayout";
 
 const ResultScreen = ({ team1Name, team2Name, team1Score, team2Score, onPlayAgain, onHome }) => {
-  const finalTeam1Score = team1Score || Math.floor(Math.random() * 12) + 1;
-  const finalTeam2Score = team2Score || Math.floor(Math.random() * 12) + 1;
+  const finalTeam1Score = team1Score;
+  const finalTeam2Score = team2Score;
 
   // 결과별 문구
   const winMessages = [
