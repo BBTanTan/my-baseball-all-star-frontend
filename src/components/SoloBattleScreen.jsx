@@ -56,7 +56,6 @@ const SoloBattleScreen = ({ onBack }) => {
   const handleStartMatch = async () => {
     // 팀 정보와 선수 id 추출
     if (!(team1Players && team2Players)) return;
-    setStep('loading');
     const homeTeam = {
       teamName: team1Name,
       playerIds: Object.values(team1Players).map(p => p?.id).filter(Boolean)
@@ -81,6 +80,8 @@ const SoloBattleScreen = ({ onBack }) => {
         team1Name: result.homeTeam.teamName,
         team2Name: result.awayTeam.teamName
       });
+      setStep('loading');
+
       // GameLoadingScreen에서 onComplete 호출 시 결과 화면으로 이동
     } catch (err) {
       alert('대결 시작 요청 실패: ' + err.message);
@@ -294,6 +295,8 @@ const SoloBattleScreen = ({ onBack }) => {
           <GameLoadingScreen 
             team1Name={team1Name}
             team2Name={team2Name}
+            team1FinalScore= {gameScores.team1}
+            team2FinalScore={gameScores.team2}
             onComplete={handleGameComplete}
           />
         )}

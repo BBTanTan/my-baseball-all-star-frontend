@@ -2,13 +2,28 @@ import { useState, useEffect } from "react";
 import ResultScreen from "@/components/ResultScreen";
 import MobileLayout from "./layout/MobileLayout";
 
-const GameLoadingScreen = ({ team1Name, team2Name, onComplete }) => {
+function distributeScoreToInnings(finalScore, innings = 9, maxPerInning = 3) {
+  // 0~maxPerInning 사이에서 랜덤하게 분배, 합이 finalScore가 되도록
+  let scores = Array(innings).fill(0);
+  let remaining = finalScore;
+  while (remaining > 0) {
+    // 남은 점수와 maxPerInning 중 작은 값까지 랜덤
+    const idx = Math.floor(Math.random() * innings);
+    const add = Math.min(remaining, Math.floor(Math.random() * (maxPerInning + 1)));
+    if (scores[idx] + add <= maxPerInning && add > 0) {
+      scores[idx] += add;
+      remaining -= add;
+    }
+  }
+  return scores;
+}
+
+const GameLoadingScreen = ({ team1Name, team2Name, team1FinalScore, team2FinalScore ,onComplete }) => {
   const [currentInning, setCurrentInning] = useState(1);
-  const [team1InningScores, setTeam1InningScores] = useState(Array(12).fill(0));
-  const [team2InningScores, setTeam2InningScores] = useState(Array(12).fill(0));
+  const [team1InningScores, setTeam1InningScores] = useState(distributeScoreToInnings(team1FinalScore));
+  const [team2InningScores, setTeam2InningScores] = useState(distributeScoreToInnings(team2FinalScore));
   const [step, setStep] = useState('loading');
   const [finalScores, setFinalScores] = useState(null);
-
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentInning(prev => {
@@ -24,24 +39,11 @@ const GameLoadingScreen = ({ team1Name, team2Name, onComplete }) => {
           }, 1000);
           return 9;
         }
-        // Simulate scoring for current inning
-        const team1Score = Math.random() > 0.7 ? Math.floor(Math.random() * 3) + 1 : 0;
-        const team2Score = Math.random() > 0.7 ? Math.floor(Math.random() * 3) + 1 : 0;
-        setTeam1InningScores(scores => {
-          const newScores = [...scores];
-          newScores[prev - 1] = team1Score;
-          return newScores;
-        });
-        setTeam2InningScores(scores => {
-          const newScores = [...scores];
-          newScores[prev - 1] = team2Score;
-          return newScores;
-        });
         return prev + 1;
       });
     }, 800);
     return () => clearInterval(interval);
-  }, [onComplete, team1InningScores, team2InningScores]);
+  }, [onComplete]);
 
   if (step === 'result' && finalScores) {
     return (
