@@ -166,8 +166,8 @@ const FriendBattleJoinScreen = () => {
           setStep(1);
         }}
         onBack={() => {
-              setTeam1Players(null);
-              setStep('setup');
+              setSelectedPlayers({});
+              setStep(0);
         }}
       />
     );
